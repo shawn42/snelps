@@ -1,5 +1,5 @@
 require 'RUDL'
-require "../turbine_terror/fps_controller.rb"
+require "fps_controller.rb"
 require 'yaml'
 include RUDL
 
