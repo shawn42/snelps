@@ -8,10 +8,9 @@ class Snelp
   # TODO how to do this for all machines at the correct speed?
   FRAME_UPDATE_TIME = 100
   @@pics = []
-  @@selected_image = Transform.zoom(Image.load(DATA_PATH + "/gfx/magiceffect0r.png"),[0.2,0.2],true)
-  @@clean_selected_image = Transform.zoom(Image.load(DATA_PATH + "/gfx/magiceffect0r.png"),[0.2,0.2],true)
+  @@selected_image = Surface.load_image(DATA_PATH + "/gfx/magiceffect0r.png").zoom([0.2,0.2],true)
   IMAGE_LIST.each do |img|
-    @@pics <<  Image.load(DATA_PATH + "/gfx/#{img}")
+    @@pics <<  Surface.load_image(DATA_PATH + "/gfx/#{img}")
   end
 	attr_accessor :vx, :vy, :speed, :frame, :animating, :selected
   def on_selection()
@@ -29,7 +28,7 @@ class Snelp
     @pic = @@pics.first
     @animating = true
     @selected = false
-    @pic.set_colorkey(@pic.get_at([0,0]))
+    @pic.set_colorkey(@pic.get_at(0,0))
 		@rate = rate
 		@vx, @vy = 0,0
 		@speed = 40

@@ -3,6 +3,7 @@
 $: << "#{File.dirname(__FILE__)}/../config"
 require "environment"
 require "rubygame"
+require "rubygame/sfont"
 include Rubygame
 require "unit"
 
@@ -10,9 +11,9 @@ $stdout.sync = true
 Rubygame.init()
 
 queue = EventQueue.new() # new EventQueue with autofetch
-queue.filter = [ActiveEvent]
-clock = Rubygame::Time::Clock.new()
-clock.desired_fps = 40
+queue.ignore = [ActiveEvent]
+clock = Clock.new()
+clock.target_framerate = 40
 
 unless ($gfx_ok = (VERSIONS[:sdl_gfx] != nil))
   raise "SDL_gfx is not available. Bailing out." 
@@ -43,7 +44,7 @@ mouse_selection = MouseSelection.new
 
 # Create the SDL window
 screen = Screen.set_mode([640,480])
-screen.set_caption("Snelps","revenge of the snelp!")
+screen.title = "Snelps"
 screen.show_cursor = true;
 
 
@@ -88,7 +89,7 @@ catch(:rubygame_quit) do
           # clicked
           selection = nil
           snelps.each do |s|
-            if s.col_rect.collide_point?(event.pos)
+            if s.col_rect.collide_point?(*event.pos)
               selection = true
               selection = s
               break
@@ -153,9 +154,10 @@ catch(:rubygame_quit) do
 		snelps.draw(screen)
 		screen.update()
 		update_time = clock.tick()
-		unless fps == clock.fps
-			fps = clock.fps
-			screen.set_caption("Snelps [%d fps]"%fps)
+		unless fps == clock.framerate
+			fps = clock.framerate
+			screen.title = "Snelps [%d fps]"%fps
 		end
 	end
 end
+Rubygame.quit()
