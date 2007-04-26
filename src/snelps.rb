@@ -75,6 +75,10 @@ snelps.push(snelp1, snelp2, snelp3)
 20.times do
   snelps << Snelp.new(rand(600), rand(400))
 end
+
+background_music = snelp1.load_sound("loop.wav")
+Rubygame::Mixer::play(background_music,-1,-1)
+
 # Make the background surface
 background = Surface.new(screen.size)
 
