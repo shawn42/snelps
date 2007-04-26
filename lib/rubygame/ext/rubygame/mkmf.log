@@ -1,0 +1,76 @@
+have_library: checking for main() in -lSDL_gfx... -------------------- yes
+
+"gcc -o conftest -I. -I/usr/local/lib/ruby/1.8/i686-darwin8.9.1 -I/Users/sanderson/code/rubygame/ext/rubygame  -g -O2 -pipe -fno-common -Wall  -I/usr/local/include/SDL -D_GNU_SOURCE=1 -D_THREAD_SAFE conftest.c  -L"/usr/local/lib"       -L/usr/local/lib -lSDLmain -lSDL -Wl,-framework,Cocoa  -lruby-static -lSDL_gfx  -ldl -lobjc  "
+checked program was:
+/* begin */
+1: /*top*/
+2: int main() { return 0; }
+3: int t() { void ((*volatile p)()); p = (void ((*)()))main; return 0; }
+/* end */
+
+--------------------
+
+have_header: checking for SDL_gfxPrimitives.h... -------------------- yes
+
+"gcc -E -I. -I/usr/local/lib/ruby/1.8/i686-darwin8.9.1 -I/Users/sanderson/code/rubygame/ext/rubygame  -g -O2 -pipe -fno-common -Wall  -I/usr/local/include/SDL -D_GNU_SOURCE=1 -D_THREAD_SAFE  conftest.c -o conftest.i"
+checked program was:
+/* begin */
+1: #include <SDL_gfxPrimitives.h>
+/* end */
+
+--------------------
+
+have_header: checking for SDL_rotozoom.h... -------------------- yes
+
+"gcc -E -I. -I/usr/local/lib/ruby/1.8/i686-darwin8.9.1 -I/Users/sanderson/code/rubygame/ext/rubygame  -g -O2 -pipe -fno-common -Wall  -I/usr/local/include/SDL -D_GNU_SOURCE=1 -D_THREAD_SAFE  conftest.c -o conftest.i"
+checked program was:
+/* begin */
+1: #include <SDL_rotozoom.h>
+/* end */
+
+--------------------
+
+have_library: checking for main() in -lSDL_image... -------------------- yes
+
+"gcc -o conftest -I. -I/usr/local/lib/ruby/1.8/i686-darwin8.9.1 -I/Users/sanderson/code/rubygame/ext/rubygame  -g -O2 -pipe -fno-common -Wall  -I/usr/local/include/SDL -D_GNU_SOURCE=1 -D_THREAD_SAFE conftest.c  -L"/usr/local/lib"       -L/usr/local/lib -lSDLmain -lSDL -Wl,-framework,Cocoa -lSDL_gfx  -lruby-static -lSDL_image -lSDL_gfx  -ldl -lobjc  "
+checked program was:
+/* begin */
+1: /*top*/
+2: int main() { return 0; }
+3: int t() { void ((*volatile p)()); p = (void ((*)()))main; return 0; }
+/* end */
+
+--------------------
+
+have_header: checking for SDL_image.h... -------------------- yes
+
+"gcc -E -I. -I/usr/local/lib/ruby/1.8/i686-darwin8.9.1 -I/Users/sanderson/code/rubygame/ext/rubygame  -g -O2 -pipe -fno-common -Wall  -I/usr/local/include/SDL -D_GNU_SOURCE=1 -D_THREAD_SAFE  conftest.c -o conftest.i"
+checked program was:
+/* begin */
+1: #include <SDL_image.h>
+/* end */
+
+--------------------
+
+have_library: checking for main() in -lSDL_ttf... -------------------- yes
+
+"gcc -o conftest -I. -I/usr/local/lib/ruby/1.8/i686-darwin8.9.1 -I/Users/sanderson/code/rubygame/ext/rubygame  -g -O2 -pipe -fno-common -Wall  -I/usr/local/include/SDL -D_GNU_SOURCE=1 -D_THREAD_SAFE conftest.c  -L"/usr/local/lib"       -L/usr/local/lib -lSDLmain -lSDL -Wl,-framework,Cocoa -lSDL_image -lSDL_gfx  -lruby-static -lSDL_ttf -lSDL_image -lSDL_gfx  -ldl -lobjc  "
+checked program was:
+/* begin */
+1: /*top*/
+2: int main() { return 0; }
+3: int t() { void ((*volatile p)()); p = (void ((*)()))main; return 0; }
+/* end */
+
+--------------------
+
+have_header: checking for SDL_ttf.h... -------------------- yes
+
+"gcc -E -I. -I/usr/local/lib/ruby/1.8/i686-darwin8.9.1 -I/Users/sanderson/code/rubygame/ext/rubygame  -g -O2 -pipe -fno-common -Wall  -I/usr/local/include/SDL -D_GNU_SOURCE=1 -D_THREAD_SAFE  conftest.c -o conftest.i"
+checked program was:
+/* begin */
+1: #include <SDL_ttf.h>
+/* end */
+
+--------------------
+
