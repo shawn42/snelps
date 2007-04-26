@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
-require "#{File.dirname(__FILE__)}/../config/environment"
+$: << "#{File.dirname(__FILE__)}/../config"
+require "environment"
 require "rubygame"
 include Rubygame
 require "unit"
