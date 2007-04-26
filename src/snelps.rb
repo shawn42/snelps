@@ -118,7 +118,9 @@ catch(:rubygame_quit) do
 			when KeyDownEvent
 				case event.key
 				when K_ESCAPE
-					throw :rubygame_quit 
+          snelps.each do |s|
+            s.on_unselection if s.selected
+          end
 				when K_Q
 					throw :rubygame_quit 
 				when K_UP
