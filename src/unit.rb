@@ -4,6 +4,28 @@ require "environment"
 
 class Snelp
 	include Sprites::Sprite
+  def load_image(name, colorkey=nil)
+      # Rubygame::Image.load has been replaced with Surface
+    image = Rubygame::Surface.load_image(File.expand_path(DATA_PATH + "gfx/" + name))
+    if colorkey != nil
+      if colorkey == -1
+        colorkey = image.get_at([0,0])
+      end
+      image.set_colorkey(colorkey)
+    end
+    return image, Rubygame::Rect.new(0,0,*image.size)
+  end
+  def load_sound(name)
+      return nil unless $sound_ok
+      begin
+          full_name = File.expand_path(DATA_PATH + "sound/" + name)
+          sound = Rubygame::Mixer::Sample.load_audio(full_name)
+          return sound
+      rescue Rubygame::SDLError => ex
+          puts "Cannot load sound " + full_name + " : " + ex
+          exit
+      end
+  end
   IMAGE_LIST = ['unit1r.png','unit2r.png','unit3r.png','unit4r.png','unit4r.png','unit6r.png','unit7r.png']
   # TODO how to do this for all machines at the correct speed?
   FRAME_UPDATE_TIME = 100
@@ -22,10 +44,12 @@ class Snelp
   def order(pos)
     puts "GOTO #{pos.first},#{pos.last}"
     @animating = true
+    Rubygame::Mixer::play(@whiff_sound,-1,0)
   end
 	def initialize(x,y,rate=0.1)
 		super()
     @pic = @@pics.first
+    @whiff_sound = load_sound('whiff.wav')
     @animating = true
     @selected = false
     @pic.set_colorkey(@pic.get_at(0,0))

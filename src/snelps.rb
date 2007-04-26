@@ -15,9 +15,12 @@ queue.ignore = [ActiveEvent]
 clock = Clock.new()
 clock.target_framerate = 40
 
-unless ($gfx_ok = (VERSIONS[:sdl_gfx] != nil))
-  raise "SDL_gfx is not available. Bailing out." 
-end
+puts 'Warning, images disabled' unless 
+  ($image_ok = (Rubygame::VERSIONS[:sdl_image] != nil))
+puts 'Warning, font disabled' unless 
+  ($font_ok = (Rubygame::VERSIONS[:sdl_ttf] != nil))
+puts 'Warning, sound disabled' unless
+  ($sound_ok = (Rubygame::VERSIONS[:sdl_mixer] != nil))
 
 class MouseSelection
 	include Sprites::Sprite
@@ -47,6 +50,22 @@ screen = Screen.set_mode([640,480])
 screen.title = "Snelps"
 screen.show_cursor = true;
 
+# Not in the pygame version - for Rubygame, we need to 
+# explicitly open the audio device.
+# Args are:
+#   Frequency - Sampling frequency in samples per second (Hz).
+#               22050 is recommended for most games; 44100 is
+#               CD audio rate. The larger the value, the more
+#               processing required.
+#   Format - Output sample format.  This is one of the
+#            AUDIO_* constants in Rubygame::Mixer
+#   Channels -output sound channels. Use 2 for stereo,
+#             1 for mono. (this option does not affect number
+#             of mixing channels) 
+#   Samplesize - Bytes per output sample. Specifically, this
+#                determines the size of the buffer that the
+#                sounds will be mixed in.
+Rubygame::Mixer::open_audio( 22050, Rubygame::Mixer::AUDIO_U8, 2, 1024 )
 
 snelp1 = Snelp.new(100,50)
 snelp2 = Snelp.new(200,80)
