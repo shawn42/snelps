@@ -1,18 +1,18 @@
-require 'RUDL'
-require "fps_controller.rb"
+#require "fps_controller.rb"
 require 'yaml'
-include RUDL
+require "rubygame"
+include Rubygame
 
 class Action
   attr_accessor :name
   attr_writer :predicate, :action
-  
+
   def initialize(name, predicate, &block)
     @name = name
     @predicate = predicate
     @action = block
   end
-  
+
   def perform
     @action.call
   end
@@ -26,7 +26,7 @@ class Agent
   attr_accessor :draw_glyph, :x, :y, :x_vel, :y_vel
   attr_accessor :actions, :predicates
   attr_accessor :partner, :captured, :hits, :dead
-  
+
   def initialize
     @actions = []
     @partner = nil
@@ -35,7 +35,7 @@ class Agent
     @hits = 0 
     @predicates = {}
   end
-  
+
   def tick
     perform_all_actions
     self.x += x_vel
@@ -43,38 +43,47 @@ class Agent
     self.x_vel *= 0.999
     self.y_vel *= 0.999
   end
-  
+
   def perform_all_actions
     for action in actions
       action.perform if action.predicate?
     end
   end
-  
+
   def condition(name, &block)
     predicates[name] = block
   end
-  
+
   def add_action(name, predicate_list, &block)
     predicate_list.each do |predicate|
       actions << Action.new(name, predicates[predicate], &block)
     end    
   end
 end
-    
+
 class Sim
 
-  def initialize(params, fps_controller)
+  def initialize(params, fps_controller = nil)
     @width = params[:width]
     @height = params[:height]
     @fps = params[:target_fps]
     @fps_controller = fps_controller
     @population = params[:population]
-    
-    @display = DisplaySurface.new [@width, @height]
+
+    Rubygame.init()
+
+    @queue = EventQueue.new() # new EventQueue with autofetch
+    @queue.filter = [ActiveEvent]
+    @clock = Rubygame::Time::Clock.new()
+    @clock.desired_fps = @fps
+
+    @screen = Screen.set_mode([@width,@height])
+    @screen.set_caption("Sim","simmy")
+    @display = Surface.new [@width, @height]
     @agents = []
     @dirty_list = {}
   end
-  
+
   def create_agents
     colors = [rand(20)+128,rand(20)+150, rand(20)+192].sort
     @population.times do
@@ -85,21 +94,17 @@ class Sim
       agent.y = rand @height
       agent.x_vel = (rand * 3.0) - 1.5
       agent.y_vel = (rand * 3.0) - 1.5
-      
+
       train agent
       @agents << agent
     end
   end
-  
-  def box_around(coord)
-    [coord[0]-4, coord[1]-4, 8, 8]
-  end
-  
+
   def plot(agent, coord, color)
     @dirty_list[agent] = coord
     draw_shape coord, color
   end
-  
+
   def train(agent)
     agent.condition(:x_max) { agent.x > @width }
     agent.condition(:y_max) { agent.y > @height }
@@ -119,11 +124,11 @@ class Sim
       end
       found
     end
-    
+
     agent.add_action :bounce_x, [:x_max, :x_min] do
       agent.x_vel = - agent.x_vel
     end
-        
+
     agent.add_action :bounce_y, [:y_max, :y_min] do
       agent.y_vel = - agent.y_vel
     end
@@ -135,65 +140,82 @@ class Sim
       agent.partner.y_vel = agent.partner.y_vel * -(1 + (agent.partner.y - agent.y).abs/15.0)
       agent.y_vel = agent.y_vel * 0.98
       agent.x_vel = agent.x_vel * 0.98
-      
+
       #agent.partner.captured = true
       #agent.captured = true
       #old_glyph = agent.draw_glyph.clone
       #agent.draw_glyph = Proc.new do
-        #old_glyph.call
+      #old_glyph.call
       #  @display.plot [agent.x-1, agent.y-1], [255,0,0]
       #end
     end
-    
+
     agent.add_action :stop, [:dead] do
       agent.dead = true
       agent.x_vel = 0.0
       agent.y_vel = 0.0
-      agent.draw_glyph = Proc.new {@display.plot [agent.x, agent.y], [255,0,0]}
+      agent.draw_glyph = Proc.new { plot agent, [agent.x, agent.y], [255,0,0]}
     end
   end
-  
+
+  def box_around(coord)
+    [coord[0]-4, coord[1]-4, 8, 8]
+  end
+
   def erase_shape(coord, color)
-    @display.filled_rectangle box_around(coord), color
+    box = box_around(coord)
+    Draw.filled_box @display, box[0..1],box[2..3], color
   end
-  
+
   def draw_shape(coord, color)
-    @display.circle coord, 2, color
-    @display.filled_rectangle [coord.map{|c|c - 1}, [3,3]].flatten, color
+    Draw.circle(@display, coord, 2, color)
+    Draw.filled_box @display, coord.map{|c|c - 1}, [3,3], color
   end
-  
+
   def erase_dirty
     @dirty_list.each_value do |coord|
       erase_shape coord, [0,0,0]
     end
     @dirty_list.clear
   end
-  
+
   def tick_agents
     @agents.each do |agent|
       agent.tick unless agent.dead
       agent.draw_glyph.call
     end
   end
-  
+
   def run
-    @fps_controller.at_fps @fps do
-    #while true
-      event = EventQueue.poll
-      case event
-      when KeyDownEvent
-        case event.key
-        when Constant::K_ESCAPE
-          exit 1
+    catch(:rubygame_quit) do
+      loop do
+        @queue.each do |event|
+          case event
+          when KeyDownEvent
+            case event.key
+            when K_ESCAPE
+              throw :rubygame_quit 
+            when K_Q
+              throw :rubygame_quit 
+            when KeyUpEvent
+            when QuitEvent
+              throw :rubygame_quit
+            end
+          end
         end
+        erase_dirty
+        #@display.fill [0,0,0]
+        tick_agents
+        @display.blit(@screen, [0,0])
+        @screen.flip
+        #      snelps.draw(screen)
+        @screen.update()
+        update_time = @clock.tick()
       end
-      erase_dirty
-      #@display.fill [0,0,0]
-      tick_agents
-      @display.flip
     end
   end
 end
+
 
 params = {
   :width => 500,
@@ -202,8 +224,8 @@ params = {
   :population =>100
 }
 
-fps_controller = FPSController.new
-sim = Sim.new params, fps_controller
+#fps_controller = FPSController.new
+sim = Sim.new params#, fps_controller
 
 sim.create_agents
 sim.run
