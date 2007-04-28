@@ -30,7 +30,7 @@ require 'complex'
 module Math
 	include Ruby3d
 
-  PI = 3.14159265358979323846
+#  PI = 3.14159265358979323846
 
 	def Vector.ZERO
 		Vector.new(0,0,0)

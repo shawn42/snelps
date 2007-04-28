@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 $: << "#{File.dirname(__FILE__)}/../config"
 require "environment"
-require "ruby3d"
+require "math"
 
 class Snelp
 	include Sprites::Sprite
