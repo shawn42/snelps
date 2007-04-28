@@ -13,7 +13,7 @@ Rubygame.init()
 queue = EventQueue.new() # new EventQueue with autofetch
 queue.ignore = [ActiveEvent]
 clock = Clock.new()
-clock.target_framerate = 25
+clock.target_framerate = 30
 
 puts 'Warning, images disabled' unless 
   ($image_ok = (Rubygame::VERSIONS[:sdl_image] != nil))

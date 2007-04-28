@@ -29,7 +29,7 @@ class Snelp
   end
   IMAGE_LIST = ['unit1r.png','unit2r.png','unit3r.png','unit4r.png','unit4r.png','unit6r.png','unit7r.png']
   # TODO how to do this for all machines at the correct speed?
-  FRAME_UPDATE_TIME = 100
+  FRAME_UPDATE_TIME = 60
   @@pics = []
   @@selected_image = Surface.load_image(DATA_PATH + "/gfx/magiceffect0r.png").zoom([0.2,0.2],true)
   IMAGE_LIST.each do |img|
@@ -43,9 +43,16 @@ class Snelp
     @selected = false
   end
   def order(pos)
-    @dest = Ruby3d::Vector.new(pos[0], pos[1], 0)
+    set_destination! pos[0], pos[1]
     @animating = true
     Rubygame::Mixer::play(@whiff_sound,2,0)
+		@speed = 150
+  end
+  def set_destination!(dx,dy)
+    x,y = @rect.center
+    @dest = Ruby3d::Vector.new(dx, dy, 0)
+    @direction = Ruby3d::Vector.new @dest.x - x, @dest.y - y, 0
+    @direction.normalize!
   end
 	def initialize(x,y,rate=0.1)
 		super()
@@ -55,27 +62,28 @@ class Snelp
     @selected = false
     @pic.set_colorkey(@pic.get_at(0,0))
 		@rate = rate
-		@speed = 100
+		@speed = 80
 		@image = @pic
 		@delta = 0
 		@frame = 1
     @time_since_last_frame_change = 0
 		@rect = Rect.new(x,y,*@pic.size)
+
+    set_destination! rand(800), rand(600)
 	end
   def update(time)
     x,y = @rect.center
     self.update_image(time)
     @rect.size = @selected ? @@selected_image.size : @image.size
     base = @speed * time/1000.0
+    if ((x - @dest.x).abs < 3 and (y - @dest.y).abs < 3)
+      set_destination!(rand(800), rand(600)) 
+      @speed = 80
+    end
 
-    @dest = Ruby3d::Vector.new(rand(800), rand(600), 0) if @dest.nil? or ((x - @dest.x).abs < 5 and (y - @dest.y).abs < 5)
-
-    @direction = Ruby3d::Vector.new @dest.x - x, @dest.y - y, 0
-    @direction.normalize!
-    @direction = @direction * base
-
-    @rect.centerx = x + @direction.x
-    @rect.centery = y + @direction.y
+    move = @direction * base
+    @rect.centerx = x + move.x
+    @rect.centery = y + move.y
   end
   def animating?()
     @animating
