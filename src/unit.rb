@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 $: << "#{File.dirname(__FILE__)}/../config"
 require "environment"
+require "ruby3d"
 
 class Snelp
 	include Sprites::Sprite
@@ -42,9 +43,9 @@ class Snelp
     @selected = false
   end
   def order(pos)
-    puts "GOTO #{pos.first},#{pos.last}"
+    @dest = Ruby3d::Vector.new(pos[0], pos[1], 0)
     @animating = true
-    Rubygame::Mixer::play(@whiff_sound,-1,0)
+    Rubygame::Mixer::play(@whiff_sound,2,0)
   end
 	def initialize(x,y,rate=0.1)
 		super()
@@ -54,8 +55,7 @@ class Snelp
     @selected = false
     @pic.set_colorkey(@pic.get_at(0,0))
 		@rate = rate
-		@vx, @vy = 0,0
-		@speed = 40
+		@speed = 100
 		@image = @pic
 		@delta = 0
 		@frame = 1
@@ -67,8 +67,15 @@ class Snelp
     self.update_image(time)
     @rect.size = @selected ? @@selected_image.size : @image.size
     base = @speed * time/1000.0
-    @rect.centerx = x + @vx * base
-    @rect.centery = y + @vy * base
+
+    @dest = Ruby3d::Vector.new(rand(800), rand(600), 0) if @dest.nil? or ((x - @dest.x).abs < 5 and (y - @dest.y).abs < 5)
+
+    @direction = Ruby3d::Vector.new @dest.x - x, @dest.y - y, 0
+    @direction.normalize!
+    @direction = @direction * base
+
+    @rect.centerx = x + @direction.x
+    @rect.centery = y + @direction.y
   end
   def animating?()
     @animating

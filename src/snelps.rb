@@ -13,7 +13,7 @@ Rubygame.init()
 queue = EventQueue.new() # new EventQueue with autofetch
 queue.ignore = [ActiveEvent]
 clock = Clock.new()
-clock.target_framerate = 40
+clock.target_framerate = 25
 
 puts 'Warning, images disabled' unless 
   ($image_ok = (Rubygame::VERSIONS[:sdl_image] != nil))
@@ -46,7 +46,7 @@ snelps.extend(Sprites::UpdateGroup)
 mouse_selection = MouseSelection.new
 
 # Create the SDL window
-screen = Screen.set_mode([640,480])
+screen = Screen.set_mode([800,600])
 screen.title = "Snelps"
 screen.show_cursor = true;
 
@@ -73,7 +73,7 @@ snelp3 = Snelp.new(100,350)
 snelps.push(snelp1, snelp2, snelp3)
 
 20.times do
-  snelps << Snelp.new(rand(600), rand(400))
+  snelps << Snelp.new(rand(800), rand(600))
 end
 
 background_music = snelp1.load_sound("loop.wav")
@@ -82,21 +82,22 @@ Rubygame::Mixer::play(background_music,-1,-1)
 # Make the background surface
 background = Surface.new(screen.size)
 
-sfont = SFont.new(DATA_PATH + "/fonts/term16.png")
-sfont.render("Love Snelps forever! <3").blit(background,[100,10])
-
-TTF.setup()
-ttfont = TTF.new(DATA_PATH + "/fonts/freesansbold.ttf",11)
-ttfrndr = ttfont.render("Drowing of strings....",true,[250,250,250])
-ttfrndr.blit(background,[70,200])
+#sfont = SFont.new(DATA_PATH + "/fonts/term16.png")
+#sfont.render("Love Snelps forever! <3").blit(background,[100,10])
+#
+#TTF.setup()
+#ttfont = TTF.new(DATA_PATH + "/fonts/freesansbold.ttf",11)
+#ttfrndr = ttfont.render("Drowing of strings....",true,[250,250,250])
+#ttfrndr.blit(background,[70,200])
 
 
 # Create another surface to test transparency blitting
-b = Surface.new([200,50])
-b.fill([150,20,40])
-b.set_alpha(123)# approx. half transparent
-b.blit(background,[20,40])
-background.blit(screen,[0,0])
+# BOX
+#b = Surface.new([200,50])
+#b.fill([150,20,40])
+#b.set_alpha(123)# approx. half transparent
+#b.blit(background,[20,40])
+#background.blit(screen,[0,0])
 
 update_time = 0
 fps = 0
@@ -147,6 +148,10 @@ catch(:rubygame_quit) do
           end
 				when K_Q
 					throw :rubygame_quit 
+				when K_A
+          snelps.each do |s|
+            s.on_selection 
+          end
 				when K_UP
 					snelp1.vy = -1
 				when K_DOWN
