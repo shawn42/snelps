@@ -73,7 +73,6 @@ class Sim
     Rubygame.init()
 
     @queue = EventQueue.new() # new EventQueue with autofetch
-    @queue.ignore = [ActiveEvent]
     @clock = Clock.new()
     @clock.target_framerate = @fps
 
@@ -163,13 +162,13 @@ class Sim
   end
 
   def erase_shape(coord, color)
-    box = box_around(coord)
-    @display.draw_box_s box[0..1],box[2..3], color
+    #box = box_around(coord)
+    #@display.draw_box_s box[0..1],box[2..3], color
+    @display.draw_circle_s coord, 3, color
   end
 
   def draw_shape(coord, color)
     @display.draw_circle coord, 2, color
-    @display.draw_box_s coord.map{|c|c - 1}, [3,3], color
   end
 
   def erase_dirty
