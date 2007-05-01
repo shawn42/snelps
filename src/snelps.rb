@@ -276,7 +276,9 @@ catch(:rubygame_quit) do
     #draw the selection box
     if mouse_selection.dragging
       screen.draw_box([mouse_selection.start_x, mouse_selection.start_y],
-        [mouse_cursor.x, mouse_cursor.y], [50,255,0])
+        [mouse_cursor.x, mouse_cursor.y], [50,200,0])
+      screen.draw_box_s([mouse_selection.start_x, mouse_selection.start_y],
+        [mouse_cursor.x, mouse_cursor.y], [85,255,0,100])
     end
     
 		mouse_cursor.draw(screen)
