@@ -73,12 +73,12 @@ class Sim
     Rubygame.init()
 
     @queue = EventQueue.new() # new EventQueue with autofetch
-    @queue.filter = [ActiveEvent]
-    @clock = Rubygame::Time::Clock.new()
-    @clock.desired_fps = @fps
+    @queue.ignore = [ActiveEvent]
+    @clock = Clock.new()
+    @clock.target_framerate = @fps
 
     @screen = Screen.set_mode([@width,@height])
-    @screen.set_caption("Sim","simmy")
+    @screen.title = "Sim"
     @display = Surface.new [@width, @height]
     @agents = []
     @dirty_list = {}
@@ -164,12 +164,12 @@ class Sim
 
   def erase_shape(coord, color)
     box = box_around(coord)
-    Draw.filled_box @display, box[0..1],box[2..3], color
+    @display.draw_box_s box[0..1],box[2..3], color
   end
 
   def draw_shape(coord, color)
-    Draw.circle(@display, coord, 2, color)
-    Draw.filled_box @display, coord.map{|c|c - 1}, [3,3], color
+    @display.draw_circle coord, 2, color
+    @display.draw_box_s coord.map{|c|c - 1}, [3,3], color
   end
 
   def erase_dirty

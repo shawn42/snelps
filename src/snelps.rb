@@ -6,6 +6,8 @@ require "rubygame"
 require "rubygame/sfont"
 include Rubygame
 require "unit"
+require "math"
+include Ruby3d
 
 $stdout.sync = true
 Rubygame.init()
@@ -13,7 +15,10 @@ Rubygame.init()
 queue = EventQueue.new() # new EventQueue with autofetch
 queue.ignore = [ActiveEvent]
 clock = Clock.new()
-clock.target_framerate = 30
+clock.target_framerate = 40
+
+# TODO how to do this for all machines at the correct speed?
+FRAME_UPDATE_TIME = 60
 
 puts 'Warning, images disabled' unless 
   ($image_ok = (Rubygame::VERSIONS[:sdl_image] != nil))
@@ -24,10 +29,11 @@ puts 'Warning, sound disabled' unless
 
 class MouseSelection
 	include Sprites::Sprite
-  attr_accessor :start_x, :start_y
+  attr_accessor :start_x, :start_y, :dragging
   def down(pos)
     @start_x = pos.first
     @start_y = pos.last
+    @dragging = true
   end
   def up(pos)
 		x_array = [@start_x, pos.first].sort
@@ -37,18 +43,70 @@ class MouseSelection
   def initialize()
     super
   end
-  def update(time)
+end
+class MouseCursor
+	include Sprites::Sprite
+  IMAGE_LIST = {
+    :cursor => ['explosion0.png'],
+    :goto => ['explosion0.png','explosion0.png','explosion0.png','explosion0.png','explosion0.png','explosion0.png']
+  }
+  @@images = {}
+  IMAGE_LIST.each do |action, imgs|
+    @@images[action] = []
+    imgs.each do |img|
+      @@images[action] <<  Surface.load_image(DATA_PATH + "gfx/#{img}")
+    end
   end
+  attr_accessor :animating
+  def initialize()
+    super
+    @current_action = :cursor
+    @animating = false
+    @frame = 0
+    @time_since_last_frame_change = 0
+    @image = @@images[@current_action][@frame]
+		@rect = Rect.new(400,300,*@image.size)
+  end
+  def animating?()
+    @animating
+  end
+  def update(time)
+    update_image(time)
+  end
+  def on_order()
+    @frame = 0
+    @current_action = :goto
+    @animating = true
+  end
+
+  def update_image(time)
+    if @time_since_last_frame_change > FRAME_UPDATE_TIME and animating?
+      @frame = (@frame + 1)
+      if @frame == IMAGE_LIST[@current_action].size
+        @current_action = :cursor
+        @animating = false
+        @frame = 0
+      end
+      @time_since_last_frame_change = 0
+    else
+      @time_since_last_frame_change += time
+    end
+    @image = @@images[@current_action][@frame]
+  end
+
+  def x; @rect.centerx; end
+  def y; @rect.centery; end
 end
 
 snelps = Sprites::Group.new
 snelps.extend(Sprites::UpdateGroup)
 mouse_selection = MouseSelection.new
+mouse_cursor = MouseCursor.new
 
 # Create the SDL window
 screen = Screen.set_mode([800,600])
 screen.title = "Snelps"
-screen.show_cursor = true;
+screen.show_cursor = false
 
 # Not in the pygame version - for Rubygame, we need to 
 # explicitly open the audio device.
@@ -68,8 +126,10 @@ screen.show_cursor = true;
 Rubygame::Mixer::open_audio( 22050, Rubygame::Mixer::AUDIO_U8, 2, 1024 )
 
 snelp1 = Snelp.new(100,50)
-snelp2 = Snelp.new(200,80)
-snelp3 = Snelp.new(100,350)
+$obj = snelp1.object_id
+snelp1.on_selection
+snelp2 = Snelp.new(100,80)
+snelp3 = Snelp.new(100,150)
 snelps.push(snelp1, snelp2, snelp3)
 
 20.times do
@@ -93,7 +153,7 @@ background = Surface.new(screen.size)
 
 # Create another surface to test transparency blitting
 # BOX
-#b = Surface.new([200,50])
+#b = Surface.new([800,50])
 #b.fill([150,20,40])
 #b.set_alpha(123)# approx. half transparent
 #b.blit(background,[20,40])
@@ -101,14 +161,18 @@ background = Surface.new(screen.size)
 
 update_time = 0
 fps = 0
+mouse_pos = [400,300]
 
 catch(:rubygame_quit) do
 	loop do
 		queue.each do |event|
 			case event
+			when MouseMotionEvent
+        mouse_cursor.rect.centerx, mouse_cursor.rect.centery = event.pos
 			when MouseDownEvent
         mouse_selection.down event.pos
 			when MouseUpEvent
+        mouse_selection.dragging = false
         if mouse_selection.start_x == event.pos.first and mouse_selection.start_y == event.pos.last
           # clicked
           selection = nil
@@ -126,9 +190,16 @@ catch(:rubygame_quit) do
             selection.on_selection 
           end
           unless selection
-            snelps.each do |s|
-              s.order(event.pos) if s.selected
+            if @ctrl_down
+              snelps.each do |s|
+                s.order(:teleport_to, event.pos) if s.selected
+              end
+            else
+              snelps.each do |s|
+                s.order(:move_to, event.pos) if s.selected
+              end
             end
+            mouse_cursor.on_order
           end
         else
           # dragged
@@ -146,11 +217,17 @@ catch(:rubygame_quit) do
           snelps.each do |s|
             s.on_unselection if s.selected
           end
+				when K_LCTRL
+          @ctrl_down = true
 				when K_Q
 					throw :rubygame_quit 
 				when K_A
           snelps.each do |s|
             s.on_selection 
+          end
+				when K_T
+          snelps.each do |s|
+            s.draw_target = !s.draw_target
           end
 				when K_UP
 					snelp1.vy = -1
@@ -163,6 +240,8 @@ catch(:rubygame_quit) do
 				end
 			when KeyUpEvent
 				case event.key
+				when K_LCTRL
+          @ctrl_down = false
 				when K_UP
 					snelp1.vy = 0
 				when K_DOWN
@@ -176,10 +255,20 @@ catch(:rubygame_quit) do
 				throw :rubygame_quit
 			end
 		end
-		snelps.undraw(screen,background)
+#		snelps.undraw(screen, background)
+    background.blit(screen,[0,0])
+		mouse_cursor.update(update_time)
 		snelps.update(update_time)
-
 		snelps.draw(screen)
+
+    #draw the selection box
+    if mouse_selection.dragging
+      screen.draw_box([mouse_selection.start_x, mouse_selection.start_y],
+        [mouse_cursor.x, mouse_cursor.y], [50,255,0])
+    end
+    
+		mouse_cursor.draw(screen)
+    
 		screen.update()
 		update_time = clock.tick()
 		unless fps == clock.framerate
