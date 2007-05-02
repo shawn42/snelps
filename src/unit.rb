@@ -70,6 +70,10 @@ class Snelp
 		@speed = 130 + rand(10)
     @last_dest = nil
   end
+  def kill()
+    Rubygame::Mixer::play(@whiff_sound,2,0)
+    super
+  end
   def teleport_to(pos)
     @rect.centerx = pos[0]
     @rect.centery = pos[1]

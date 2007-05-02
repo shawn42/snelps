@@ -16,6 +16,9 @@ queue = EventQueue.new() # new EventQueue with autofetch
 queue.ignore = [ActiveEvent]
 clock = Clock.new()
 clock.target_framerate = 40
+score = 0
+new_snelp_counter = 0
+SNELP_CREATION_TIME = 5000 # 5 secs
 
 # TODO how to do this for all machines at the correct speed?
 FRAME_UPDATE_TIME = 60
@@ -27,6 +30,25 @@ puts 'Warning, font disabled' unless
 puts 'Warning, sound disabled' unless
   ($sound_ok = (Rubygame::VERSIONS[:sdl_mixer] != nil))
 
+class ScoringTarget
+	include Sprites::Sprite
+  SNELP_SCORE_VALUE = 10
+  def score(snelp)
+    @scored_snelps << snelp
+    SNELP_SCORE_VALUE
+  end
+  def has_scored?(snelp)
+    @scored_snelps.include? snelp
+  end
+  def initialize()
+    super
+    @scored_snelps = []
+    @rect = Rect.new(500,200,100,80)
+  end
+  def draw(destination)
+    destination.draw_box [@rect.x-10, @rect.y-10], [@rect.x + @rect.w + 20, @rect.y + @rect.h + 20], [200,20,10]
+  end
+end
 class MouseSelection
 	include Sprites::Sprite
   attr_accessor :start_x, :start_y, :dragging
@@ -102,6 +124,7 @@ snelps = Sprites::Group.new
 snelps.extend(Sprites::UpdateGroup)
 mouse_selection = MouseSelection.new
 mouse_cursor = MouseCursor.new
+scoring_target = ScoringTarget.new
 
 # Create the SDL window
 screen = Screen.set_mode([800,600])
@@ -126,8 +149,6 @@ screen.show_cursor = false
 Rubygame::Mixer::open_audio( 22050, Rubygame::Mixer::AUDIO_U8, 2, 1024 )
 
 snelp1 = Snelp.new(100,50)
-$obj = snelp1.object_id
-snelp1.on_selection
 snelp2 = Snelp.new(100,80)
 snelp3 = Snelp.new(100,150)
 snelps.push(snelp1, snelp2, snelp3)
@@ -147,7 +168,10 @@ background = Surface.new(screen.size)
 #
 TTF.setup()
 ttfont = TTF.new(DATA_PATH + "/fonts/freesansbold.ttf",11)
-ttfrndr = ttfont.render("Snelps Sandbox",true,[250,250,250])
+win_ttfont = TTF.new(DATA_PATH + "/fonts/freesansbold.ttf",30)
+score_ttfont = TTF.new(DATA_PATH + "/fonts/freesansbold.ttf",16)
+
+ttfrndr = ttfont.render("Snelps Sandbox (get all the snelps into the box)",true,[250,250,250])
 ttfrndr.blit(background,[70,60])
 ttfrndr = ttfont.render("CLICK - tell selected snelps to goto clicked location",true,[250,250,250])
 ttfrndr.blit(background,[70,80])
@@ -159,8 +183,10 @@ ttfrndr = ttfont.render("ESC - deselect all",true,[250,250,250])
 ttfrndr.blit(background,[70,125])
 ttfrndr = ttfont.render("T - toggle targets",true,[250,250,250])
 ttfrndr.blit(background,[70,140])
-ttfrndr = ttfont.render("Q - quit",true,[250,250,250])
+ttfrndr = ttfont.render("N - new snelp",true,[250,250,250])
 ttfrndr.blit(background,[70,155])
+ttfrndr = ttfont.render("Q - quit",true,[250,250,250])
+ttfrndr.blit(background,[70,170])
 
 
 # Create another surface to test transparency blitting
@@ -241,6 +267,8 @@ catch(:rubygame_quit) do
           snelps.each do |s|
             s.draw_target = !s.draw_target
           end
+				when K_N
+          snelps << Snelp.new(rand(800), rand(600))
 				when K_UP
 					snelp1.vy = -1
 				when K_DOWN
@@ -269,9 +297,31 @@ catch(:rubygame_quit) do
 		end
 #		snelps.undraw(screen, background)
     background.blit(screen,[0,0])
+    scoring_target.draw(screen)
 		mouse_cursor.update(update_time)
 		snelps.update(update_time)
+    snelps.each do |s|
+      if not scoring_target.has_scored?(s) and s.collide_sprite?(scoring_target)
+        score += scoring_target.score(s)
+        s.kill
+      end
+    end
+    snelps_yet_to_score = false
+    snelps.each do |s|
+      if not scoring_target.has_scored?(s)
+        snelps_yet_to_score = true
+        break
+      end
+    end
 		snelps.draw(screen)
+
+    score_ttfrndr = score_ttfont.render("Score: #{score}",true,[250,250,250])
+    score_ttfrndr.blit(screen,[70,20])
+
+    if snelps_yet_to_score == false
+      win_ttfrndr = win_ttfont.render("YOU WIN!!",true,[250,250,250])
+      win_ttfrndr.blit(screen,[350,300])
+    end
 
     #draw the selection box
     if mouse_selection.dragging
@@ -285,6 +335,12 @@ catch(:rubygame_quit) do
     
 		screen.update()
 		update_time = clock.tick()
+    new_snelp_counter += update_time
+    if new_snelp_counter > SNELP_CREATION_TIME
+      snelps << Snelp.new(rand(800), rand(600))
+      new_snelp_counter = 0
+    end
+     
 		unless fps == clock.framerate
 			fps = clock.framerate
 			screen.title = "Snelps [%d fps]"%fps
