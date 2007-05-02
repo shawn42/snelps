@@ -70,7 +70,7 @@ class MouseCursor
 	include Sprites::Sprite
   IMAGE_LIST = {
     :cursor => ['explosion0.png'],
-    :goto => ['explosion0.png','explosion0.png','explosion0.png','explosion0.png','explosion0.png','explosion0.png']
+    :goto => ['explosion0.png','explosion1.png','explosion2.png','explosion3.png','explosion4.png','explosion5.png']
   }
   @@images = {}
   IMAGE_LIST.each do |action, imgs|
@@ -303,7 +303,7 @@ catch(:rubygame_quit) do
     snelps.each do |s|
       if not scoring_target.has_scored?(s) and s.collide_sprite?(scoring_target)
         score += scoring_target.score(s)
-        s.kill
+        s.start_death
       end
     end
     snelps_yet_to_score = false

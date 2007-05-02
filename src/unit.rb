@@ -42,6 +42,7 @@ class Snelp
     :e => ["unit#{IMAGE_OFFSET + 56}r.png","unit#{IMAGE_OFFSET + 57}r.png","unit#{IMAGE_OFFSET + 58}r.png","unit#{IMAGE_OFFSET + 59}r.png","unit#{IMAGE_OFFSET + 60}r.png","unit#{IMAGE_OFFSET + 61}r.png","unit#{IMAGE_OFFSET + 62}r.png","unit#{IMAGE_OFFSET + 63}r.png"],
   }
   @@images = {}
+  DEATH_SEQUENCE = ['death9r.png','death8r.png','death7r.png','death6r.png','death5r.png','death4r.png','death3r.png','death2r.png','death1r.png','death0r.png']
   @@selected_image = Surface.load_image(DATA_PATH + "/gfx/magiceffect0r.png").zoom([0.15,0.15],true)
   IMAGE_LIST.each do |dir, imgs|
     @@images[dir] = []
@@ -49,8 +50,12 @@ class Snelp
       @@images[dir] <<  Surface.load_image(DATA_PATH + "/gfx/#{img}")
     end
   end
+  @@images[:death] = []
+  DEATH_SEQUENCE.each do |img|
+    @@images[:death] <<  Surface.load_image(DATA_PATH + "/gfx/#{img}")
+  end
 
-	attr_accessor :speed, :frame, :animating, :selected, :direction, :draw_target
+	attr_accessor :speed, :frame, :animating, :selected, :direction, :draw_target, :dying
   def x()
     @rect.centerx
   end
@@ -70,9 +75,12 @@ class Snelp
 		@speed = 130 + rand(10)
     @last_dest = nil
   end
-  def kill()
-    Rubygame::Mixer::play(@whiff_sound,2,0)
-    super
+  def start_death()
+    unless @dying
+      Rubygame::Mixer::play(@whiff_sound,2,0)
+      @frame = DEATH_SEQUENCE.size - 1
+      @dying = true
+    end
   end
   def teleport_to(pos)
     @rect.centerx = pos[0]
@@ -135,7 +143,7 @@ class Snelp
 		@rate = rate
 		@speed = 70 + rand(5) - 4
 		@image = @pic
-		@frame = 1
+		@frame = rand 8
     @time_since_last_frame_change = 0
 		@rect = Rect.new(x,y,*@pic.size)
 
@@ -222,11 +230,18 @@ class Snelp
   end
   def update_image(time)
     if @time_since_last_frame_change > FRAME_UPDATE_TIME and animating?
-      @frame = (@frame - 1) % IMAGE_LIST[@animation_direction].size
+      if @dying
+        @frame = (@frame - 1)
+        self.kill if @frame == 0
+      else
+        @frame = (@frame - 1) % IMAGE_LIST[@animation_direction].size
+      end
       @time_since_last_frame_change = 0
     else
       @time_since_last_frame_change += time
     end
-    @image = @@images[@animation_direction][@frame]
+    animation_key = @dying ? :death : @animation_direction
+    @image = @@images[animation_key][@frame]
+    puts "#{animation_key}:#{@frame} [#{@dying}]" if @image.nil?
   end
 end
