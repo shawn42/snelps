@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 $: << "#{File.dirname(__FILE__)}/../config"
+$: << "#{File.dirname(__FILE__)}"
 require "environment"
 require "rubygame"
 require "rubygame/sfont"
