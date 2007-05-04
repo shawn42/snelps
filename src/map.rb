@@ -1,23 +1,28 @@
 require 'yaml'
+require 'narray'
 # represents a game map
 # original map idea is to load/save as yaml
 class Map
-  attr_accessor :tile_size
-  def initialize(args = {})
+  def to_yaml_properties()
+    ['@width', '@height', '@tile_size', '@converted_tiles']
+  end
+  attr_accessor :tile_size, :height, :width, :tile_images, :tiles, :converted_tiles
+  def setup(args = {})
     @width = args[:width].nil? ? 6 : args[:width]
     @height = args[:height].nil? ? 6 : args[:height]
+
     # nubmer of pixels of each tile
     @tile_size = args[:tile_size].nil? ? 32 : args[:width]
-    @tiles = args[:tiles].nil? ? Array.new(@width, Array.new(@height)) : args[:tiles]
+    @tiles = args[:tiles].nil? ? NArray.object(@width, @height) : args[:tiles]
     load_images
   end
   def load_images()
-    @tile_images = Array.new(@width, Array.new(@height))
-    if @tiles[0][0].is_a? Fixnum
-      @tiles.each_with_index do |row,i|
-        row.each_with_index do |col,j|
-          img = Surface.load_image(GFX_PATH + "terrain#{col}.png")
-          @tile_images[i][j] = img
+    @tile_images = NArray.object @width, @height
+    if @tiles[0,0].is_a? Fixnum
+      @width.times do |i|
+        @height.times do |j|
+          @tile_images[i,j] = 
+            Surface.load_image(GFX_PATH + "terrain#{@tiles[i,j]}.png")
         end
       end
     else
@@ -25,27 +30,40 @@ class Map
     end
   end
 
-  def load(map_name)
+  def self.load_from_file(map_name)
+    map = YAML::load_file(map_name)
+    map.tiles = NArray.object(map.width, map.height)
+    map.converted_tiles.each_with_index do |row,i|
+      row.each_with_index do |col,j|
+        map.tiles[i,j] = col
+      end
+    end
+    map.load_images
+    map
   end
 
   def save(file_name)
+    @converted_tiles = @tiles.to_a
+    File.open file_name, "w" do |f|
+      YAML::dump(self,f)
+    end
   end
 
   def at(x,y)
-    @tiles[x][y]
+    @tiles[x,y]
   end
   def set(x,y,val)
-    @tiles[x][y] = val
+    @tiles[x,y] = val
   end
 
   def draw(destination)
-    count = 0
-    @tile_images.each_with_index do |row,i|
-      row.each_with_index do |col,j|
-        count += 1
+#    @tile_images.each_with_index do |row,i|
+#      row.each_with_index do |col,j|
+    @width.times do |i|
+      @height.times do |j|
         x = i * @tile_size
         y = j * @tile_size
-        col.blit destination, [x,y,@tile_size,@tile_size]
+        @tile_images[i,j].blit destination, [x,y]
       end
     end
   end
@@ -69,16 +87,18 @@ if $0 == __FILE__
 
   num_rows = 20
   num_cols = 20
-  tiles = []
+  tiles = NArray.int(num_rows,num_cols)
   num_rows.times do |i|
-    tiles[i] = []
     num_cols.times do |j|
-      tiles[i][j] = rand 271
+      tiles[i,j] = rand 271
     end
   end
   
-  map = Map.new :tiles => tiles, :width => tiles.size, :height => tiles.first.size
-  screen = Screen.set_mode([num_cols * map.tile_size,num_rows * map.tile_size])
+#  map = Map.new 
+#  map.setup :tiles => tiles, :width => num_rows, :height => num_cols
+  map = Map.load_from_file "random_map.yml"
+#  map.save "random_map.yml"
+  screen = Screen.set_mode([map.width * map.tile_size,map.height * map.tile_size])
   screen.title = "Map Test"
   background = Surface.new(screen.size)
 

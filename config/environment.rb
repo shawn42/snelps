@@ -11,3 +11,4 @@ ADDITIONAL_LOAD_PATHS.each do |path|
 	$:.push path
 end
 DATA_PATH = File.dirname(__FILE__) + "/../data/"
+GFX_PATH = DATA_PATH + "gfx/"

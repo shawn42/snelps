@@ -4,8 +4,8 @@ require "environment"
 
 class Snelp
 	include Sprites::Sprite
-  MAX_X = 800
-  MAX_Y = 600
+  MAX_X = 20 * 32
+  MAX_Y = 20 * 32
   def load_image(name, colorkey=nil)
       # Rubygame::Image.load has been replaced with Surface
     image = Rubygame::Surface.load_image(File.expand_path(DATA_PATH + "gfx/" + name))

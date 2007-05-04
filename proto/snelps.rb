@@ -7,6 +7,7 @@ require "rubygame"
 require "rubygame/sfont"
 include Rubygame
 require "unit"
+require "map"
 require "math"
 include Ruby3d
 
@@ -44,10 +45,10 @@ class ScoringTarget
   def initialize()
     super
     @scored_snelps = []
-    @rect = Rect.new(500,200,100,80)
+    @rect = Rect.new(16*32,6*32,32*3,32*3)
   end
   def draw(destination)
-    destination.draw_box [@rect.x-10, @rect.y-10], [@rect.x + @rect.w + 20, @rect.y + @rect.h + 20], [200,20,10]
+    destination.draw_box [@rect.x, @rect.y], [@rect.x + @rect.w, @rect.y + @rect.h], [200,20,10]
   end
 end
 class MouseSelection
@@ -127,8 +128,13 @@ mouse_selection = MouseSelection.new
 mouse_cursor = MouseCursor.new
 scoring_target = ScoringTarget.new
 
+map = Map.load_from_file "random_map.yml"
+map_width = map.width * map.tile_size
+map_height = map.height * map.tile_size
+screen = Screen.set_mode([map.width * map.tile_size,map.height * map.tile_size])
+
 # Create the SDL window
-screen = Screen.set_mode([800,600])
+#screen = Screen.set_mode([800,600])
 screen.title = "Snelps"
 screen.show_cursor = false
 
@@ -155,7 +161,7 @@ snelp3 = Snelp.new(100,150)
 snelps.push(snelp1, snelp2, snelp3)
 
 20.times do
-  snelps << Snelp.new(rand(800), rand(600))
+  snelps << Snelp.new(rand(map_width), rand(map_height))
 end
 
 background_music = snelp1.load_sound("loop.wav")
@@ -163,6 +169,7 @@ Rubygame::Mixer::play(background_music,-1,-1)
 
 # Make the background surface
 background = Surface.new(screen.size)
+map.draw(background)
 
 #sfont = SFont.new(DATA_PATH + "/fonts/term16.png")
 #sfont.render("Love Snelps forever! <3").blit(background,[100,10])
@@ -270,27 +277,11 @@ catch(:rubygame_quit) do
           end
 				when K_N
           snelps << Snelp.new(rand(800), rand(600))
-				when K_UP
-					snelp1.vy = -1
-				when K_DOWN
-					snelp1.vy = 1
-				when K_LEFT
-					snelp1.vx = -1
-				when K_RIGHT
-					snelp1.vx = 1
 				end
 			when KeyUpEvent
 				case event.key
 				when K_LCTRL
           @ctrl_down = false
-				when K_UP
-					snelp1.vy = 0
-				when K_DOWN
-					snelp1.vy = 0
-				when K_LEFT
-					snelp1.vx = 0
-				when K_RIGHT
-					snelp1.vx = 0
 				end
 			when QuitEvent
 				throw :rubygame_quit
