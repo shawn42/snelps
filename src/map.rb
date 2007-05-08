@@ -6,8 +6,9 @@ class Map
   def to_yaml_properties()
     ['@width', '@height', '@tile_size', '@converted_tiles']
   end
-  attr_accessor :tile_size, :height, :width, :tile_images, :tiles, :converted_tiles
+  attr_accessor :tile_size, :height, :width, :tile_images, :tiles, :converted_tiles, :viewport
   def setup(args = {})
+    @resource_manager = args[:resource_manager]
     @width = args[:width].nil? ? 6 : args[:width]
     @height = args[:height].nil? ? 6 : args[:height]
 
@@ -21,13 +22,22 @@ class Map
     if @tiles[0,0].is_a? Fixnum
       @width.times do |i|
         @height.times do |j|
+          # TODO use resource manager
           @tile_images[i,j] = 
-            Surface.load_image(GFX_PATH + "terrain#{@tiles[i,j]}.png")
+            @resource_manager.load_image "terrain#{@tiles[i,j]}.png"
         end
       end
     else
       # assume image names
     end
+  end
+
+  def pixel_height()
+    @height * @tile_size
+  end
+
+  def pixel_width()
+    @width * @tile_size
   end
 
   def self.load_from_file(map_name)
@@ -52,6 +62,7 @@ class Map
   def at(x,y)
     @tiles[x,y]
   end
+
   def set(x,y,val)
     @tiles[x,y] = val
   end
@@ -63,7 +74,7 @@ class Map
       @height.times do |j|
         x = i * @tile_size
         y = j * @tile_size
-        @tile_images[i,j].blit destination, [x,y]
+        @tile_images[i,j].blit destination, @viewport.world_to_view(x,y)
       end
     end
   end
