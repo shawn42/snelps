@@ -1,4 +1,5 @@
 require 'map'
+require 'game_server_proxy'
 class GameClient
   def initialize(resource_manager, sound_manager, input_manager, viewport)
     @resource_manager = resource_manager
@@ -8,7 +9,8 @@ class GameClient
     @viewport = viewport
     @screen = @viewport.screen
 
-
+    @game_server = GameServerProxy.new
+    
     #########################
     ## SETUP THE GAME HERE ##
     #########################
