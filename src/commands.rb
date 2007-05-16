@@ -1,0 +1,6 @@
+module Commands
+  CLIENT_CONNECT = 'CLIENT_CONNECT'
+  SUCCESS = 'SUCCESS'
+  FAILURE = 'FAILURE'
+
+end
