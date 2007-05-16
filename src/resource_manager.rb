@@ -6,6 +6,15 @@ class ResourceManager
   def initialize()
     @loaded_images = {}
   end
+  def load_map(map_name)
+    YAML::load_file(MAP_PATH + map_name + ".yml")
+  end
+  def save_map(map, file_name)
+    File.open MAP_PATH + file_name + ".yml", "w" do |f|
+      YAML::dump(map, f)
+    end
+  end
+
   def load_image(file_name, colorkey = nil)
     if @loaded_images[file_name].nil?
       image = Rubygame::Surface.load_image(File.expand_path(DATA_PATH + "gfx/" + file_name))

@@ -6,7 +6,7 @@ class Map
   def to_yaml_properties()
     ['@width', '@height', '@tile_size', '@converted_tiles']
   end
-  attr_accessor :tile_size, :height, :width, :tile_images, :tiles, :converted_tiles, :viewport
+  attr_accessor :tile_size, :height, :width, :tile_images, :tiles, :converted_tiles, :viewport, :resource_manager
   def setup(args = {})
     @resource_manager = args[:resource_manager]
     @width = args[:width].nil? ? 6 : args[:width]
@@ -40,8 +40,9 @@ class Map
     @width * @tile_size
   end
 
-  def self.load_from_file(map_name)
-    map = YAML::load_file(map_name)
+  def self.load_from_file(resource_manager, map_name)
+    map = resource_manager.load_map(map_name)
+    map.resource_manager = resource_manager
     map.tiles = NArray.object(map.width, map.height)
     map.converted_tiles.each_with_index do |row,i|
       row.each_with_index do |col,j|
@@ -54,9 +55,7 @@ class Map
 
   def save(file_name)
     @converted_tiles = @tiles.to_a
-    File.open file_name, "w" do |f|
-      YAML::dump(self,f)
-    end
+    @resource_manager.save_map self, file_name
   end
 
   def at(x,y)
