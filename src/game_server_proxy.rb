@@ -15,7 +15,7 @@ class GameServerProxy
   end
 
   def connect_to_game_server()
-    @socket.send "CONNECT", 0, @host, @port
+    @socket.send CLIENT_CONNECT, 0, @host, @port
     payload, from_who = @socket.recvfrom MAX_RECV_SIZE
 #    port = from_who[1]
 #    name = from_who[2]
@@ -25,6 +25,20 @@ class GameServerProxy
       puts "Connected successfully"
     else
       raise("Could not connect to server #{@host}#{@port}")
+    end
+  end
+
+  def create_unit(unit_type, x, y)
+    # TODO, make request to server and get the server's id for this unit for
+    # tracking
+    msg = [UNIT_REQ,unit_type,x,y].join ':'
+    @socket.send msg, 0, @host, @port
+    payload, from_who = @socket.recvfrom MAX_RECV_SIZE
+    if payload[0..SUCCESS.size - 1] == SUCCESS
+      args = payload.split(':')[1..-1]    
+      return args[1]
+    else
+      raise("could not create a unit")
     end
   end
 

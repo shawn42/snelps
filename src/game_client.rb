@@ -1,10 +1,12 @@
 require 'map'
+require 'unit_manager'
 require 'game_server_proxy'
 class GameClient
-  def initialize(resource_manager, sound_manager, input_manager, viewport)
+  def initialize(resource_manager, sound_manager, input_manager, animation_manager, viewport)
     @resource_manager = resource_manager
     @sound_manager = sound_manager
     @input_manager = input_manager
+    @animation_manager = animation_manager
     # TODO should viewport just completely replace screen?
     @viewport = viewport
     @screen = @viewport.screen
@@ -31,13 +33,16 @@ class GameClient
 
     @background = Surface.new(@screen.size)
     @game_server = GameServerProxy.new
+    @unit_manager = UnitManager.new viewport, animation_manager, sound_manager, @game_server
     @game_server.start
+    @unit_manager.create_unit Unit::BIRD, rand(30), rand(55)
   end
 
   def update(time)
     @viewport.update time
     @background.blit @screen,[0,0]
     @map.draw @screen
+    @unit_manager.draw @screen
     @screen.update
   end
 

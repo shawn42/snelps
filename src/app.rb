@@ -16,7 +16,7 @@ class SnelpsApp
 
   def initialize()
     @registry = Needle::Registry.define do |r|
-      r.game_client { GameClient.new r.resource_manager, r.sound_manager, r.input_manager, r.viewport }
+      r.game_client { GameClient.new r.resource_manager, r.sound_manager, r.input_manager, r.animation_manager, r.viewport }
       r.viewport { Viewport.new r.screen }
       r.screen { Screen.set_mode [400, 300] }
       r.resource_manager { ResourceManager.new }

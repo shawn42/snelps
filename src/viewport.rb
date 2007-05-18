@@ -2,7 +2,7 @@
 class Viewport
   SCROLL_DELAY = 50
   ACTIVE_EDGE_WIDTH = 30
-  attr_accessor :x_offset, :y_offset, :screen
+  attr_accessor :x_offset, :y_offset, :screen, :world_width, :world_height
   def initialize(screen)
     @x_offset = 0
     @y_offset = 0

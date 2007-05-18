@@ -7,6 +7,7 @@ require "rubygame"
 require "rubygame/sfont"
 include Rubygame
 require "unit"
+require "resource_manager"
 require "map"
 require "math"
 include Ruby3d
@@ -128,7 +129,7 @@ mouse_selection = MouseSelection.new
 mouse_cursor = MouseCursor.new
 scoring_target = ScoringTarget.new
 
-map = Map.load_from_file "random_map"
+map = Map.load_from_file ResourceManager.new, "random_map"
 map_width = map.width * map.tile_size
 map_height = map.height * map.tile_size
 screen = Screen.set_mode([map.width * map.tile_size,map.height * map.tile_size])

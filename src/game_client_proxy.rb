@@ -9,7 +9,8 @@ class GameClientProxy
   
   attr_accessor :port, :host
 
-  def initialize(port=GameServerProxy::PORT, host='')
+  def initialize(game_server, port=GameServerProxy::PORT, host='' )
+    @game_server = game_server
     @port = port
     @host = host
     @log = Logger.new STDOUT
@@ -27,9 +28,17 @@ class GameClientProxy
       payload, from_who = @socket.recvfrom MAX_RECV_SIZE
       client_ip = from_who[3]
       client_port = from_who[1]
-      @clients ||= []
-      @clients << "#{client_ip}:#{client_port}"
-      @socket.send SUCCESS, 0, client_ip, client_port # remote IP, remote port
+
+      if payload == CLIENT_CONNECT
+        puts "CONNECTING..."
+        @socket.send SUCCESS, 0, client_ip, client_port # remote IP, remote port
+      elsif payload[0..UNIT_REQ.size-1] == UNIT_REQ
+        puts "UNIT_REQING..."
+        args = payload.split(':')[1..-1]
+        unit_id = @game_server.create_unit("#{client_ip}:#{client_port}", args[0], args[1], args[2])
+        msg = [SUCCESS, unit_id].join ":"
+        @socket.send msg, 0, client_ip, client_port
+      end
     end
   end
 end

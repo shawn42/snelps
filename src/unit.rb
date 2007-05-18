@@ -4,8 +4,10 @@ require "environment"
 
 class Unit
 	include Sprites::Sprite
+  BIRD = 0
 
-  def initialize(*args = {})
+  attr_accessor :server_id
+  def initialize(args = {})
     @animation_manager = args[:animation_manager]
     @sound_manager = args[:sound_manager]
     @viewport = args[:viewport]
@@ -20,11 +22,13 @@ class Unit
   end
 
   def update(time)
-#    @animation_manager.update(self, time)
+    @animation_manager.update(time)
   end
 
   def draw(destination)
     x,y = @rect.center 
+    w = @viewport.world_width
+    h = @viewport.world_height
     x,y = @viewport.world_to_view(x+(w-@image.w)/2, y+(h-@image.h)/2)
     @image.blit(destination, [x,y,@image.w,@image.h])
   end
