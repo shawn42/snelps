@@ -1,7 +1,0 @@
-module Commands
-  CLIENT_CONNECT = 'CLIENT_CONNECT'
-  SUCCESS = 'SUCCESS'
-  FAILURE = 'FAILURE'
-  UNIT_REQ = 'UNIT_REQ'
-
-end
