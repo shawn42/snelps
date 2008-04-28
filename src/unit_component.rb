@@ -29,8 +29,6 @@ module UnitComponent
   end
 
   def path=(path)
-    #ignore the starting square
-#    path.shift unless path.nil?
     @dest = nil
     @path = path
   end
@@ -100,7 +98,7 @@ module UnitComponent
         end
       else
         # move toward dest
-        base = @base_speed * time.milliseconds
+        base = @base_speed * time
         move = @direction * base
         @rect.centerx = x + move.x
         @rect.centery = y + move.y

@@ -34,7 +34,7 @@ class AnimationManager
           obj.next_frame(@images[obj.object_type][obj.animation_image_set][obj.next_frame_num]) 
           obj.last_animated_time = 0
         else
-          obj.last_animated_time += time.milliseconds
+          obj.last_animated_time += time
         end
       end
     end

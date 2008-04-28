@@ -35,9 +35,9 @@ class CampaignMode < BaseMode
 
   def on_key_up(event)
     case event.key
-    when :q
+    when K_Q
       fire :mode_change, :main_menu
-    when :escape
+    when K_ESCAPE
       fire :mode_change, :main_menu
     else
       @entity_manager.handle_key_up event

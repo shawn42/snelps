@@ -19,9 +19,9 @@ class StoryDialog < Dialog
 
   def on_key_up(event)
     case event.key
-    when :escape
+    when K_ESCAPE
       close
-    when :q
+    when K_Q
       close
     else
       @layout.key_up event

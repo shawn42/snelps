@@ -75,12 +75,12 @@ class EntityManager
 
   def handle_key_up(event)
     case event.key
-    when :t
+    when K_T
       @trace = !@trace
       for entity in @entities
         entity.trace = @trace
       end
-    when :r
+    when K_R
       # report (mostly for debugging)
       for entity in @entities
         puts entity

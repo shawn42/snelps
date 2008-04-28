@@ -24,7 +24,7 @@ class MiniMap
     if @last_updated > MINI_MAP_UPDATE_TIME
       @last_updated = 0
     else
-      @last_updated += time.milliseconds
+      @last_updated += time
     end
   end
 

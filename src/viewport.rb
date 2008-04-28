@@ -47,7 +47,7 @@ class Viewport
       do_scroll
       @last_update_time = 0
     else
-      @last_update_time += time.milliseconds
+      @last_update_time += time
     end
   end
 

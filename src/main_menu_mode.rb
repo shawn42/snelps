@@ -57,9 +57,9 @@ class MainMenuMode < BaseMode
 
   def on_key_up(event)
     case event.key
-    when :q
+    when K_Q
       throw :rubygame_quit
-    when :escape
+    when K_ESCAPE
       throw :rubygame_quit
     end
   end

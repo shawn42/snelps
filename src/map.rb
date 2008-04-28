@@ -109,8 +109,8 @@ class Map
     end
   end
 
-  def update(tick)
-    @last_check += tick.milliseconds
+  def update(time)
+    @last_check += time
     if @last_check > CHECK_CONDITIONS_POLL_TIME
       @last_check = 0
       state = @check_conditions.call("TODO:GAME OBJECT HERE")

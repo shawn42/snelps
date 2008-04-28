@@ -6,7 +6,7 @@ class InputManager
   def setup()
     @queue = EventQueue.new
     @queue.ignore = [ActiveEvent]
-    @clock = Clock::World
+    @clock = Clock.new
     #seems to max out at around 18 anyways
     @clock.target_framerate = 20
   end
@@ -24,7 +24,7 @@ class InputManager
             @mouse_manager.mouse_up event
           when KeyDownEvent
             case event.key
-            when :f
+            when K_F
               puts "Framerate:#{@clock.framerate}"
             end
           when KeyUpEvent
