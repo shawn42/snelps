@@ -2,10 +2,6 @@ module Movable
 #  attr_accessor :destination, :moving, :direction
 
   def self.included(target)
-    # TODO finish this
-#    target.add_setup_listener do |*args|
-#      setup_movable *args
-#    end
     target.add_update_listener :update_movable 
     target.add_setup_listener :setup_movable 
   end

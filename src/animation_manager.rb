@@ -1,7 +1,7 @@
 require 'image_list'
 class AnimationManager
   # TODO how to do this for all machine speeds?
-  FRAME_UPDATE_TIME = 50
+  FRAME_UPDATE_TIME = 60
 
   constructor :resource_manager
   def setup()

@@ -16,8 +16,8 @@
   :health: 100
   :components: 
   - :movable
-  - :animated
   - :unit_component
+  - :animated
   :armor: 5
   :range: 5
   :attack_power: 10
@@ -39,8 +39,8 @@
   :health: 100
   :components: 
   - :movable
-  - :animated
   - :unit_component
+  - :animated
   :armor: 0
   :range: 15
   :attack_power: 10

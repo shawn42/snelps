@@ -42,7 +42,6 @@ class EntityManager
             entity.stop_animating
           else
             entity.path = path 
-            entity.animate
           end
         end
       end
@@ -111,7 +110,6 @@ class EntityManager
       for entity in @entities
         if entity.selected
           # we clicked to send them an order
-          entity.animate
           world_x, world_y = @viewport.view_to_world(x, y)
 
           tile_x,tile_y = 
@@ -170,6 +168,9 @@ class EntityManager
     @entities << new_entity
     rescue Exception => ex
       p ex
+      caller.each do |c|
+        p c
+      end
     end
     new_entity
   end

@@ -6,11 +6,6 @@ module UnitComponent
     @unit_type = args[:unit_type]
     @server_id = args[:server_id]
     
-    @animation_length = 8
-    @animation_manager = args[:animation_manager]
-    @animation_manager.register(self)
-
-
     @sound_manager = args[:sound_manager]
     @viewport = args[:viewport]
     @map = args[:map]
@@ -22,13 +17,6 @@ module UnitComponent
 
     @tile_x, @tile_y = @map.coords_to_tiles x, y
     @grid.occupy @tile_x, @tile_y
-
-    @image = @animation_manager.get_default_frame(@unit_type)
-		@rect = Rect.new(x,y,*@image.size)
-
-    @selected_image = 
-      @animation_manager.get_selection_image(@unit_type).
-      zoom([0.25,0.25], true)
   end
 
   def self.included(target)
@@ -47,6 +35,8 @@ module UnitComponent
     @path = path
   end
 
+  # TODO clean up this code, there's duplicate code everywhere and its
+  # too long of a method
   def update_movement(time)
     if @dest.nil?
       unless @path.nil? or @path.empty?
@@ -55,15 +45,16 @@ module UnitComponent
         if @entity_manager.has_obstacle?(dest[0], dest[1], @unit_type, [self])
           from = @map.coords_to_tiles(x,y)
 
-          # what if we are on the last step of the path?
-          to = @path.last
+          to = @path.pop
+          while !to.nil? and @entity_manager.has_obstacle?(to[0], to[1], @unit_type, [self]) 
+            to = @path.pop
+          end
 
           if to.nil? or to.empty?
             stop_moving!
           else
             path = Pathfinder.new(@unit_type, @entity_manager, @map.w, @map.h).find(from,to,80)
           end
-
 
           @path = path
           dest = @path.shift unless @path.nil? or @path.empty?
@@ -72,9 +63,11 @@ module UnitComponent
       end
     else
       # TODO XXX this is kind of a hack
+      # should I draw line from previous point to now and see if target
+      # is on the line?
       @direction = Vec2.new @dest.x - x, @dest.y - y
       @direction.normalize!
-      if (x - @dest.x).abs < 6 and (y - @dest.y).abs < 6
+      if (x - @dest.x).abs < 5 and (y - @dest.y).abs < 5
         if @path.nil? or @path.empty?
           stop_moving!
         else
@@ -85,16 +78,16 @@ module UnitComponent
               stop_moving!
             else
               from = @map.coords_to_tiles(x,y)
-              # what if we are on the last step of the path?
-              to = @path.last
-              # TODO XXX
-              # NOT SURE WHAT TO DO ABOUT THE PATH HERE?
-              # maybe walk the path backwards and get as close as
-              # possible?
-              if @entity_manager.has_obstacle?(to[0], to[1], @unit_type, [self])
+
+              to = @path.pop
+              while !to.nil? and @entity_manager.has_obstacle?(to[0], to[1], @unit_type, [self]) 
+                to = @path.pop
+              end
+
+              if to.nil?
                 stop_moving!
                 dest = nil
-                p "AAHHH, no where to go!?!?!"
+                p "AAHHH, no where to go!?!?! taking a break"
               else
                 path = Pathfinder.new(@unit_type, @entity_manager, @map.w, @map.h).find(from,to,80)
   #              path.shift
@@ -115,8 +108,6 @@ module UnitComponent
     end
     if @dest.nil?
       stop_animating 
-    else
-      animate
     end
   end
 
@@ -145,6 +136,7 @@ module UnitComponent
     @direction = Vec2.new @dest.x - x, @dest.y - y
 
     @direction.normalize!
+    animate
   end
 
   def stop_moving!()
@@ -224,14 +216,6 @@ module UnitComponent
 
   def idle?()
     @direction.nil?
-  end
-
-  def animation_image_set()
-    @animation_image_set ||= :se
-  end
-
-  def object_type()
-    @unit_type
   end
 
   def to_s()
