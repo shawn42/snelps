@@ -1,0 +1,74 @@
+font_manager:
+  compose:
+    - resource_manager
+game_client:
+  compose:
+    - mode_controller
+mode_controller:
+  compose:
+    - resource_manager
+    - font_manager
+    - sound_manager
+    - input_manager
+    - network_manager
+    - turn_manager
+    - main_menu_mode
+    - campaign_mode
+    - mouse_manager
+    - snelps_screen
+resource_manager:
+sound_manager:
+  compose:
+    - resource_manager
+input_manager:
+  compose:
+    - mouse_manager
+animation_manager:
+  compose:
+    - resource_manager
+network_manager:
+  library: nil
+turn_manager:
+  compose:
+    - network_manager
+mouse_manager:
+  compose:
+    - viewport
+entity_manager:
+  compose:
+    - viewport
+    - animation_manager
+    - sound_manager
+    - network_manager
+    - mouse_manager
+    - input_manager
+main_menu_mode:
+  compose:
+    - font_manager
+    - resource_manager
+    - config_manager
+    - snelps_screen
+campaign_mode:
+  compose:
+    - entity_builder
+    - font_manager
+    - resource_manager
+    - entity_manager
+    - viewport
+    - snelps_screen
+    - animation_manager
+    - network_manager
+    - mouse_manager
+viewport:
+  compose:
+    - snelps_screen
+    - config_manager
+snelps_screen:
+  compose:
+    - config_manager
+config_manager:
+  compose:
+    - resource_manager
+entity_builder:
+  compose:
+    - resource_manager

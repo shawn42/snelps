@@ -1,0 +1,392 @@
+loading background music...
+done.
+loading images...
+done.
+KATHUMP:TOKEN
+"setup 100 units ... lets see em dance"
+KATHUMP:TOKEN
+KATHUMP:TOKEN
+drag received
+clicked
+KATHUMP:TOKEN
+Thread ID: 369824460
+Total: 21.23
+
+ %self     total     self     wait    child    calls  name
+  0.00      0.00     0.00     0.00     0.00        3  Kernel#class (ruby_runtime:0}
+  0.00     20.07     0.00    20.07     0.00        2  Kernel#sleep (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00        3  Proc#call (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00        6  IO#write (ruby_runtime:0}
+  0.00      1.16     0.00     0.00     1.16        3  NetworkChannel#push (./network_channel.rb:16}
+  0.00      0.00     0.00     0.00     0.00        3  Array#== (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00        3  Array#include? (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00        3  Array#each (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00        3  Array#[] (ruby_runtime:0}
+  0.00     21.23     0.00    20.07     1.16        0  TurnManager#start (./turn_manager.rb:35}
+  0.00      1.16     0.00     1.16     0.00        3  Mutex#synchronize (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00        3  Publisher::InstanceMethods#ensure_valid (./../config/../lib/publisher.rb:76}
+  0.00      0.00     0.00     0.00     0.00        3  Publisher::InstanceMethods#fire (./../config/../lib/publisher.rb:66}
+  0.00      0.00     0.00     0.00     0.00        3  Module#class_eval (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00        3  MockNetworkManager#handle_server_msg (./network_manager.rb:43}
+  0.00      0.00     0.00     0.00     0.00        3  MockNetworkManager#[] (./network_manager.rb:57}
+  0.00      0.00     0.00     0.00     0.00        3  String#split (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00        6  Hash#[] (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00        3  Kernel#puts (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00        3  Kernel#nil? (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00        3  String#== (ruby_runtime:0}
+
+
+Thread ID: 370136080
+Total: 0.01
+
+ %self     total     self     wait    child    calls  name
+25200.00      7.19     2.52     2.94     1.73    21622  Array#each_index (ruby_runtime:0}
+24500.00      3.63     2.45     0.15     1.03   475658  Array#== (ruby_runtime:0}
+23000.00      2.30     2.30     0.00     0.00   876897  Array#[] (ruby_runtime:0}
+17800.00      6.84     1.78     3.79     1.27    21622  Pathfinder#diagonal_heuristic (./pathfinding.rb:68}
+13400.00      5.24     1.34     0.31     3.59    24504  Array#include? (ruby_runtime:0}
+10100.00      1.01     1.01     0.00     0.00   440189  Fixnum#== (ruby_runtime:0}
+9900.00      3.13     0.99     1.40     0.74    21608  Pathfinder#is_valid (./pathfinding.rb:91}
+8800.00     26.93     0.88     2.88    23.17     5493  Array#each-4 (ruby_runtime:0}
+3600.00      0.36     0.36     0.00     0.00   124316  Fixnum#- (ruby_runtime:0}
+2500.00      0.83     0.25     0.45     0.13    32515  Pathfinder#extract_node (./pathfinding.rb:112}
+2400.00      0.24     0.24     0.00     0.00   101412  Float#> (ruby_runtime:0}
+2200.00      0.22     0.22     0.00     0.00    86488  Fixnum#abs (ruby_runtime:0}
+1800.00     29.83     0.18     0.61    29.04       90  Pathfinder#find (./pathfinding.rb:126}
+1600.00      0.16     0.16     0.00     0.00    24911  Array#<< (ruby_runtime:0}
+1500.00      0.78     0.15     0.33     0.30     2701  Pathfinder#adjacent_nodes (./pathfinding.rb:79}
+1400.00      0.14     0.14     0.00     0.00    21243  Array#insert (ruby_runtime:0}
+1400.00      7.34     0.14     0.00     7.20    21622  Queue#add_path (./pathfinding.rb:40}
+1400.00      0.27     0.14     0.13     0.00    21531  Map#has_obstacle (./map.rb:83}
+1300.00      7.42     0.13     0.45     6.84    21622  Pathfinder#make_NH (./pathfinding.rb:117}
+1200.00      0.15     0.12     0.00     0.03    21531  Array#each-5 (ruby_runtime:0}
+1200.00      0.12     0.12     0.00     0.00    38110  Fixnum#+ (ruby_runtime:0}
+1200.00      0.12     0.12     0.00     0.00    43444  Fixnum#* (ruby_runtime:0}
+900.00     12.55     0.09     0.26    12.20     2701  Pathfinder#successors (./pathfinding.rb:101}
+900.00      0.09     0.09     0.00     0.00    43216  Fixnum#< (ruby_runtime:0}
+900.00      0.09     0.09     0.00     0.00    45849  Fixnum#>= (ruby_runtime:0}
+700.00     29.98     0.07     0.05    29.86       90  Array#each-3 (ruby_runtime:0}
+500.00      0.20     0.05     0.00     0.15    21622  Enumerable#min (ruby_runtime:0}
+500.00      0.05     0.05     0.00     0.00    21531  Array#+ (ruby_runtime:0}
+400.00      0.04     0.04     0.00     0.00     5593  Array#size (ruby_runtime:0}
+400.00      0.04     0.04     0.00     0.00    21622  Float#+ (ruby_runtime:0}
+400.00      0.04     0.04     0.00     0.00     2519  Kernel#== (ruby_runtime:0}
+300.00      0.11     0.03     0.08     0.00     2792  Queue#shift (./pathfinding.rb:51}
+300.00      0.03     0.03     0.00     0.00    21622  Fixnum#<=> (ruby_runtime:0}
+300.00      0.03     0.03     0.00     0.00    21622  Float#* (ruby_runtime:0}
+300.00      0.03     0.03     0.00     0.00     5493  Fixnum#> (ruby_runtime:0}
+200.00      0.06     0.02     0.01     0.03      100  Unit#initialize (./unit.rb:15}
+100.00     30.47     0.01     0.44    30.02       90  Mutex#synchronize (ruby_runtime:0}
+100.00      0.01     0.01     0.00     0.00      200  Array#first (ruby_runtime:0}
+100.00      0.01     0.01     0.00     0.00       91  Map#coords_to_tiles (./map.rb:71}
+100.00      0.01     0.01     0.00     0.00      182  Publisher::InstanceMethods#ensure_valid (./../config/../lib/publisher.rb:76}
+100.00      0.01     0.01     0.00     0.00      100  Float#/ (ruby_runtime:0}
+100.00     30.01     0.01     0.02    29.98       90  UnitManager#handle_unit_move (./unit_manager.rb:29}
+100.00     30.48     0.01     0.00    30.47       90  NetworkChannel#push (./network_channel.rb:16}
+100.00      0.01     0.01     0.00     0.00      100  Rubygame::Surface#zoom (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00       91  MockNetworkManager#[] (./network_manager.rb:57}
+  0.00      0.00     0.00     0.00     0.00      191  Class#new-1 (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00      100  AnimatedObject#frame_count= (./animated_object.rb:22}
+  0.00     30.01     0.00     0.00    30.01       90  Proc#call (ruby_runtime:0}
+  0.00      0.06     0.00     0.00     0.06      191  Class#new (ruby_runtime:0}
+  0.00      0.09     0.00     0.00     0.09        0  GameClient#initialize (./game_client.rb:53}
+  0.00      0.00     0.00     0.00     0.00     1764  Hash#[] (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00      382  Kernel#rand (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00        1  Kernel#p (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00      100  Array#length (ruby_runtime:0}
+  0.00     30.01     0.00     0.00    30.01       90  Proc#call-1 (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00      100  AnimatedObject#last_animated_time= (./animated_object.rb:30}
+  0.00      0.00     0.00     0.00     0.00      182  Fixnum#div (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00       91  Pathfinder#initialize (./pathfinding.rb:62}
+  0.00      0.00     0.00     0.00     0.00       91  Queue#clear (./pathfinding.rb:34}
+  0.00      0.00     0.00     0.00     0.00      100  <Class::Array>#allocate (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00       91  NilClass#nil? (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00        2  IO#write (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00       91  Unit#idle? (./unit.rb:126}
+  0.00     30.01     0.00     0.00    30.01       90  MockNetworkManager#handle_server_msg (./network_manager.rb:43}
+  0.00      0.00     0.00     0.00     0.00       91  Rubygame::Rect#centerx (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:223}
+  0.00      0.00     0.00     0.00     0.00      182  String#== (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00        0  Kernel#loop (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00       90  AnimatedObject#animate (./animated_object.rb:42}
+  0.00      0.00     0.00     0.00     0.00      100  Map#pixel_height (./map.rb:36}
+  0.00      0.00     0.00     0.00     0.00      182  Integer#ceil (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00       91  Rubygame::Rect#centery (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:233}
+  0.00      0.09     0.00     0.03     0.06      100  UnitManager#create_unit (./unit_manager.rb:106}
+  0.00      0.00     0.00     0.00     0.00      100  AnimationManager#get_selection_image (./animation_manager.rb:27}
+  0.00      0.00     0.00     0.00     0.00      300  Kernel#=== (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00      100  AnimatedObject#frame_num= (./animated_object.rb:6}
+  0.00      0.01     0.00     0.00     0.01      100  AnimationManager#get_default_frame (./animation_manager.rb:23}
+  0.00      0.00     0.00     0.00     0.00      273  Fixnum#to_s (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00      100  AnimationManager#register (./animation_manager.rb:14}
+  0.00      0.00     0.00     0.00     0.00       91  Queue#initialize (./pathfinding.rb:29}
+  0.00      0.00     0.00     0.00     0.00      100  Float#coerce (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00      273  String#split (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00      100  Rubygame::Surface#size (ruby_runtime:0}
+  0.00     30.01     0.00     0.00    30.01       90  Array#each-2 (ruby_runtime:0}
+  0.00     30.01     0.00     0.00    30.01       90  NetworkChannel#push-1 (./network_channel.rb:16}
+  0.00      0.00     0.00     0.00     0.00     2882  Array#shift (ruby_runtime:0}
+  0.00      0.09     0.00     0.00     0.09        1  Integer#times (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00      364  Array#at (ruby_runtime:0}
+  0.00     30.01     0.00     0.00    30.01       90  Array#each-1 (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00      273  String#to_i (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00       91  Unit#y (./unit.rb:113}
+  0.00      0.00     0.00     0.00     0.00      182  Kernel#class (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00        1  String#inspect (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00      182  Module#class_eval (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00      100  Map#pixel_width (./map.rb:40}
+  0.00     30.01     0.00     0.00    30.01       90  Mutex#synchronize-1 (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00      100  Array#initialize (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00        0  Array#each (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00      191  <Class::Object>#allocate (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00       91  <Class::Queue>#allocate (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00       91  Kernel#nil? (ruby_runtime:0}
+  0.00      0.01     0.00     0.00     0.01      282  Fixnum#/ (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00        1  Integer#to_int (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00       91  Unit#x (./unit.rb:112}
+  0.00      0.00     0.00     0.00     0.00      100  Rubygame::Rect#initialize (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:86}
+  0.00     30.01     0.00     0.00    30.01       90  Publisher::InstanceMethods#fire-1 (./../config/../lib/publisher.rb:66}
+  0.00      0.03     0.00     0.00     0.03     2792  Queue#size (./pathfinding.rb:50}
+  0.00     30.02     0.00     0.00    30.02       90  Publisher::InstanceMethods#fire (./../config/../lib/publisher.rb:66}
+  0.00      0.00     0.00     0.00     0.00       90  Unit#path= (./unit.rb:41}
+
+
+Thread ID: 367252860
+Total: 0.01
+
+ %self     total     self     wait    child    calls  name
+100.00      0.01     0.01     0.00     0.00       72  Module#class_eval (ruby_runtime:0}
+100.00      0.02     0.01     0.00     0.01       72  Publisher::InstanceMethods#ensure_valid (./../config/../lib/publisher.rb:76}
+  0.00      0.00     0.00     0.00     0.00       72  Fixnum#== (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00       72  String#to_i (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00       72  Proc#call (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00       72  Fixnum#to_s (ruby_runtime:0}
+  0.00      0.02     0.00     0.00     0.02       72  NetworkChannel#push (./network_channel.rb:16}
+  0.00      0.00     0.00     0.00     0.00       72  Array#== (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00       72  Array#include? (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00       72  Array#each (ruby_runtime:0}
+  0.00     26.71     0.00    26.71     0.00       72  Kernel#sleep (ruby_runtime:0}
+  0.00      0.02     0.00     0.00     0.02       72  Mutex#synchronize (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00       72  Kernel#class (ruby_runtime:0}
+  0.00      0.02     0.00     0.00     0.02       72  Publisher::InstanceMethods#fire (./../config/../lib/publisher.rb:66}
+  0.00      0.00     0.00     0.00     0.00      216  Fixnum#+ (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00        0  MockNetworkManager#initialize (./network_manager.rb:35}
+  0.00      0.00     0.00     0.00     0.00       72  TurnManager#handle_turn (./turn_manager.rb:12}
+  0.00      0.00     0.00     0.00     0.00       72  String#split (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00        0  Kernel#loop (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00      144  Hash#[] (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00       72  String#== (ruby_runtime:0}
+
+
+Thread ID: 20485880
+Total: 31.83
+
+ %self     total     self     wait    child    calls  name
+ 10.74     15.42     3.42     9.28     2.72   118340  Rubygame::Rect#initialize (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:86}
+  8.45     28.24     2.69     3.48    22.07     1920  Integer#times-1 (ruby_runtime:0}
+  4.87      2.07     1.55     0.00     0.52   355022  Kernel#=== (ruby_runtime:0}
+  4.12     17.89     1.31     0.00    16.58   118239  Rubygame::Surface#blit (ruby_runtime:0}
+  3.52      3.91     1.12     2.15     0.64   118200  Viewport#world_to_view (./viewport.rb:99}
+  2.89     16.64     0.92     0.00    15.72   118357  Class#new (ruby_runtime:0}
+  2.01      0.64     0.64     0.00     0.00   238235  Fixnum#- (ruby_runtime:0}
+  1.73      0.55     0.55     0.00     0.00   230826  Fixnum#* (ruby_runtime:0}
+  1.63      0.52     0.52     0.00     0.00   237283  Fixnum#== (ruby_runtime:0}
+  1.45      0.46     0.46     0.00     0.00   115200  NArray#[] (ruby_runtime:0}
+  1.19      0.38     0.38     0.00     0.00   118340  Array#length (ruby_runtime:0}
+  0.85      0.27     0.27     0.00     0.00   118340  Array#initialize (ruby_runtime:0}
+  0.75      0.24     0.24     0.00     0.00   118740  <Class::Array>#allocate (ruby_runtime:0}
+  0.53      1.42     0.17     0.11     1.14     3000  Unit#draw (./unit.rb:94}
+  0.47      0.87     0.15     0.27     0.45     2900  Unit#update_movement (./unit.rb:47}
+  0.28      3.30     0.09     0.47     2.74      162  Array#each (ruby_runtime:0}
+  0.19      0.06     0.06     0.00     0.00    24203  Array#at (ruby_runtime:0}
+  0.19      0.18     0.06     0.08     0.04     4355  Rubygame::Rect#centery (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:233}
+  0.16      0.05     0.05     0.00     0.00     8241  Float#+ (ruby_runtime:0}
+  0.16      0.35     0.05     0.19     0.11     5505  Rubygame::Rect#centerx (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:223}
+  0.09      0.09     0.03     0.00     0.06       33  <Module::Rubygame>#fetch_sdl_events (ruby_runtime:0}
+  0.09      0.03     0.03     0.00     0.00     7203  Fixnum#+ (ruby_runtime:0}
+  0.09      0.03     0.03     0.00     0.00     6016  Fixnum#/ (ruby_runtime:0}
+  0.09      0.03     0.03     0.00     0.00    12204  Fixnum#div (ruby_runtime:0}
+  0.09      0.45     0.03     0.00     0.42     3124  Rubygame::Rect#center (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:211}
+  0.09      0.03     0.03     0.00     0.00     1964  AnimatedObject#last_animated_time (./animated_object.rb:26}
+  0.06      0.02     0.02     0.00     0.00     8650  Float#- (ruby_runtime:0}
+  0.06      0.02     0.02     0.00     0.00     1296  AnimatedObject#last_animated_time= (./animated_object.rb:30}
+  0.06      0.12     0.02     0.00     0.10     2381  Unit#x (./unit.rb:112}
+  0.06     28.26     0.02     0.00    28.24       32  Integer#times (ruby_runtime:0}
+  0.06      0.89     0.02     0.00     0.87     2900  Unit#update (./unit.rb:37}
+  0.06      0.02     0.02     0.00     0.00     2900  AnimatedObject#animating? (./animated_object.rb:46}
+  0.03      0.01     0.01     0.00     0.00       88  Pathfinder#is_valid (./pathfinding.rb:91}
+  0.03      0.01     0.01     0.00     0.00     1354  Ruby3d::Vector#y (ruby_runtime:0}
+  0.03      0.01     0.01     0.00     0.00     4901  NilClass#nil? (ruby_runtime:0}
+  0.03      0.01     0.01     0.00     0.00     1261  Float#* (ruby_runtime:0}
+  0.03      0.01     0.01     0.00     0.00     3017  Rubygame::Surface#h (ruby_runtime:0}
+  0.03      0.01     0.01     0.00     0.00     1266  Float#< (ruby_runtime:0}
+  0.03      0.03     0.01     0.00     0.02      100  Rubygame::Rect#collide_rect? (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:488}
+  0.03      0.01     0.01     0.00     0.00     1604  AnimatedObject#stop_animating (./animated_object.rb:38}
+  0.03      0.01     0.01     0.00     0.00       30  Kernel#== (ruby_runtime:0}
+  0.03      0.01     0.01     0.00     0.00      100  Rubygame::Rect#x (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:149}
+  0.03      0.01     0.01     0.00     0.00      124  Map#tiles_to_coords (./map.rb:76}
+  0.03      0.01     0.01     0.00     0.00       32  Rubygame::Screen#update (ruby_runtime:0}
+  0.03      0.01     0.01     0.00     0.00     2344  Array#[]= (ruby_runtime:0}
+  0.03      0.11     0.01     0.07     0.03     1172  Rubygame::Rect#centerx= (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:227}
+  0.03     28.27     0.01     0.00    28.26       32  Map#draw (./map.rb:87}
+  0.03      0.08     0.01     0.07     0.00     1172  Rubygame::Rect#centery= (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:237}
+  0.03      0.06     0.01     0.00     0.05        1  Array#each-5 (ruby_runtime:0}
+  0.03      0.01     0.01     0.00     0.00     5187  Array#[] (ruby_runtime:0}
+  0.03      0.01     0.01     0.00     0.00      100  Rubygame::Rect#collide_point? (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:482}
+  0.03      0.05     0.01     0.00     0.04       23  Array#each-6 (ruby_runtime:0}
+  0.03      0.01     0.01     0.00     0.00      100  <Class::Rubygame::Rect>#new_from_object (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:109}
+  0.03      0.14     0.01     0.13     0.00     1256  AnimatedObject#next_frame_num (./animated_object.rb:10}
+  0.03      0.01     0.01     0.00     0.00     1172  Ruby3d::Vector#* (ruby_runtime:0}
+  0.03      0.01     0.01     0.00     0.00       89  Pathfinder#diagonal_heuristic (./pathfinding.rb:68}
+  0.03      0.01     0.01     0.00     0.00       89  Array#each_index (ruby_runtime:0}
+  0.03      0.01     0.01     0.00     0.00     2504  Ruby3d::Vector#x (ruby_runtime:0}
+  0.03      0.15     0.01     0.00     0.14      628  AnimatedObject#next_frame (./animated_object.rb:14}
+  0.03      0.01     0.01     0.00     0.00      796  Fixnum#< (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00       33  Rubygame::EventQueue#push (/usr/local/lib/ruby/site_ruby/1.8/rubygame/queue.rb:82}
+  0.00      0.00     0.00     0.00     0.00       32  Array#clear (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00       14  Publisher::InstanceMethods#ensure_valid (./../config/../lib/publisher.rb:76}
+  0.00     31.83     0.00     0.00    31.83        1  InputManager#main_loop (./input_manager.rb:15}
+  0.00      0.00     0.00     0.00     0.00        1  Needle::Lifecycle::Singleton#call (/usr/local/lib/ruby/gems/1.8/gems/needle-1.3.0/lib/needle/lifecycle/singleton.rb:38}
+  0.00      0.06     0.00     0.00     0.06        1  UnitManager#handle_unit_move (./unit_manager.rb:29}
+  0.00      0.00     0.00     0.00     0.00        1  Queue#clear (./pathfinding.rb:34}
+  0.00      0.00     0.00     0.00     0.00       88  Array#each-7 (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00     2629  Kernel#nil? (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00       32  Rubygame::Clock#tick (/usr/local/lib/ruby/site_ruby/1.8/rubygame/clock.rb:116}
+  0.00      0.00     0.00     0.00     0.00     1266  Float#abs (ruby_runtime:0}
+  0.00      0.05     0.00     0.00     0.05        1  Pathfinder#find (./pathfinding.rb:126}
+  0.00      0.00     0.00     0.00     0.00        2  String#== (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00      209  Range#include? (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00        1  Queue#initialize (./pathfinding.rb:29}
+  0.00      0.00     0.00     0.00     0.00        3  String#split (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00      103  Array#<< (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00        2  Rubygame::MouseUpEvent#initialize (/usr/local/lib/ruby/site_ruby/1.8/rubygame/event.rb:188}
+  0.00      0.11     0.00     0.07     0.04      100  Unit#in? (./unit.rb:115}
+  0.00      0.00     0.00     0.00     0.00      100  Rubygame::Rect#right (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:191}
+  0.00      0.00     0.00     0.00     0.00     1256  Fixnum#% (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00       32  Fixnum#<= (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00      124  Module#=== (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00      100  Rubygame::Rect#y (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:159}
+  0.00      0.00     0.00     0.00     0.00        3  Fixnum#to_s (ruby_runtime:0}
+  0.00      0.06     0.00     0.00     0.06        1  Array#each-4 (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00        1  <Class::Queue>#allocate (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00        1  Needle::ServicePoint#instance (/usr/local/lib/ruby/gems/1.8/gems/needle-1.3.0/lib/needle/service-point.rb:115}
+  0.00      0.00     0.00     0.00     0.00       20  Array#first (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00      335  Float#<=> (ruby_runtime:0}
+  0.00      0.06     0.00     0.00     0.06        1  Array#each-3 (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00        1  Unit#path= (./unit.rb:41}
+  0.00      0.00     0.00     0.00     0.00      248  <Class::Ruby3d::Vector>#new (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00       10  Viewport#scroll (./viewport.rb:70}
+  0.00      0.00     0.00     0.00     0.00       32  <Class::Rubygame::Clock>#delay (ruby_runtime:0}
+  0.00      0.21     0.00     0.00     0.21        3  Array#each-2 (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00        2  Float#/ (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00        2  <Module::Rubygame>#key2str (/usr/local/lib/ruby/site_ruby/1.8/rubygame/event.rb:32}
+  0.00      0.01     0.00     0.00     0.01      134  Array#include? (ruby_runtime:0}
+  0.00      0.21     0.00     0.00     0.21       12  Array#each-1 (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00        1  Rubygame::Rect#bottom (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:201}
+  0.00      0.00     0.00     0.00     0.00     1371  Fixnum#> (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00      100  Rubygame::Rect#h (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:177}
+  0.00      0.00     0.00     0.00     0.00        1  Pathfinder#initialize (./pathfinding.rb:62}
+  0.00      0.01     0.00     0.00     0.01       89  Pathfinder#make_NH (./pathfinding.rb:117}
+  0.00      0.00     0.00     0.00     0.00       16  Module#== (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00       26  Rubygame::Rect#t (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:159}
+  0.00      1.75     0.00     0.00     1.75       32  UnitManager#draw (./unit_manager.rb:132}
+  0.00      0.00     0.00     0.00     0.00        2  Integer#ceil (ruby_runtime:0}
+  0.00      0.21     0.00     0.00     0.21       12  Publisher::InstanceMethods#fire (./../config/../lib/publisher.rb:66}
+  0.00     31.53     0.00     0.00    31.53       32  GameClient#update (./game_client.rb:81}
+  0.00      0.00     0.00     0.00     0.00      100  Rubygame::Rect#left (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:149}
+  0.00      0.00     0.00     0.00     0.00        1  Rubygame::Rect#top (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:159}
+  0.00      0.06     0.00     0.00     0.06        1  Proc#call-2 (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00        2  Float#ceil (ruby_runtime:0}
+  0.00      0.05     0.00     0.04     0.01     1231  Unit#y (./unit.rb:113}
+  0.00      0.00     0.00     0.00     0.00      462  Float#> (ruby_runtime:0}
+  0.00      0.06     0.00     0.00     0.06        1  Publisher::InstanceMethods#fire-1 (./../config/../lib/publisher.rb:66}
+  0.00      0.00     0.00     0.00     0.00       30  Kernel#class (ruby_runtime:0}
+  0.00     31.83     0.00     0.00    31.83        1  Kernel#loop (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00      196  Rubygame::Rect#r (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:191}
+  0.00      0.01     0.00     0.00     0.01      100  Unit#hit_by? (./unit.rb:121}
+  0.00      0.06     0.00     0.00     0.06        1  Proc#call-1 (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00      137  Array#shift (ruby_runtime:0}
+  0.00      0.21     0.00     0.00     0.21       12  Proc#call (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00     1298  AnimatedObject#animate (./animated_object.rb:42}
+  0.00      0.00     0.00     0.00     0.00        2  Kernel#puts (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00        2  Array#sort (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00       12  Queue#size (./pathfinding.rb:50}
+  0.00      0.00     0.00     0.00     0.00       23  Array#size (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00       12  Queue#shift (./pathfinding.rb:51}
+  0.00      0.02     0.00     0.02     0.00        1  Rubygame::KeyDownEvent#initialize (/usr/local/lib/ruby/site_ruby/1.8/rubygame/event.rb:98}
+  0.00      0.00     0.00     0.00     0.00       10  MouseManager#mouse_motion (./mouse_manager.rb:21}
+  0.00      0.00     0.00     0.00     0.00      628  AnimatedObject#animation_direction (./animated_object.rb:50}
+  0.00      0.06     0.00     0.00     0.06        1  Publisher::InstanceMethods#fire-2 (./../config/../lib/publisher.rb:66}
+  0.00      0.90     0.00     0.00     0.90       32  UnitManager#update (./unit_manager.rb:126}
+  0.00      0.00     0.00     0.00     0.00       11  Pathfinder#adjacent_nodes (./pathfinding.rb:79}
+  0.00      0.00     0.00     0.00     0.00       89  Enumerable#min (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00      134  Pathfinder#extract_node (./pathfinding.rb:112}
+  0.00      0.00     0.00     0.00     0.00       14  Module#class_eval (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00      203  Fixnum#>= (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00      356  Fixnum#abs (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00       16  Viewport#max_up? (./viewport.rb:58}
+  0.00      0.00     0.00     0.00     0.00       64  <Class::Rubygame::Clock>#runtime (ruby_runtime:0}
+  0.00      0.06     0.00     0.00     0.06        1  Mutex#synchronize-1 (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00        1  Kernel#throw (ruby_runtime:0}
+  0.00      0.30     0.00     0.00     0.30       33  Rubygame::EventQueue#each (/usr/local/lib/ruby/site_ruby/1.8/rubygame/queue.rb:99}
+  0.00     31.83     0.00     0.00    31.83        1  SnelpsApp#main_loop (app.rb:58}
+  0.00      0.00     0.00     0.00     0.00        1  Needle::Container#find_definition (/usr/local/lib/ruby/gems/1.8/gems/needle-1.3.0/lib/needle/container.rb:289}
+  0.00      0.01     0.00     0.00     0.01      300  Rubygame::Rect#normalize (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:539}
+  0.00      0.00     0.00     0.00     0.00        2  Map#coords_to_tiles (./map.rb:71}
+  0.00      0.08     0.00     0.02     0.06        1  Mutex#synchronize (ruby_runtime:0}
+  0.00     31.83     0.00     0.00    31.83        0  SnelpsApp#run (app.rb:76}
+  0.00      0.00     0.00     0.00     0.00        1  Needle::Container#[] (/usr/local/lib/ruby/gems/1.8/gems/needle-1.3.0/lib/needle/container.rb:304}
+  0.00      0.00     0.00     0.00     0.00        3  String#to_i (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00      226  <Class::Object>#allocate (ruby_runtime:0}
+  0.00      0.01     0.00     0.00     0.01      300  Rubygame::Rect#normalize! (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:546}
+  0.00      0.00     0.00     0.00     0.00      392  Rubygame::Rect#l (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:149}
+  0.00      0.00     0.00     0.00     0.00      391  Fixnum#<=> (ruby_runtime:0}
+  0.00      0.06     0.00     0.00     0.06        1  MockNetworkManager#handle_server_msg (./network_manager.rb:43}
+  0.00      0.00     0.00     0.00     0.00        1  Rubygame::KeyUpEvent#initialize (/usr/local/lib/ruby/site_ruby/1.8/rubygame/event.rb:119}
+  0.00     30.18     0.00     0.04    30.14       32  GameClient#draw (./game_client.rb:89}
+  0.00      0.00     0.00     0.00     0.00        1  Class#new-1 (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00      101  Comparable#between? (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00      124  Array#empty? (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00       16  Viewport#do_scroll (./viewport.rb:34}
+  0.00      0.00     0.00     0.00     0.00       33  Array#delete_if (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00      151  Float#coerce (ruby_runtime:0}
+  0.00      0.10     0.00     0.00     0.10        1  UnitManager#handle_mouse_click (./unit_manager.rb:51}
+  0.00      0.00     0.00     0.00     0.00        0  SnelpsApp#shutdown (app.rb:63}
+  0.00      0.00     0.00     0.00     0.00       17  Array#last (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00        3  Rubygame::Surface#draw_box_s (ruby_runtime:0}
+  0.00      0.21     0.00     0.00     0.21        2  MouseManager#mouse_up (./mouse_manager.rb:36}
+  0.00      0.00     0.00     0.00     0.00      400  Kernel#dup (ruby_runtime:0}
+  0.00     31.83     0.00     0.00    31.83        1  Kernel#catch (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00       16  Viewport#max_left? (./viewport.rb:54}
+  0.00      0.01     0.00     0.00     0.01      696  Array#== (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00        2  Rubygame::MouseDownEvent#initialize (/usr/local/lib/ruby/site_ruby/1.8/rubygame/event.rb:167}
+  0.00      0.00     0.00     0.00     0.00        4  IO#write (ruby_runtime:0}
+  0.00      0.06     0.00     0.00     0.06        1  NetworkChannel#push-1 (./network_channel.rb:16}
+  0.00      0.00     0.00     0.00     0.00        1  MockNetworkManager#[] (./network_manager.rb:57}
+  0.00      0.00     0.00     0.00     0.00       32  Viewport#update (./viewport.rb:24}
+  0.00      0.00     0.00     0.00     0.00     1279  Hash#[] (ruby_runtime:0}
+  0.00      0.08     0.00     0.00     0.08        1  NetworkChannel#push (./network_channel.rb:16}
+  0.00      0.00     0.00     0.00     0.00       88  Map#has_obstacle (./map.rb:83}
+  0.00      0.44     0.00     0.00     0.44       32  AnimationManager#update (./animation_manager.rb:31}
+  0.00      0.00     0.00     0.00     0.00     9033  Rubygame::Surface#w (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00       16  Array#push (ruby_runtime:0}
+  0.00      0.04     0.00     0.04     0.00       10  Rubygame::MouseMotionEvent#initialize (/usr/local/lib/ruby/site_ruby/1.8/rubygame/event.rb:148}
+  0.00      0.09     0.00     0.00     0.09       33  Rubygame::EventQueue#fetch_sdl_events (/usr/local/lib/ruby/site_ruby/1.8/rubygame/queue.rb:110}
+  0.00      0.02     0.00     0.02     0.00       32  MouseManager#draw (./mouse_manager.rb:14}
+  0.00      0.00     0.00     0.00     0.00       85  Array#insert (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00      400  Array#initialize_copy (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00      201  Viewport#view_to_world (./viewport.rb:104}
+  0.00      0.01     0.00     0.00     0.01       89  Queue#add_path (./pathfinding.rb:40}
+  0.00      0.00     0.00     0.00     0.00      124  Ruby3d::Vector#normalize! (ruby_runtime:0}
+  0.00      0.01     0.00     0.00     0.01      124  Unit#set_destination! (./unit.rb:79}
+  0.00      0.00     0.00     0.00     0.00        6  Kernel#kind_of? (ruby_runtime:0}
+  0.00      0.11     0.00     0.00     0.11        1  UnitManager#handle_mouse_drag (./unit_manager.rb:92}
+  0.00      0.00     0.00     0.00     0.00      100  Rubygame::Rect#w (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:169}
+  0.00      0.03     0.00     0.00     0.03       11  Pathfinder#successors (./pathfinding.rb:101}
+  0.00      0.00     0.00     0.00     0.00       16  Viewport#max_right? (./viewport.rb:62}
+  0.00      0.00     0.00     0.00     0.00       33  Array#flatten (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00        2  MouseManager#mouse_down (./mouse_manager.rb:27}
+  0.00      0.00     0.00     0.00     0.00        3  Rubygame::Surface#draw_box (ruby_runtime:0}
+  0.00      0.00     0.00     0.00     0.00       13  Rubygame::Rect#b (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:201}
+  0.00      0.00     0.00     0.00     0.00       88  Array#+ (ruby_runtime:0}
+
+

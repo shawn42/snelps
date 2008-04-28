@@ -1,0 +1,9 @@
+--- 
+:fullscreen: false
+:viewport_screen_x: 10
+:screen_resolution: 
+- 1024
+- 800
+:viewport_screen_y: 36
+:viewport_width: 816
+:viewport_height: 760
