@@ -1,3 +1,4 @@
+require 'rubygame/ftor'
 module UnitComponent
 
   attr_accessor :unit_type, :selected, :dest, :trace
@@ -63,8 +64,7 @@ module UnitComponent
       # TODO XXX this is kind of a hack
       # should I draw line from previous point to now and see if target
       # is on the line?
-      @direction = Vec2.new @dest.x - x, @dest.y - y
-      @direction.normalize!
+      @direction = Ftor.new(@dest.x - x, @dest.y - y).unit
       if (x - @dest.x).abs < 5 and (y - @dest.y).abs < 5
         if @path.nil? or @path.empty?
           stop_moving!
@@ -130,12 +130,10 @@ module UnitComponent
     new_x,new_y = @map.tiles_to_coords(new_tile_x,new_tile_y)
     
     # our current target
-    @dest = Vec2.new new_x, new_y
+    @dest = Ftor.new new_x, new_y
 
     # our current directional vector
-    @direction = Vec2.new @dest.x - x, @dest.y - y
-
-    @direction.normalize!
+    @direction = Ftor.new(@dest.x - x, @dest.y - y).unit
     animate
   end
 

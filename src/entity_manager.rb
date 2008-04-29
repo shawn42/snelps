@@ -7,7 +7,7 @@ class EntityManager
   include Commands
 
   attr_accessor :map, :occupancy_grids, :entities
-  can_fire :sound_play
+  can_fire :sound_play, :network_msg_to
 
   constructor :viewport, :animation_manager, :sound_manager, :network_manager, :mouse_manager, :input_manager
   def setup()
@@ -102,7 +102,8 @@ class EntityManager
 
           fire :sound_play, :unit_move
           cmd = "#{ENTITY_MOVE}:#{entity.server_id}:#{tile_x}:#{tile_y}"
-          @network_manager[:to_server].push cmd
+          fire :network_msg_to, cmd
+#          @network_manager[:to_server].push cmd
         end
       end
     else

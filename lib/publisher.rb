@@ -71,7 +71,7 @@ module Publisher
 		protected
 		# Fire an event with 0 or more outbound parameters
 		def fire(event, *args)
-#			ensure_valid event
+			ensure_valid event
 			listeners = @subscriptions[event] if @subscriptions
 			listeners.each do |l| l.call(*args) end if listeners
 		end

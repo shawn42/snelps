@@ -24,6 +24,10 @@ class CampaignMode < BaseMode
     @entity_manager.when :sound_play do |snd|
       fire :sound_play, snd
     end
+    @entity_manager.when :network_msg_to do |cmd|
+      fire :network_msg_to, cmd
+#      @network_manager[:to_server].push cmd
+    end
     #TODO screen widths?
     @view_screen = Surface.new([824, 760])
     @background = Surface.new(@snelps_screen.size)
@@ -151,23 +155,22 @@ class CampaignMode < BaseMode
         end
       end
       p "setup #{num_test_units} entities ... lets see em dance"
-#      loop do
-#        begin
-#          for unit in units
-#            if unit.idle?
-#              x = rand(@map.w)
-#              y = rand(@map.h)
-#              cmd = "#{UNIT_MOVE}:#{unit.server_id}:#{x}:#{y}"
-#              fire :network_msg_to, cmd
-##              @network_manager[:to_server].push cmd
-#            end
-#          end
-#          sleep 5
-#        rescue Exception => ex
-#          p "boom"
-#          p ex
-#        end
-#      end
+      loop do
+        begin
+          for entity in ents
+            if entity.idle?
+              x = rand(@map.w)
+              y = rand(@map.h)
+              cmd = "#{ENTITY_MOVE}:#{entity.server_id}:#{x}:#{y}"
+              fire :network_msg_to, cmd
+            end
+          end
+          sleep 5
+        rescue Exception => ex
+          p "boom"
+          p ex
+        end
+      end
     end
   end
 

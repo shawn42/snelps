@@ -12,8 +12,6 @@ require 'constructor'
 require 'diy'
 require 'linked_list'
 
-require 'chipmunk'
-include CP
 require 'rubygame'
 include Rubygame
 
