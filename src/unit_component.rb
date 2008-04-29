@@ -117,7 +117,9 @@ module UnitComponent
     @animation_image_set = dir
     x,y = @rect.center
 
-    @grid.leave @last_tile_x, @last_tile_y unless @last_tile_x.nil?
+    unless @last_tile_x.nil? or (@last_tile_x == @tile_x and @last_tile_y == @tile_y)
+      @grid.leave @last_tile_x, @last_tile_y 
+    end
     @grid.occupy(new_tile_x, new_tile_y)
 
     @last_tile_x = @tile_x
@@ -141,7 +143,9 @@ module UnitComponent
     @dest = nil
     @path = nil
     @direction = nil
-    @grid.leave @last_tile_x, @last_tile_y unless @last_tile_x.nil?
+    unless @last_tile_x.nil? or (@last_tile_x == @tile_x and @last_tile_y == @tile_y)
+      @grid.leave @last_tile_x, @last_tile_y 
+    end
   end
 
   def draw(destination)

@@ -51,30 +51,10 @@ class EntityManager
     end
   end
 
-  # TODO, I'm pretty sure there is a GIANT race condition here
   def has_obstacle?(x, y, unit_type, ignore_objects = [])
-    begin
-      obj = ignore_objects.shift
-      # for now 266 is water, only flying entities can go on them
-      case unit_type
-      when :unit_bird
-        # only obs is another bird
-        return occupancy_grid(unit_type).occupied?(x, y)
-      else
-        # ground entities
-        if @map.at(x, y) == 266
-          return true
-        else
-          return occupancy_grid(unit_type).occupied?(x, y)
-        end
-      end
-    rescue Exception => ex
-      p ex
-      caller.each do |frame|
-        p frame
-      end
-    end
-    false
+    # for now 266 is water, only flying entities can go on them
+    return (occupancy_grid(unit_type).occupied?(x, y) or 
+            (@map.at(x,y) == 266 and unit_type != :unit_bird))
   end
 
   def handle_key_up(event)
