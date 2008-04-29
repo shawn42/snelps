@@ -82,9 +82,9 @@ class Map
   # returns the tile x,y that the coord point falls in
   def coords_to_tiles(x, y)
     if tiles[1] > @height - 1 or tiles[0] > @width - 1
-      p "WTF: #{},#{}  => #{tiles[0]},#{tiles[1]}"
+      p "WTF: #{x},#{y}  => #{tiles[0]},#{tiles[1]}"
     end
-    tiles = [(x / @tile_size).ceil, (y / @tile_size).ceil]
+    tiles = [(x / @tile_size).floor, (y / @tile_size).floor]
     tiles[0] = 0 if tiles[0] < 0
     tiles[0] = @width - 1 if tiles[0] > @width - 1
     tiles[1] = 0 if tiles[1] < 0

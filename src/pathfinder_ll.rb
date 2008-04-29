@@ -7,10 +7,10 @@ class Pathfinder
 
   attr_accessor :consideration_count, :diagonal_heuristics_count
 
-  def initialize(unit_type, unit_manager, width, height)
+  def initialize(unit_type, entity_manager, width, height)
     @width = width
     @height = height
-    @unit_manager = unit_manager
+    @entity_manager = entity_manager
     @unit_type = unit_type
     @consideration_count = 0
     @diagonal_heuristics_count = 0
@@ -61,14 +61,13 @@ class Pathfinder
     x = n.x
     y = n.y
     return false if(x<0 or y<0 or x>=@width or y>=@height)
-    return false if @unit_manager.has_obstacle?(x,y,@unit_type)
+    return false if @entity_manager.has_obstacle?(x,y,@unit_type)
     return true
   end
 
   # return the best path from start to target
   # A* based
   def find(start,target,max=0)
-
 #    p "#{start.inspect} => #{target.inspect}"
     target_node = Node.new target[0], target[1], nil,nil,nil,nil
     unless is_valid?(target_node)
@@ -90,8 +89,7 @@ class Pathfinder
       nh_node = open.best
 
       @consideration_count += 1
-      if nh_node.x == target_node.x and nh_node.y == target_node.y
-#        p "found path..."
+      if nh_node.h == 0 #nh_node.x == target_node.x and nh_node.y == target_node.y
         # walk back up the parents of nh
         path = [] 
         path.unshift [nh_node.x,nh_node.y,nh_node.dir,nh_node.cost]
@@ -100,6 +98,8 @@ class Pathfinder
           path.unshift [parent.x,parent.y,parent.dir,parent.cost]
           parent = parent.parent
         end
+        # shift off start node
+        path.shift
         return path
       else
         closed << nh_node
@@ -112,6 +112,7 @@ class Pathfinder
             next if closed.find{|node| node.x == neighbor.x and node.y == neighbor.y}
 
             neighbor.h = diagonal_heuristic(neighbor, target_node)
+
             open_neighbor = open.find(neighbor)
 
             if open_neighbor
@@ -166,7 +167,10 @@ class PriorityQueue
     found_node = nil
     @list.each_element do |elem|
       node = elem.obj
-#      p "looking at item:#{item.inspect}"
+#      p "looking at item:#{node.inspect}"
+#      p "======"
+#      p "looking at #{node.x},#{node.y},#{node.h}"
+#      p "compaired to #{n.x},#{n.y},#{n.h}"
       return nil if node.h > n.h # we know, since it is ordered
       if node.x == n.x and node.y == n.y
         found_node = node
@@ -204,7 +208,6 @@ class PriorityQueue
       @list.place nh, :before, elem
     end
 
-#    for it in @list;p it;end
     @list
   end
 
@@ -218,7 +221,8 @@ if $0 == __FILE__ #or true
   require 'linked_list'
   class Map
     def has_obstacle?(x, y, unit_type);
-#      return false
+      p "has_obs"  
+      return false
       if x == 26 and y < 114
         return true
       end
@@ -230,15 +234,15 @@ if $0 == __FILE__ #or true
     end
   end
   mappy = Map.new
-  size = 600
-#  size = 20
+#  size = 600
+  size = 20
   pf = Pathfinder.new(:foo, mappy, size, size)
 #  path = pf.find([0,0],[59,59], 50)
   start = Time.now
-  path = pf.find([4,3],[431,585], 50)
-#  path = pf.find([2,2],[11,19], 50)
+#  path = pf.find([4,3],[431,585], 50)
+  path = pf.find([4,4],[3,3], 50)
 #  pf.to_ascii
-  p (Time.now - start)
+  p(Time.now - start)
   puts "nodes considered:[#{pf.consideration_count}]"
   puts "heuristics calc'd:[#{pf.diagonal_heuristics_count}]"
   puts "path size:[#{path.size}]" unless path.nil?

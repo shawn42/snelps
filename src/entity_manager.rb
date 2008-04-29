@@ -51,6 +51,7 @@ class EntityManager
   # TODO, I'm pretty sure there is a GIANT race condition here
   def has_obstacle?(x, y, unit_type, ignore_objects = [])
     begin
+      obj = ignore_objects.shift
       # for now 266 is water, only flying entities can go on them
       case unit_type
       when :unit_bird
