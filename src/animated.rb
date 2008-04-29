@@ -18,6 +18,7 @@ module Animated
     @animation_manager.register(self)
 
     @image = @animation_manager.get_default_frame(@unit_type)
+
     x = args[:x]
     y = args[:y]
 		@rect = Rect.new(x,y,*@image.size)

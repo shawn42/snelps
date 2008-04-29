@@ -47,7 +47,23 @@ class AnimationManager
       for k, v in dir
         @images[type][k] = []
         for file_name in v
-          @images[type][k] << @resource_manager.load_image(file_name)
+          img = @resource_manager.load_image(file_name)
+          # TODO change this stuff to be player specific?
+          # maybe add another layer
+          # :red => {:unit_bird => ...}
+          # :blue => {:unit_bird => ...}
+          if type == :unit_bird and k != :default and k != :selected
+            img.w.times do |c|
+              img.h.times do |r|
+                oc = img.get_at(r,c)
+                unless oc[3] == 1
+                  new_color = [oc[0]*1.69,oc[1]*0.09,oc[2]*0.09, oc[3]]
+                  img.set_at [r,c], new_color
+                end
+              end
+            end
+          end
+          @images[type][k] << img
         end
       end
     end
