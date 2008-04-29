@@ -40,10 +40,10 @@ class MiniMap
     destination.draw_box([view_x, view_y], [view_x + w, view_y + h],
       PURPLE) 
 
-    @entity_manager.entities.each do |u|
-      ux = u.x * SCALE + MINI_MAP_X
-      uy = u.y * SCALE + MINI_MAP_Y
-      destination.draw_circle_s [ux.floor,uy.floor], 1, RED
+    for ent in @entity_manager.entities
+      entx = ent.x * SCALE + MINI_MAP_X
+      enty = ent.y * SCALE + MINI_MAP_Y
+      destination.draw_circle_s [entx.floor,enty.floor], 1, RED
     end
   end
 end

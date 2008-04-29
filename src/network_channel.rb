@@ -10,6 +10,7 @@ class NetworkChannel
   end
 
   def push(obj)
+    # TODO: is this sync needed? it's expensive
     @mutex.synchronize do
       fire :msg_received, obj
     end
