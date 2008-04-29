@@ -43,10 +43,10 @@ class SoundManager
     if @enabled
       case what
       when :unit_move
-        # TODO change to use new Mixer::Sound class
+        # TODO add in locking to prevent the same sound from being
+        # played at the same time
         @sound_thread = Thread.new do
-          # TODO, why doesn't this play?
-          @unit_move.play -1
+          Mixer.play @unit_move, -1, 0
         end
       end
     end

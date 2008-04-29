@@ -21,6 +21,9 @@ class CampaignMode < BaseMode
   def setup()
     base_setup
 
+    @entity_manager.when :sound_play do |snd|
+      fire :sound_play, snd
+    end
     #TODO screen widths?
     @view_screen = Surface.new([824, 760])
     @background = Surface.new(@snelps_screen.size)
@@ -45,7 +48,6 @@ class CampaignMode < BaseMode
   end
 
   def on_click(event)
-    fire :sound_play, :unit_move
     @entity_manager.handle_mouse_click event
   end
 

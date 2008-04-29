@@ -1,10 +1,13 @@
 require 'pathfinder_ll'
+require 'publisher'
 require 'commands'
 require 'entity'
 class EntityManager
+  extend Publisher
   include Commands
 
   attr_accessor :map, :occupancy_grids, :entities
+  can_fire :sound_play
 
   constructor :viewport, :animation_manager, :sound_manager, :network_manager, :mouse_manager, :input_manager
   def setup()
@@ -116,6 +119,8 @@ class EntityManager
           tile_x,tile_y = 
             @map.coords_to_tiles(world_x,world_y)
 
+
+          fire :sound_play, :unit_move
           cmd = "#{ENTITY_MOVE}:#{entity.server_id}:#{tile_x}:#{tile_y}"
           @network_manager[:to_server].push cmd
         end
