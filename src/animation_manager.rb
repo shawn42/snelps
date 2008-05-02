@@ -47,7 +47,7 @@ class AnimationManager
       for k, v in dir
         @images[type][k] = []
         for file_name in v
-          img = @resource_manager.load_image(file_name)
+          img = @resource_manager.load_image(file_name,type)
           # TODO change this stuff to be player specific?
           # maybe add another layer
           # :red => {:unit_bird => ...}

@@ -20,6 +20,26 @@ class AnimationManager
       :w => ["unit56r.png","unit57r.png","unit58r.png","unit59r.png",
               "unit60r.png","unit61r.png","unit62r.png","unit63r.png"]
     },
+    :animal => {
+      :selected => ['magiceffect0r.png'],
+      :default => ['unit0r.png'],
+      :nw => ['unit0r.png', 'unit1r.png', 'unit2r.png', 'unit3r.png', 
+              'unit4r.png', 'unit5r.png', 'unit6r.png', 'unit7r.png'],
+      :n => ['unit8r.png', 'unit9r.png', 'unit10r.png', 'unit11r.png', 
+              'unit12r.png', 'unit13r.png', 'unit14r.png', 'unit15r.png'],
+      :ne => ['unit16r.png', 'unit17r.png', 'unit18r.png', 'unit19r.png', 
+              'unit20r.png', 'unit21r.png', 'unit22r.png', 'unit23r.png'],
+      :e => ["unit24r.png","unit25r.png","unit26r.png","unit27r.png",
+              "unit28r.png","unit29r.png","unit30r.png","unit31r.png"],
+      :se => ["unit32r.png","unit33r.png","unit34r.png","unit35r.png",
+              "unit36r.png","unit37r.png","unit38r.png","unit39r.png"],
+      :s => ["unit40r.png","unit41r.png","unit42r.png","unit43r.png",
+              "unit44r.png","unit45r.png","unit46r.png","unit47r.png"],
+      :sw => ["unit48r.png","unit49r.png","unit50r.png","unit51r.png",
+              "unit52r.png","unit53r.png","unit54r.png","unit55r.png"],
+      :w => ["unit56r.png","unit57r.png","unit58r.png","unit59r.png",
+              "unit60r.png","unit61r.png","unit62r.png","unit63r.png"]
+    },
     :unit_worker => {
       :selected => ['magiceffect0r.png'],
       :default => ['unit96r.png'],

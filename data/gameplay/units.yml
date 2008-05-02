@@ -1,18 +1,5 @@
 --- 
 :unit_worker: 
-  :images: 
-    :walking: 
-    - worker_walking
-    - !ruby/range 
-      begin: 0
-      end: 8
-      excl: false
-    :building: 
-    - worker_building
-    - !ruby/range 
-      begin: 0
-      end: 16
-      excl: false
   :health: 100
   :components: 
   - :positionable
@@ -26,19 +13,6 @@
   :attack_power: 10
   :speed: 30
 :unit_bird: 
-  :images: 
-    :walking: 
-    - worker_walking
-    - !ruby/range 
-      begin: 0
-      end: 7
-      excl: false
-    :building: 
-    - worker_building
-    - !ruby/range 
-      begin: 0
-      end: 7
-      excl: false
   :health: 100
   :components: 
   - :positionable
@@ -51,3 +25,16 @@
   :range: 15
   :attack_power: 10
   :speed: 40
+:animal: 
+  :health: 10
+  :components: 
+  - :positionable
+  - :movable
+  - :pathable
+  - :audible
+  - :unit_component
+  - :animated
+  :armor: 0
+  :range: 5
+  :attack_power: 0
+  :speed: 10

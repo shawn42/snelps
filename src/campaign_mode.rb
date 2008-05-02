@@ -136,14 +136,15 @@ class CampaignMode < BaseMode
   end
 
   def setup_test_units()
-    num_test_ents = 90
+    num_test_ents = 40
     Thread.new do
       ents = []
       sleep 1
       p "setting up #{num_test_ents} entities ... "
       num_test_ents.times do
         created = false 
-        type = [:unit_worker,:unit_bird][rand(2)]
+        rand_types = [:unit_worker,:unit_bird,:animal]
+        type = rand_types[rand(rand_types.size)]
         until created do
           x,y = rand(@map.pixel_width), rand(@map.pixel_height)
           tile_x, tile_y = @map.coords_to_tiles(x,y)
