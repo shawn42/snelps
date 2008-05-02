@@ -20,6 +20,9 @@ class EntityBuilder
       properties.delete :components
       klass = Class.new(Entity){
         components.each do |c|
+#          if c.to_s == "Wanderer"
+#            p self
+#          end
           include c
         end
 
@@ -31,14 +34,4 @@ class EntityBuilder
       Object.const_set klass_name, klass
     end
   end
-end
-
-if $0 == __FILE__
-  require '../config/environment'
-  require 'resource_manager'
-  rm = ResourceManager.new
-  eb = EntityBuilder.new :resource_manager => rm
-  e = Engineer.new 23
-  p e.health
-  p e.armor
 end

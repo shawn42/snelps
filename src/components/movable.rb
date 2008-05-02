@@ -54,6 +54,7 @@ module Movable
   def idle?()
     @direction.nil?
   end
+  alias moving? idle?
 
   def to_s()
     "UNIT:[#{@server_id}] at [#{x},#{y}] => DEST:#{@dest.inspect} DIR[#{@direction.inspect}]"

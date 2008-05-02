@@ -136,7 +136,7 @@ class CampaignMode < BaseMode
   end
 
   def setup_test_units()
-    num_test_ents = 40
+    num_test_ents = 140
     Thread.new do
       ents = []
       sleep 1

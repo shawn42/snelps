@@ -12,6 +12,8 @@ class Entity
   end
 
   def self.add_update_listener(meth)
+#    p "#{self.methods.sort.inspect}"
+#    p "#{self} #{meth}"
     @@update_listeners ||= []
     @@update_listeners << meth
   end

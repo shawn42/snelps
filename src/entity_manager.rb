@@ -16,7 +16,10 @@ class EntityManager
   end
 
   def occupancy_grid(entity_type)
+    # TODO add this to unit def?
     case entity_type
+    when :animal
+      @occupancy_grids[:flying]
     when :unit_bird
       @occupancy_grids[:flying]
     else
