@@ -3,6 +3,8 @@ require 'rubygems'
 ADDITIONAL_LOAD_PATHS = []
 ADDITIONAL_LOAD_PATHS.concat %w(
   src 
+  src/components
+  src/gui
   lib 
   lib/ruby3d
   config 

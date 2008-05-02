@@ -15,7 +15,10 @@
       excl: false
   :health: 100
   :components: 
+  - :positionable
   - :movable
+  - :pathable
+  - :audible
   - :unit_component
   - :animated
   :armor: 5
@@ -28,17 +31,20 @@
     - worker_walking
     - !ruby/range 
       begin: 0
-      end: 8
+      end: 7
       excl: false
     :building: 
     - worker_building
     - !ruby/range 
       begin: 0
-      end: 16
+      end: 7
       excl: false
   :health: 100
   :components: 
+  - :positionable
   - :movable
+  - :pathable
+  - :audible
   - :unit_component
   - :animated
   :armor: 0
