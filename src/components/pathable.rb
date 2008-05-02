@@ -13,6 +13,8 @@ module Pathable
   end
 
   def update_pathable(time)
+    # not sure about movement vs path stuff
+    update_movement(time)
   end
 
   def path=(path)

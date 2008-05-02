@@ -12,8 +12,6 @@ module Movable
   end
 
   def update_movable(time)
-    # not sure about movement vs path stuff
-    update_movement(time)
   end
 
   def stop_moving!()
