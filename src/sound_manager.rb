@@ -46,7 +46,7 @@ class SoundManager
         # TODO add in locking to prevent the same sound from being
         # played at the same time
         @sound_thread = Thread.new do
-          Mixer.play @unit_move, -1, 0
+          Mixer.play @unit_move, 1, 0
         end
       end
     end
