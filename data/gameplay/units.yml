@@ -6,8 +6,8 @@
   - :movable
   - :pathable
   - :audible
-  - :unit_component
   - :animated
+  - :drawable
   :armor: 5
   :range: 5
   :attack_power: 10
@@ -19,8 +19,8 @@
   - :movable
   - :pathable
   - :audible
-  - :unit_component
   - :animated
+  - :drawable
   :armor: 0
   :range: 15
   :attack_power: 10
@@ -32,8 +32,8 @@
   - :movable
   - :pathable
   - :audible
-  - :unit_component
   - :animated
+  - :drawable
   :armor: 0
   :range: 5
   :attack_power: 0

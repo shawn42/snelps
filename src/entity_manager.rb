@@ -15,8 +15,8 @@ class EntityManager
     @entities = []
   end
 
-  def occupancy_grid(unit_type)
-    case unit_type
+  def occupancy_grid(entity_type)
+    case entity_type
     when :unit_bird
       @occupancy_grids[:flying]
     else
@@ -38,9 +38,9 @@ class EntityManager
         
         from = [tile_x,tile_y]
         to = [dest_tile_x,dest_tile_y]
-        unless has_obstacle?(dest_tile_x, dest_tile_y, entity.unit_type)
+        unless has_obstacle?(dest_tile_x, dest_tile_y, entity.entity_type)
           max = 80
-          path = Pathfinder.new(entity.unit_type, self, @map.w, @map.h).find(from,to,max)
+          path = Pathfinder.new(entity.entity_type, self, @map.w, @map.h).find(from,to,max)
           if path.nil?
             entity.stop_animating
           else
@@ -51,10 +51,10 @@ class EntityManager
     end
   end
 
-  def has_obstacle?(x, y, unit_type, ignore_objects = [])
+  def has_obstacle?(x, y, entity_type, ignore_objects = [])
     # for now 266 is water, only flying entities can go on them
-    return (occupancy_grid(unit_type).occupied?(x, y) or 
-            (@map.at(x,y) == 266 and unit_type != :unit_bird))
+    return (occupancy_grid(entity_type).occupied?(x, y) or 
+            (@map.at(x,y) == 266 and entity_type != :unit_bird))
   end
 
   def handle_key_up(event)
@@ -130,23 +130,23 @@ class EntityManager
     end
   end
   
-  def create_entity(unit_type, x, y)
+  def create_entity(entity_type, x, y)
     # TODO, send CREATE_entity CMD?
     @@entity_count ||= 0
     @@entity_count += 1
-    new_entity_id = @@entity_count #@game_server.create_entity(unit_type, x, y)
+    new_entity_id = @@entity_count #@game_server.create_entity(entity_type, x, y)
 
     begin
-    klass = Object.const_get Inflector.camelize(unit_type)
+    klass = Object.const_get Inflector.camelize(entity_type)
     new_entity = klass.new(new_entity_id,
      {
       :animation_manager => @animation_manager,
       :sound_manager => @sound_manager,
       :viewport => @viewport,
-      :unit_type => unit_type,
+      :entity_type => entity_type,
       :server_id => new_entity_id,
       :map => @map,
-      :occupancy_grid => occupancy_grid(unit_type),
+      :occupancy_grid => occupancy_grid(entity_type),
       :entity_manager => self,
       :x => x,
       :y => y,

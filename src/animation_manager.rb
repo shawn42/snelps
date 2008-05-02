@@ -19,12 +19,12 @@ class AnimationManager
   end
 
   # returns the image
-  def get_default_frame(unit_type)
-    @images[unit_type][:default].first
+  def get_default_frame(entity_type)
+    @images[entity_type][:default].first
   end
 
-  def get_selection_image(unit_type)
-    @images[unit_type][:selected].first
+  def get_selection_image(entity_type)
+    @images[entity_type][:selected].first
   end
 
   def update(time)

@@ -14,7 +14,7 @@ class EntityBuilder
   end
 
   def build_dynamic_classes
-    for unit_type, unit_def in @gameplay_config
+    for entity_type, unit_def in @gameplay_config
       components = unit_def[:components].collect{|c|require c.to_s;Object.const_get(Inflector.camelize(c))}
       properties = unit_def.keys.dup
       properties.delete :components
@@ -27,7 +27,7 @@ class EntityBuilder
           attribute prop => unit_def[prop]
         end
       }
-      klass_name = Inflector.camelize(unit_type)
+      klass_name = Inflector.camelize(entity_type)
       Object.const_set klass_name, klass
     end
   end

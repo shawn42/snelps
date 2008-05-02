@@ -1,7 +1,7 @@
 class ServerUnit
-  attr_accessor :x, :y, :unit_type
-  def initialize(unit_type, x, y)
-    @unit_type = unit_type
+  attr_accessor :x, :y, :entity_type
+  def initialize(entity_type, x, y)
+    @entity_type = entity_type
     @x = x
     @y = y
   end

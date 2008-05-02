@@ -2,10 +2,12 @@
 class Entity
   include Sprites::Sprite
 
-  attr_accessor :server_id
+  attr_accessor :server_id, :entity_type
 
   def initialize(server_id, *args)
     @server_id = server_id
+
+    @entity_type = args.first[:entity_type]
     setup(*args)
   end
 

@@ -18,13 +18,13 @@ module Animated
     @animation_manager = args[:animation_manager]
     @animation_manager.register(self)
 
-    @image = @animation_manager.get_default_frame(@unit_type)
+    @image = @animation_manager.get_default_frame(@entity_type)
 
     x = args[:x]
     y = args[:y]
 		@rect = Rect.new(x,y,*@image.size)
     @selected_image = 
-      @animation_manager.get_selection_image(@unit_type).
+      @animation_manager.get_selection_image(@entity_type).
       zoom([0.25,0.25], true)
   end
   
@@ -77,7 +77,7 @@ module Animated
   end
 
   def object_type()
-    @unit_type
+    @entity_type
   end
 
 #  def animation_image_set()

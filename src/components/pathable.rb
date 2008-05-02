@@ -27,18 +27,18 @@ module Pathable
       unless @path.nil? or @path.empty?
         dest = @path.shift
 
-        if @entity_manager.has_obstacle?(dest[0], dest[1], @unit_type, [self])
+        if @entity_manager.has_obstacle?(dest[0], dest[1], @entity_type, [self])
           from = @map.coords_to_tiles(x,y)
 
           to = @path.pop
-          while !to.nil? and @entity_manager.has_obstacle?(to[0], to[1], @unit_type, [self]) 
+          while !to.nil? and @entity_manager.has_obstacle?(to[0], to[1], @entity_type, [self]) 
             to = @path.pop
           end
 
           if to.nil? or to.empty?
             stop_moving!
           else
-            path = Pathfinder.new(@unit_type, @entity_manager, @map.w, @map.h).find(from,to,80)
+            path = Pathfinder.new(@entity_type, @entity_manager, @map.w, @map.h).find(from,to,80)
           end
 
           @path = path
@@ -56,7 +56,7 @@ module Pathable
           stop_moving!
         else
           dest = @path.shift
-          if @entity_manager.has_obstacle?(dest[0], dest[1], @unit_type, [self])
+          if @entity_manager.has_obstacle?(dest[0], dest[1], @entity_type, [self])
             # nil check path
             if @path.empty?
               stop_moving!
@@ -64,7 +64,7 @@ module Pathable
               from = @map.coords_to_tiles(x,y)
 
               to = @path.pop
-              while !to.nil? and @entity_manager.has_obstacle?(to[0], to[1], @unit_type, [self]) 
+              while !to.nil? and @entity_manager.has_obstacle?(to[0], to[1], @entity_type, [self]) 
                 to = @path.pop
               end
 
@@ -73,7 +73,7 @@ module Pathable
                 dest = nil
                 p "AAHHH, no where to go!?!?! taking a break"
               else
-                path = Pathfinder.new(@unit_type, @entity_manager, @map.w, @map.h).find(from,to,80)
+                path = Pathfinder.new(@entity_type, @entity_manager, @map.w, @map.h).find(from,to,80)
   #              path.shift
                 @path = path
                 dest = @path.shift unless @path.nil?

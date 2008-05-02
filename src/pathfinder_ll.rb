@@ -7,11 +7,11 @@ class Pathfinder
 
   attr_accessor :consideration_count, :diagonal_heuristics_count
 
-  def initialize(unit_type, entity_manager, width, height)
+  def initialize(entity_type, entity_manager, width, height)
     @width = width
     @height = height
     @entity_manager = entity_manager
-    @unit_type = unit_type
+    @entity_type = entity_type
     @consideration_count = 0
     @diagonal_heuristics_count = 0
   end
@@ -61,7 +61,7 @@ class Pathfinder
     x = n.x
     y = n.y
     return false if(x<0 or y<0 or x>=@width or y>=@height)
-    return false if @entity_manager.has_obstacle?(x,y,@unit_type)
+    return false if @entity_manager.has_obstacle?(x,y,@entity_type)
     return true
   end
 
@@ -220,7 +220,7 @@ if $0 == __FILE__ #or true
   $: << '../lib'
   require 'linked_list'
   class Map
-    def has_obstacle?(x, y, unit_type);
+    def has_obstacle?(x, y, entity_type);
       p "has_obs"  
       return false
       if x == 26 and y < 114
