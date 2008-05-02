@@ -26,7 +26,6 @@ class CampaignMode < BaseMode
     end
     @entity_manager.when :network_msg_to do |cmd|
       fire :network_msg_to, cmd
-#      @network_manager[:to_server].push cmd
     end
     #TODO screen widths?
     @view_screen = Surface.new([824, 760])
@@ -73,7 +72,6 @@ class CampaignMode < BaseMode
       # parse player from event
       id = pieces[2].to_i
       snelp = Player::SNELPS[pieces[1].to_i]
-      p "creating player..."
       @player = Player.new :snelp => snelp, :server_id => id
     end
   end
@@ -138,10 +136,11 @@ class CampaignMode < BaseMode
   end
 
   def setup_test_units()
-    num_test_ents = 30
+    num_test_ents = 90
     Thread.new do
-      sleep 1
       ents = []
+      sleep 1
+      p "setting up #{num_test_ents} entities ... "
       num_test_ents.times do
         created = false 
         type = [:unit_worker,:unit_bird][rand(2)]
@@ -154,7 +153,7 @@ class CampaignMode < BaseMode
           end
         end
       end
-      p "setup #{num_test_units} entities ... lets see em dance"
+      p " ... lets see em dance"
       loop do
         begin
           for entity in ents

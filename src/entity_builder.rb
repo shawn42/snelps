@@ -1,9 +1,5 @@
 $: << "../lib"
 require 'yaml'
-require 'positionable'
-require 'animated'
-require 'movable'
-require 'unit_component'
 require 'entity'
 require 'inflector'
 require 'constructor'
@@ -19,7 +15,7 @@ class EntityBuilder
 
   def build_dynamic_classes
     for unit_type, unit_def in @gameplay_config
-      components = unit_def[:components].collect{|c|Object.const_get(Inflector.camelize(c))}
+      components = unit_def[:components].collect{|c|require c.to_s;Object.const_get(Inflector.camelize(c))}
       properties = unit_def.keys.dup
       properties.delete :components
       klass = Class.new(Entity){

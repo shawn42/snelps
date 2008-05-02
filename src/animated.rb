@@ -13,6 +13,7 @@ module Animated
 
   def setup_animated(*arg_list)
     args = arg_list.shift
+    # TODO setup animations to use data from units.yml
     @animation_length = 8
     @animation_manager = args[:animation_manager]
     @animation_manager.register(self)

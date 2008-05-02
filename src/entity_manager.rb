@@ -100,6 +100,7 @@ class EntityManager
             @map.coords_to_tiles(world_x,world_y)
 
 
+          # TODO properly pass around sound events, these should come from the audible component
           fire :sound_play, :unit_move
           cmd = "#{ENTITY_MOVE}:#{entity.server_id}:#{tile_x}:#{tile_y}"
           fire :network_msg_to, cmd
