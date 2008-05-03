@@ -136,7 +136,7 @@ class CampaignMode < BaseMode
   end
 
   def setup_test_units()
-    num_test_ents = 140
+    num_test_ents = 40
     Thread.new do
       ents = []
       sleep 1
@@ -158,7 +158,7 @@ class CampaignMode < BaseMode
       loop do
         begin
           for entity in ents
-            if entity.idle?
+            if entity.idle? and entity.entity_type != :animal
               x = rand(@map.w)
               y = rand(@map.h)
               cmd = "#{ENTITY_MOVE}:#{entity.server_id}:#{x}:#{y}"

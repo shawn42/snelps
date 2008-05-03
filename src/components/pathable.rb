@@ -22,6 +22,12 @@ module Pathable
     @path = path
   end
 
+  def create_new_path(to_x, to_y, max=80)
+    from = [@tile_x, @tile_y]
+    to = [to_x,to_y]
+    Pathfinder.new(@entity_type, @entity_manager, @map.w, @map.h).find(from,to,max)
+  end
+  
   # TODO clean up this code, there's duplicate code everywhere and its
   # too long of a method
   def update_movement(time)

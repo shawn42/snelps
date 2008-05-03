@@ -11,7 +11,7 @@
   :armor: 5
   :range: 5
   :attack_power: 10
-  :speed: 30
+  :speed: 60
 :unit_bird: 
   :health: 100
   :components: 
@@ -24,7 +24,7 @@
   :armor: 0
   :range: 15
   :attack_power: 10
-  :speed: 40
+  :speed: 80
 :animal: 
   :health: 10
   :components: 
@@ -38,4 +38,4 @@
   :armor: 0
   :range: 5
   :attack_power: 0
-  :speed: 10
+  :speed: 20

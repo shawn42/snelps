@@ -12,26 +12,24 @@ class Entity
   end
 
   def self.add_update_listener(meth)
-#    p "#{self.methods.sort.inspect}"
-#    p "#{self} #{meth}"
-    @@update_listeners ||= []
-    @@update_listeners << meth
+    @update_listeners ||= []
+    @update_listeners << meth
   end
 
   def update(time)
-    @@update_listeners.each do |meth_callback|
+    self.class.instance_variable_get("@update_listeners").each do |meth_callback|
       self.send(meth_callback, time)
     end
   end
 
   def setup(*args)
-    @@setup_listeners.each do |meth_callback|
+    self.class.instance_variable_get("@setup_listeners").each do |meth_callback|
       self.send(meth_callback, *args)
     end
   end
 
   def self.add_setup_listener(meth)
-    @@setup_listeners ||= [] 
-    @@setup_listeners << meth
+    @setup_listeners ||= [] 
+    @setup_listeners << meth
   end
 end
