@@ -71,7 +71,7 @@ class Pathfinder
 #    p "#{start.inspect} => #{target.inspect}"
     target_node = Node.new target[0], target[1], nil,nil,nil,nil
     unless is_valid?(target_node)
-      p "ERROR, target not valid #{start.inspect} => #{target_node} #{obs}"
+      p "ERROR, target not valid #{start.inspect} => #{target_node}"
       return nil
     end
 

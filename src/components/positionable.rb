@@ -15,6 +15,8 @@ module Positionable
     @z = 1
     @map = args[:map]
     @tile_x, @tile_y = @map.coords_to_tiles args[:x], args[:y]
+    @grid = args[:occupancy_grid]
+    @grid.occupy @tile_x, @tile_y
   end
 
   def update_positionable(time)

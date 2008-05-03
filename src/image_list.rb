@@ -40,6 +40,10 @@ class AnimationManager
       :w => ["unit56r.png","unit57r.png","unit58r.png","unit59r.png",
               "unit60r.png","unit61r.png","unit62r.png","unit63r.png"]
     },
+    :tree => {
+      :selected => ['magiceffect0r.png'],
+      :default => ['ressource2.png','ressource2.png','ressource2.png','ressource2.png','ressource2.png','ressource2.png','ressource2.png','ressource2.png']
+    },
     :unit_worker => {
       :selected => ['magiceffect0r.png'],
       :default => ['unit96r.png'],

@@ -39,3 +39,9 @@
   :range: 5
   :attack_power: 0
   :speed: 20
+:tree: 
+  :components: 
+  - :positionable
+  - :audible
+  - :animated
+  - :drawable
