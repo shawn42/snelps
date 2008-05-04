@@ -24,7 +24,7 @@ class ResourceManager
     @loaded_images[entity_type] ||= {}
     ent_images = @loaded_images[entity_type]
     if ent_images[file_name].nil?
-      image = Rubygame::Surface.load_image(File.expand_path(DATA_PATH + "gfx/" + file_name))
+      image = Rubygame::Surface.load_image(File.expand_path(GDATA_PATH + "gfx/" + file_name))
 #      if colorkey != nil
 #        if colorkey == -1
 #          colorkey = image.get_at([0,0])

@@ -17,6 +17,7 @@ end
 $:.push "/usr/local/lib/ruby/site_ruby/1.8/i686-darwin8.10.1"
 APP_ROOT = File.dirname(__FILE__) + "/../"
 DATA_PATH =  APP_ROOT + "data/"
+GDATA_PATH =  APP_ROOT + "glob2_data/"
 ENTITY_DATA_PATH =  DATA_PATH + "gameplay/"
 MAP_PATH = APP_ROOT + "maps/"
 CONFIG_PATH = APP_ROOT + "config/"
