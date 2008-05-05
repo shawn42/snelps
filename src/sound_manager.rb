@@ -26,7 +26,8 @@ class SoundManager
     if @enabled
       STDOUT.puts "loading background music..."
       # TODO change this to be a hash of sounds for easier coding later
-      @background_music = @resource_manager.load_music("snelps_jungle.wav")
+#      @background_music = @resource_manager.load_music("snelps_jungle.wav")
+      @background_music = @resource_manager.load_music("Ethan1.wav")
       @background_music.fade_in 3
       @background_music.fade_out 3
 
