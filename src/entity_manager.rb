@@ -141,6 +141,7 @@ class EntityManager
         @available_z_levels.sort!
         @occupancy_grids[z] = OccupancyGrid.new @map.width, @map.height
       end
+      @z_entities[z] ||= []
 
       new_entity = klass.new(new_entity_id,
        {
@@ -159,7 +160,6 @@ class EntityManager
       )
 
       # TODO should this be the ONLY storage of ents?
-      @z_entities[z] ||= []
       @z_entities[z] << new_entity
 
       @id_entities[new_entity_id] = new_entity
