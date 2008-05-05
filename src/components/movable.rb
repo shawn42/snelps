@@ -19,6 +19,7 @@ module Movable
     @path = nil
     @direction = nil
     unless @last_tile_x.nil? or (@last_tile_x == @tile_x and @last_tile_y == @tile_y)
+#      p "#{@server_id} leavingA [#{@last_tile_x}, #{@last_tile_y}]"
       @grid.leave @last_tile_x, @last_tile_y 
     end
   end
@@ -27,13 +28,18 @@ module Movable
   # etc)
   def set_destination!(new_tile_x, new_tile_y, dir)
     # current location
-    return nil if @grid.occupied?(new_tile_x, new_tile_y)
+    if @grid.occupied?(new_tile_x, new_tile_y)
+#      stop_moving!
+      return nil
+    end
     @animation_image_set = dir
     x,y = @rect.center
 
     unless @last_tile_x.nil? or (@last_tile_x == @tile_x and @last_tile_y == @tile_y)
+#      p "#{@server_id} leavingB [#{@last_tile_x}, #{@last_tile_y}]"
       @grid.leave @last_tile_x, @last_tile_y 
     end
+#    p "#{@server_id} entering [#{new_tile_x}, #{new_tile_y}]"
     @grid.occupy(new_tile_x, new_tile_y)
 
     @last_tile_x = @tile_x

@@ -12,7 +12,10 @@ module Positionable
 
   def setup_positionable(args)
     @map = args[:map]
-    @tile_x, @tile_y = @map.coords_to_tiles args[:x], args[:y]
+    tile_size = @map.tile_size
+    @rect = Rect.new args[:x],args[:y],tile_size,tile_size
+
+    @tile_x, @tile_y = @map.coords_to_tiles x, y
     @grid = args[:occupancy_grid]
     @grid.occupy @tile_x, @tile_y
   end

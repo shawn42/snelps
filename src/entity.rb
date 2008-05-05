@@ -1,7 +1,8 @@
 
 class Entity
+  # this is included here because it has its own initialize and it will
+  # override ours
   include Sprites::Sprite
-
   attr_accessor :server_id, :entity_type
 
   def initialize(server_id, *args)

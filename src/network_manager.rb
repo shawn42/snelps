@@ -52,6 +52,7 @@ class NetworkManager
         end
       end
     rescue Exception => ex
+      p ex.backtrace
       p ex
     end
   end

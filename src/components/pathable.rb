@@ -9,7 +9,6 @@ module Pathable
     # requires positionable to be included prior
     @grid = args[:occupancy_grid]
     @entity_manager = args[:entity_manager]
-    @grid.occupy @tile_x, @tile_y
   end
 
   def update_pathable(time)
