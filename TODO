@@ -5,14 +5,9 @@ MILESTONE #1 - "move units here" campaign
  - Maps need to know if X,Y has an obsticle
    - tile number ranges? (http://www.gamedev.net/reference/articles/article728.asp)
  - player connects and unit/structure creation needs to be sent to the network
- - pull out unit definitions into separate loadable file unit_defs.rb?
- - pull out structure definitions into separate loadable file structure_defs.rb?
  - add structure placement "grid-locking"
  - add abilities to units (maybe not needed for this milestone)
- - add abilities to stuctures (maybe not needed for this milestone)
- - add intro "placeholder" (slideshow w/ text)
  - add simple intro UI (map selection)
- - come up w/ campaign definition file format (how to develop victory conditions)
 
 BACKLOG
  - add logger to app

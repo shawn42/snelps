@@ -31,7 +31,7 @@ class EntityManager
     
     from = [tile_x,tile_y]
     to = [dest_tile_x,dest_tile_y]
-    unless has_obstacle?(dest_tile_x, dest_tile_y, entity.z) or !entity.respond_to? :path=
+    unless has_obstacle?(dest_tile_x, dest_tile_y, entity.z)
       max = 80
       path = Pathfinder.new(entity.z, self, @map.w, @map.h).find(from,to,max)
       if path.nil?
@@ -89,7 +89,7 @@ class EntityManager
 
     if selected_entity.nil?
       for entity in @entities
-        if entity.selected
+        if entity.selected and entity.respond_to? :path=
           # we clicked to send them an order
           world_x, world_y = @viewport.view_to_world(x, y)
 
@@ -135,7 +135,6 @@ class EntityManager
     
     begin
       klass = Object.const_get Inflector.camelize(entity_type)
-
       z = klass.default_z
       unless @available_z_levels.include? z
         @available_z_levels << z

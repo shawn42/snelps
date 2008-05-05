@@ -7,6 +7,7 @@ if $PROFILING
   require "ruby-prof"
 end
 require "environment"
+require 'metaclass'
 require 'publisher'
 require 'constructor'
 require 'diy'
