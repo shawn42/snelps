@@ -7,11 +7,11 @@ class Pathfinder
 
   attr_accessor :consideration_count, :diagonal_heuristics_count
 
-  def initialize(entity_type, entity_manager, width, height)
+  def initialize(entity_z, entity_manager, width, height)
     @width = width
     @height = height
     @entity_manager = entity_manager
-    @entity_type = entity_type
+    @entity_z = entity_z
     @consideration_count = 0
     @diagonal_heuristics_count = 0
   end
@@ -61,7 +61,7 @@ class Pathfinder
     x = n.x
     y = n.y
     return false if(x<0 or y<0 or x>=@width or y>=@height)
-    return false if @entity_manager.has_obstacle?(x,y,@entity_type)
+    return false if @entity_manager.has_obstacle?(x,y,@entity_z)
     return true
   end
 
@@ -71,7 +71,8 @@ class Pathfinder
 #    p "#{start.inspect} => #{target.inspect}"
     target_node = Node.new target[0], target[1], nil,nil,nil,nil
     unless is_valid?(target_node)
-      p "ERROR, target not valid #{start.inspect} => #{target_node}"
+      # TODO wanderers hit this a lot!?!?
+#      p "ERROR, target not valid #{start.inspect} => #{target_node}"
       return nil
     end
 
@@ -220,7 +221,7 @@ if $0 == __FILE__ #or true
   $: << '../lib'
   require 'linked_list'
   class Map
-    def has_obstacle?(x, y, entity_type);
+    def has_obstacle?(x, y, entity_z);
       p "has_obs"  
       return false
       if x == 26 and y < 114

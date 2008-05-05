@@ -10,13 +10,19 @@ module Wanderer
     @orig_x = @tile_x
     @orig_y = @tile_y
     self.range
+    self.wandering_idle_time
     @range_options = (0-@range..@range).to_a
     @range_size = 2*@range
-    # why do I need to ask for this once?
+    @idle_timer = 0
   end
+
 
   def update_wanderer(time)
     if idle?
+      @idle_timer += time
+    end
+    if @idle_timer > @wandering_idle_time
+      @idle_timer = 0
       # validate these positions before sending to the pathfinder
       wander_x = @orig_x + @range_options[rand(@range_size)]
       wander_y = @orig_y + @range_options[rand(@range_size)]

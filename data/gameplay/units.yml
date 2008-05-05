@@ -1,5 +1,6 @@
 --- 
 :unit_worker: 
+  :z: 1
   :health: 100
   :components: 
   - :positionable
@@ -13,6 +14,7 @@
   :attack_power: 10
   :speed: 60
 :unit_bird: 
+  :z: 2
   :health: 100
   :components: 
   - :positionable
@@ -26,6 +28,7 @@
   :attack_power: 10
   :speed: 80
 :animal: 
+  :z: 2
   :health: 10
   :components: 
   - :positionable
@@ -35,11 +38,13 @@
   - :animated
   - :drawable
   - :wanderer
+  :wandering_idle_time: 2000
   :armor: 0
   :range: 5
   :attack_power: 0
   :speed: 20
 :tree: 
+  :z: 1
   :components: 
   - :positionable
   - :audible

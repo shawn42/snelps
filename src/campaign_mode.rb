@@ -6,6 +6,7 @@ require 'map'
 require 'mini_map'
 require 'occupancy_grid'
 require 'story_dialog'
+require 'inflector'
 class CampaignMode < BaseMode
   extend Publisher
   include Commands
@@ -117,14 +118,9 @@ class CampaignMode < BaseMode
     @map.viewport = @viewport
 
     @entity_manager.map = @map
-    @entity_manager.entities = []
-
-    # putting this here because mini_map may benifit from having these
-    # as well
-    @occupancy_grids = {}
-    @occupancy_grids[:flying] = OccupancyGrid.new @map.width, @map.height
-    @occupancy_grids[:ground] = OccupancyGrid.new @map.width, @map.height
-    @entity_manager.occupancy_grids = @occupancy_grids
+#    @entity_manager.entities = []
+    # is this better?
+    @entity_manager.setup
 
     @mini_map = MiniMap.new @map, @viewport, @entity_manager
 
@@ -148,7 +144,11 @@ class CampaignMode < BaseMode
         until created do
           x,y = rand(@map.pixel_width), rand(@map.pixel_height)
           tile_x, tile_y = @map.coords_to_tiles(x,y)
-          unless @entity_manager.has_obstacle?(tile_x, tile_y, type) 
+          # TODO, is there a better way of getting the z here?
+          klass = Object.const_get Inflector.camelize(type)
+          z = klass.default_z
+
+          unless @entity_manager.has_obstacle?(tile_x, tile_y, z)
             ents << @entity_manager.create_entity(type,x,y)
             created = true
           end

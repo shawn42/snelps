@@ -1,5 +1,4 @@
 module Positionable
-  attr_accessor :z
 
   def self.included(target)
     target.add_update_listener :update_positionable
@@ -12,7 +11,6 @@ module Positionable
   def h();@rect.h;end
 
   def setup_positionable(args)
-    @z = 1
     @map = args[:map]
     @tile_x, @tile_y = @map.coords_to_tiles args[:x], args[:y]
     @grid = args[:occupancy_grid]

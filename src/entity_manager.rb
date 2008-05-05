@@ -13,18 +13,10 @@ class EntityManager
   def setup()
     @trace = false
     @entities = []
-  end
-
-  def occupancy_grid(entity_type)
-    # TODO add this to unit def?
-    case entity_type
-    when :animal
-      @occupancy_grids[:flying]
-    when :unit_bird
-      @occupancy_grids[:flying]
-    else
-      @occupancy_grids[:ground] 
-    end
+    @available_z_levels = []
+    @z_entities = {}
+    @id_entities = {}
+    @occupancy_grids = {}
   end
 
   def handle_entity_move(cmd)
@@ -33,31 +25,33 @@ class EntityManager
     dest_tile_x = dest_tile_x.to_i
     dest_tile_y = dest_tile_y.to_i
     
-    # TODO, put entities in a hash by server_id
-    for entity in @entities
-      if entity.server_id == entity_id
-        tile_x,tile_y = 
-          @map.coords_to_tiles(entity.x,entity.y)
-        
-        from = [tile_x,tile_y]
-        to = [dest_tile_x,dest_tile_y]
-        unless has_obstacle?(dest_tile_x, dest_tile_y, entity.entity_type)
-          max = 80
-          path = Pathfinder.new(entity.entity_type, self, @map.w, @map.h).find(from,to,max)
-          if path.nil?
-            entity.stop_animating
-          else
-            entity.path = path 
-          end
-        end
+    entity = @id_entities[entity_id]
+    tile_x,tile_y = 
+      @map.coords_to_tiles(entity.x,entity.y)
+    
+    from = [tile_x,tile_y]
+    to = [dest_tile_x,dest_tile_y]
+    unless has_obstacle?(dest_tile_x, dest_tile_y, entity.z) or !entity.respond_to? :path=
+      max = 80
+      path = Pathfinder.new(entity.z, self, @map.w, @map.h).find(from,to,max)
+      if path.nil?
+        entity.stop_animating
+      else
+        entity.path = path 
       end
     end
   end
 
-  def has_obstacle?(x, y, entity_type, ignore_objects = [])
+  def has_obstacle?(x, y, z, ignore_objects = [])
     # for now 266 is water, only flying entities can go on them
-    return (occupancy_grid(entity_type).occupied?(x, y) or 
-            (@map.at(x,y) == 266 and entity_type != :unit_bird))
+    begin
+      occ = @occupancy_grids[z].nil? ? false : @occupancy_grids[z].occupied?(x, y)
+      water_check = @map.at(x,y) == 266 and z == 1
+      return (occ or water_check)
+    rescue Exception => ex
+      p ex
+    end
+
   end
 
   def handle_key_up(event)
@@ -138,25 +132,39 @@ class EntityManager
     @@entity_count ||= 0
     @@entity_count += 1
     new_entity_id = @@entity_count #@game_server.create_entity(entity_type, x, y)
-
+    
     begin
-    klass = Object.const_get Inflector.camelize(entity_type)
-    new_entity = klass.new(new_entity_id,
-     {
-      :animation_manager => @animation_manager,
-      :sound_manager => @sound_manager,
-      :viewport => @viewport,
-      :entity_type => entity_type,
-      :server_id => new_entity_id,
-      :map => @map,
-      :occupancy_grid => occupancy_grid(entity_type),
-      :entity_manager => self,
-      :x => x,
-      :y => y,
-      :trace => @trace
-     }
+      klass = Object.const_get Inflector.camelize(entity_type)
+
+      z = klass.default_z
+      unless @available_z_levels.include? z
+        @available_z_levels << z
+        @available_z_levels.sort!
+        @occupancy_grids[z] = OccupancyGrid.new @map.width, @map.height
+      end
+
+      new_entity = klass.new(new_entity_id,
+       {
+        :animation_manager => @animation_manager,
+        :sound_manager => @sound_manager,
+        :viewport => @viewport,
+        :entity_type => entity_type,
+        :server_id => new_entity_id,
+        :occupancy_grid => @occupancy_grids[z],
+        :map => @map,
+        :entity_manager => self,
+        :x => x,
+        :y => y,
+        :trace => @trace
+       }
       )
-    @entities << new_entity
+
+      # TODO should this be the ONLY storage of ents?
+      @z_entities[z] ||= []
+      @z_entities[z] << new_entity
+
+      @id_entities[new_entity_id] = new_entity
+      @entities << new_entity
     rescue Exception => ex
       p ex
       caller.each do |c|
@@ -177,25 +185,28 @@ class EntityManager
       half_tile = @map.half_tile_size
       @map.width.times do |i|
         @map.height.times do |j|
-          if occupancy_grid(:unit_bird).occupied?(i,j)
-            occ_x, occ_y = @map.tiles_to_coords(i,j)
-            occ_x, occ_y = @viewport.world_to_view(occ_x,occ_y)
+          for z, grid in @occupancy_grids
+            if grid.occupied?(i,j)
+              occ_x, occ_y = @map.tiles_to_coords(i,j)
+              occ_x, occ_y = @viewport.world_to_view(occ_x,occ_y)
 
-            destination.draw_box_s([occ_x-half_tile,occ_y-half_tile],
-              [occ_x+half_tile,occ_y+half_tile], RED_HALF_ALPHA)
-          end
-          if occupancy_grid(:unit_worker).occupied?(i,j)
-            occ_x, occ_y = @map.tiles_to_coords(i,j)
-            occ_x, occ_y = @viewport.world_to_view(occ_x,occ_y)
-
-            destination.draw_box_s([occ_x-half_tile,occ_y-half_tile],
-              [occ_x+half_tile,occ_y+half_tile], RED_HALF_ALPHA)
+              destination.draw_box_s([occ_x-half_tile,occ_y-half_tile],
+                [occ_x+half_tile,occ_y+half_tile], RED_HALF_ALPHA)
+            end
           end
         end
       end
     end
-    @entities.each do |u|
-      u.draw destination
+
+    # TODO, change this to use z ordering,
+    # ent manager should keep an array of the current available z values.
+    # those values should act as keys into the entity-z-hash
+    # [1,2,3,4]
+    # {1 => [ent,ent,ent], 2=> [ent... 
+    @available_z_levels.each do |az|
+      @z_entities[az].each do |ze|
+        ze.draw destination
+      end
     end
   end
 end
