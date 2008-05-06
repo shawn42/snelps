@@ -27,13 +27,14 @@ class SoundManager
       STDOUT.puts "loading background music..."
       # TODO change this to be a hash of sounds for easier coding later
 #      @background_music = @resource_manager.load_music("snelps_jungle.wav")
-      @background_music = @resource_manager.load_music("Ethan1.wav")
+#      @background_music = @resource_manager.load_music("Loop 1.ogg")
+      @background_music = @resource_manager.load_music("Ethan1.ogg")
       @background_music.fade_in 3
       @background_music.fade_out 3
 
-      @unit_move = @resource_manager.load_sound("whiff.wav")
+      @unit_move = @resource_manager.load_sound("whiff.ogg")
 
-      @menu_music = @resource_manager.load_music("loop.wav")
+      @menu_music = @resource_manager.load_music("loop.ogg")
       @menu_music.fade_in 3
       @menu_music.fade_out 3
       STDOUT.write "done.\n"

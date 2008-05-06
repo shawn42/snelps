@@ -9,6 +9,9 @@ MILESTONE #1 - "move units here" campaign
  - add abilities to units (maybe not needed for this milestone)
  - add simple intro UI (map selection)
 
+PROBLEMS
+ - shouldn't render all enities every draw cycle
+
 BACKLOG
  - add logger to app
  - add clicking to minimap
