@@ -1,5 +1,8 @@
 
 MILESTONE #1 - "move units here" campaign
+ - maps should contain a list of entities to start the map with
+   - remove random unit creation from campaign_mode.rb
+   - create an target_zone entity for completion of first map
  - create Element class to parent Button,Checkbox,StoryStack
  - change coords_to_tiles calls to use an entities centerx, centery
  - Maps need to know if X,Y has an obsticle
