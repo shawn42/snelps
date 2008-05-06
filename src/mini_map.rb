@@ -1,9 +1,12 @@
+require 'publisher'
 
 class MiniMap
-  include Sprites::Sprite
+  extend Publisher
 
-  # update the mini map once per 2 seconds
-  MINI_MAP_UPDATE_TIME = 2000
+  can_fire :center_viewport
+
+  # update the mini map once per 3 seconds
+  MINI_MAP_UPDATE_TIME = 3000
   MINI_MAP_X = 850
   MINI_MAP_Y = 160
   SCALE = 0.08
@@ -18,6 +21,25 @@ class MiniMap
     @map.draw surf
     @map_image = surf.zoom [SCALE,SCALE], true
     @image = @map_image
+    @rect = Rect.new(MINI_MAP_X,MINI_MAP_Y,*@image.size)
+  end
+
+  def hit_by?(x,y)
+    @rect.collide_point? x, y
+  end
+
+  def handle_mouse_click(event)
+    pos = event.pos
+    x_click = pos[0]
+    y_click = pos[1]
+
+    scaled_x = x_click - MINI_MAP_X
+    scaled_y = y_click - MINI_MAP_Y
+    
+    x = scaled_x / SCALE + @viewport.screen_x_offset
+    y = scaled_y / SCALE + @viewport.screen_y_offset
+    fire :center_viewport, x, y
+
   end
 
   def update(time)

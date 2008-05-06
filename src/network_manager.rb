@@ -3,6 +3,7 @@ require 'commands'
 
 # this class manages the passing of commands to/from the server
 class NetworkManager
+  NETWORK_DEBUG = false
   include Commands
   attr_accessor :channels
 
@@ -20,6 +21,7 @@ end
 class NetworkManager
 
   def initialize()
+    @log = File.open 'network_log.txt', 'w' if NETWORK_DEBUG
     @channels = {}
     @channels[:to_server] = NetworkChannel.new
     @channels[:from_server] = NetworkChannel.new
@@ -27,6 +29,8 @@ class NetworkManager
     @turn_num = 0
 
     @channels[:to_server].when :msg_received do |msg|
+      @log.puts msg if NETWORK_DEBUG
+
       handle_server_msg msg
     end
     @mock_server_thread = Thread.new do

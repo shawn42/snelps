@@ -26,10 +26,10 @@ class EntityManager
     dest_tile_y = dest_tile_y.to_i
     
     entity = @id_entities[entity_id]
-    tile_x,tile_y = 
-      @map.coords_to_tiles(entity.x,entity.y)
+#    tile_x,tile_y = 
+#      @map.coords_to_tiles(entity.x,entity.y)
     
-    from = [tile_x,tile_y]
+    from = [entity.tile_x,entity.tile_y]
     to = [dest_tile_x,dest_tile_y]
     unless has_obstacle?(dest_tile_x, dest_tile_y, entity.z)
       max = 80

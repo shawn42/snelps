@@ -5,6 +5,7 @@ module Positionable
     target.add_setup_listener :setup_positionable
   end
 
+  attr_accessor :tile_x, :tile_y
   def x();@rect.centerx;end
   def y();@rect.centery;end
   def w();@rect.w;end

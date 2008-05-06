@@ -77,6 +77,12 @@ class Viewport
     fire :screen_scroll, [orig_x_offset-@x_offset,orig_y_offset-@y_offset]
   end
 
+  def center_to(x, y)
+    p "#{x},#{y}"
+    @y_offset = [y - @height/2, 0].max
+    @x_offset = [x - @width/2, 0].max
+  end
+  
   def max_left?
     return @x_offset <= 0
   end

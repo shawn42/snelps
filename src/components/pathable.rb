@@ -24,7 +24,7 @@ module Pathable
   def create_new_path(to_x, to_y, max=80)
     from = [@tile_x, @tile_y]
     to = [to_x,to_y]
-    Pathfinder.new(@entity_type, @entity_manager, @map.w, @map.h).find(from,to,max)
+    Pathfinder.new(z, @entity_manager, @map.w, @map.h).find(from,to,max)
   end
   
   # TODO clean up this code, there's duplicate code everywhere and its
@@ -45,10 +45,9 @@ module Pathable
           if to.nil? or to.empty?
             stop_moving!
           else
-            path = Pathfinder.new(@entity_type, @entity_manager, @map.w, @map.h).find(from,to,80)
+            self.path = create_new_path to[0], to[1]
           end
 
-          @path = path
           dest = @path.shift unless @path.nil? or @path.empty?
         end
         set_destination! dest[0], dest[1], dest[2] unless dest.nil?
@@ -63,15 +62,16 @@ module Pathable
           stop_moving!
         else
           dest = @path.shift
-          if @entity_manager.has_obstacle?(dest[0], dest[1], @entity_type, [self])
+          if @entity_manager.has_obstacle?(dest[0], dest[1], z, [self])
             # nil check path
             if @path.empty?
               stop_moving!
             else
-              from = @map.coords_to_tiles(x,y)
+
+              from = [@tile_x, @tile_y]#@map.coords_to_tiles(x,y)
 
               to = @path.pop
-              while !to.nil? and @entity_manager.has_obstacle?(to[0], to[1], @entity_type, [self]) 
+              while !to.nil? and @entity_manager.has_obstacle?(to[0], to[1], z, [self]) 
                 to = @path.pop
               end
 
@@ -80,14 +80,16 @@ module Pathable
                 dest = nil
                 p "AAHHH, no where to go!?!?! taking a break"
               else
-                path = Pathfinder.new(@entity_type, @entity_manager, @map.w, @map.h).find(from,to,80)
-  #              path.shift
-                @path = path
+                self.path = create_new_path to[0], to[1] 
                 dest = @path.shift unless @path.nil?
               end
             end
           end
-          set_destination! dest[0], dest[1], dest[2] unless dest.nil?
+          if dest.nil?
+            @dest = nil
+          else
+            set_destination! dest[0], dest[1], dest[2]
+          end
         end
       else
         # move toward dest

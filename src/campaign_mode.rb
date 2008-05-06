@@ -52,7 +52,11 @@ class CampaignMode < BaseMode
   end
 
   def on_click(event)
-    @entity_manager.handle_mouse_click event
+    if @mini_map.hit_by? event.pos[0], event.pos[1]
+      @mini_map.handle_mouse_click event
+    else
+      @entity_manager.handle_mouse_click event
+    end
   end
 
   def on_mouse_motion(event)
@@ -114,15 +118,17 @@ class CampaignMode < BaseMode
       fire :mode_change, :main_menu
     end
     
+    @viewport.setup
     @viewport.set_map_size(@map.pixel_width, @map.pixel_height)
     @map.viewport = @viewport
 
     @entity_manager.map = @map
-#    @entity_manager.entities = []
-    # is this better?
     @entity_manager.setup
 
     @mini_map = MiniMap.new @map, @viewport, @entity_manager
+    @mini_map.when :center_viewport do |x,y|
+      @viewport.center_to x, y
+    end
 
     @playing = true
     # TODO take this out?

@@ -1,6 +1,4 @@
 module Audible 
-  attr_accessor :dest
-
   def self.included(target)
     target.add_setup_listener :setup_audible
   end
