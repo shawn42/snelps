@@ -2,9 +2,9 @@
 :stages: 
 - :map: obs
   :before_story: 
-  - - blah blah blah
+  - - this is where story goes.. <click or press key>
     - image.png
-  - - blah too..
+  - - and more story to come.. <click or press key>
     - image2.png
 - :map: random
   :before_story: 

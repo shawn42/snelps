@@ -9,7 +9,7 @@ class EntityBuilder
   constructor :resource_manager
   
   def setup()
-    @gameplay_config = @resource_manager.load_entity_config "units"
+    @gameplay_config = @resource_manager.load_entity_config "entity_defs"
     build_dynamic_classes
   end
 
@@ -29,11 +29,6 @@ class EntityBuilder
       }
       klass_name = Inflector.camelize(entity_type)
       Object.const_set klass_name, klass
-
-#      klass_name = Inflector.camelize(entity_type)
-#      comp_str = components.collect{|c|"include #{c};"}.join
-#      props_str = properties.collect{|prop|"attribute(:#{prop}=>#{unit_def[prop]});"}.join
-#      Object.class_eval "class #{klass_name}<Entity;#{comp_str};#{props_str};end"
     end
   end
 end

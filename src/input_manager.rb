@@ -5,10 +5,18 @@ class InputManager
   constructor :mouse_manager
   def setup()
     @queue = EventQueue.new
-    @queue.ignore = [ActiveEvent]
+    @queue.ignore = [
+      ActiveEvent,
+      JoyAxisEvent,
+      JoyBallEvent,
+      JoyDownEvent,
+      JoyHatEvent,
+      JoyUpEvent,
+      ResizeEvent
+    ]
     @clock = Clock.new
     #seems to max out at around 18 anyways
-    @clock.target_framerate = 20
+    @clock.target_framerate = 17
   end
 
   def main_loop(game)
