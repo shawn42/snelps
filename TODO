@@ -4,7 +4,6 @@ MILESTONE #1 - "move units here" campaign
    - remove random unit creation from campaign_mode.rb
    - create an target_zone entity for completion of first map
  - create Element class to parent Button,Checkbox,StoryStack
- - change coords_to_tiles calls to use an entities centerx, centery
  - Maps need to know if X,Y has an obsticle
    - tile number ranges? (http://www.gamedev.net/reference/articles/article728.asp)
  - player connects and unit/structure creation needs to be sent to the network
@@ -17,5 +16,4 @@ PROBLEMS
 
 BACKLOG
  - add logger to app
- - add clicking to minimap
  - change map loading to be ruby code? (loads w/ sandbox C extension)

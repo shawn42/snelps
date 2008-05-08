@@ -9,6 +9,61 @@
   - :audible
   - :animated
   - :drawable
+  :sounds:
+  - :selected: worker_select.wav
+  - :acknowledge: worker_ack.wav
+  :animations:
+    :selected:
+      :prefix: magiceffect
+      :suffix: r.png
+      :first: 0
+      :last: 0
+    :idle:
+      :prefix: unit
+      :suffix: r.png
+      :first: 96
+      :last: 96
+    :moving:
+      :nw:
+        :prefix: unit
+        :suffix: r.png
+        :first: 64
+        :last: 71
+      :n:
+        :prefix: unit
+        :suffix: r.png
+        :first: 72
+        :last: 79
+      :ne:
+        :prefix: unit
+        :suffix: r.png
+        :first: 80
+        :last: 87
+      :e:
+        :prefix: unit
+        :suffix: r.png
+        :first: 88
+        :last: 95
+      :se:
+        :prefix: unit
+        :suffix: r.png
+        :first: 96
+        :last: 103
+      :s:
+        :prefix: unit
+        :suffix: r.png
+        :first: 104
+        :last: 111
+      :sw:
+        :prefix: unit
+        :suffix: r.png
+        :first: 112
+        :last: 119
+      :w:
+        :prefix: unit
+        :suffix: r.png
+        :first: 120
+        :last: 127
   :armor: 5
   :range: 5
   :attack_power: 10
@@ -23,6 +78,58 @@
   - :audible
   - :animated
   - :drawable
+  :animations:
+    :selected:
+      :prefix: magiceffect
+      :suffix: r.png
+      :first: 0
+      :last: 0
+    :idle:
+      :prefix: unit
+      :suffix: r.png
+      :first: 0
+      :last: 0
+    :moving:
+      :nw:
+        :prefix: unit
+        :suffix: r.png
+        :first: 0
+        :last: 7
+      :n:
+        :prefix: unit
+        :suffix: r.png
+        :first: 8
+        :last: 15
+      :ne:
+        :prefix: unit
+        :suffix: r.png
+        :first: 16
+        :last: 23
+      :e:
+        :prefix: unit
+        :suffix: r.png
+        :first: 24
+        :last: 31
+      :se:
+        :prefix: unit
+        :suffix: r.png
+        :first: 32
+        :last: 39
+      :s:
+        :prefix: unit
+        :suffix: r.png
+        :first: 40
+        :last: 47
+      :sw:
+        :prefix: unit
+        :suffix: r.png
+        :first: 48
+        :last: 55
+      :w:
+        :prefix: unit
+        :suffix: r.png
+        :first: 56
+        :last: 63
   :armor: 0
   :range: 15
   :attack_power: 10
@@ -38,6 +145,58 @@
   - :animated
   - :drawable
   - :wanderer
+  :animations:
+    :selected:
+      :prefix: magiceffect
+      :suffix: r.png
+      :first: 0
+      :last: 0
+    :idle:
+      :prefix: unit
+      :suffix: r.png
+      :first: 0
+      :last: 0
+    :moving:
+      :nw:
+        :prefix: unit
+        :suffix: r.png
+        :first: 0
+        :last: 7
+      :n:
+        :prefix: unit
+        :suffix: r.png
+        :first: 8
+        :last: 15
+      :ne:
+        :prefix: unit
+        :suffix: r.png
+        :first: 16
+        :last: 23
+      :e:
+        :prefix: unit
+        :suffix: r.png
+        :first: 24
+        :last: 31
+      :se:
+        :prefix: unit
+        :suffix: r.png
+        :first: 32
+        :last: 39
+      :s:
+        :prefix: unit
+        :suffix: r.png
+        :first: 40
+        :last: 47
+      :sw:
+        :prefix: unit
+        :suffix: r.png
+        :first: 48
+        :last: 55
+      :w:
+        :prefix: unit
+        :suffix: r.png
+        :first: 56
+        :last: 63
   :wandering_idle_time: 2000
   :armor: 0
   :range: 5
@@ -50,3 +209,14 @@
   - :audible
   - :animated
   - :drawable
+  :animations:
+    :selected:
+      :prefix: magiceffect
+      :suffix: r.png
+      :first: 0
+      :last: 0
+    :idle:
+      :prefix: ressource
+      :suffix: .png
+      :first: 2
+      :last: 2

@@ -4,17 +4,14 @@ module Animated
     :animation_image_set
 
   def self.included(target)
-    target.add_update_listener :update_animated
     target.add_setup_listener :setup_animated
-  end
-
-  def update_animated(time)
   end
 
   def setup_animated(*arg_list)
     args = arg_list.shift
-    # TODO setup animations to use data from units.yml
-    @animation_length = 8
+    @animated_time = 0
+    @frame_num = 0
+
     @animation_manager = args[:animation_manager]
     @animation_manager.register(self)
 
@@ -31,21 +28,15 @@ module Animated
   def frame_num()
     return @frame_num
   end
-  def frame_num=(frame_num)
-    @frame_num = frame_num
-  end
 
   def next_frame_num()
-    (@frame_num + 1) % @frame_count
+    # use the class version to keep our instance from loading a copy of animations
+    (@frame_num + 1) % self.class.default_animations[:moving][@animation_image_set].size
   end
 
   def next_frame(img)
     @frame_num = next_frame_num
     @image = img
-  end
-
-  def frame_count=(count)
-    @frame_count = count
   end
 
   def last_animated_time()
@@ -69,19 +60,18 @@ module Animated
   end
 
   def animation_length()
-    @animation_length.nil? ? 1 : @animation_length
+    # TODO hack, ugly
+    set = self.class.default_animations[:moving][animation_image_set]
+
+    set.nil? ? 1 : set[:last]-set[:first]+1
   end
 
   def animation_image_set()
-    @animation_image_set ||= :default
+    @animation_image_set ||= :idle
   end
 
   def object_type()
     @entity_type
   end
-
-#  def animation_image_set()
-#    @animation_image_set ||= :se
-#  end
 
 end

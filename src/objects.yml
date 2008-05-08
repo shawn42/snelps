@@ -72,3 +72,4 @@ config_manager:
 entity_builder:
   compose:
     - resource_manager
+    - animation_manager
