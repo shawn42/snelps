@@ -12,7 +12,7 @@ MILESTONE #1 - "move units here" campaign
  - add simple intro UI (map selection)
 
 PROBLEMS
- - shouldn't render all enities every draw cycle
+ - coords_to_tiles/unit placement is off
 
 BACKLOG
  - add logger to app

@@ -23,9 +23,6 @@ sound_manager:
 input_manager:
   compose:
     - mouse_manager
-animation_manager:
-  compose:
-    - resource_manager
 network_manager:
   library: nil
 turn_manager:
@@ -36,8 +33,8 @@ mouse_manager:
     - viewport
 entity_manager:
   compose:
+    - resource_manager
     - viewport
-    - animation_manager
     - sound_manager
     - network_manager
     - mouse_manager
@@ -56,7 +53,6 @@ campaign_mode:
     - entity_manager
     - viewport
     - snelps_screen
-    - animation_manager
     - network_manager
     - mouse_manager
 viewport:
@@ -72,4 +68,3 @@ config_manager:
 entity_builder:
   compose:
     - resource_manager
-    - animation_manager

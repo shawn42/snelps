@@ -8,21 +8,17 @@ class Map
 
   can_fire :victory, :failure
   
-  # check every 2 seconds
-  CHECK_CONDITIONS_POLL_TIME = 2000
-
   def to_yaml_properties()
     ['@width', '@height', '@tile_size', '@converted_tiles', '@half_tile_size']
   end
 
   attr_accessor :tile_size, :height, :width, :tile_images, :tiles,
     :converted_tiles, :viewport, :resource_manager, :half_tile_size,
-    :background_image, :check_conditions, :last_check
+    :background_image, :script
 
   alias :w :width
   alias :h :height
   def setup(args = {})
-    @last_check = 0
     @resource_manager = args[:resource_manager]
     @width = args[:width].nil? ? 6 : args[:width]
     @height = args[:height].nil? ? 6 : args[:height]
@@ -32,6 +28,10 @@ class Map
     @tiles = args[:tiles].nil? ? NArray.object(@width, @height) : args[:tiles]
     @half_tile_size = (@tile_size / 2.0).floor
     load_images
+  end
+
+  def start_script()
+    @script.start
   end
 
   def load_images()
@@ -55,7 +55,6 @@ class Map
   def self.load_from_file(resource_manager, map_name)
     map = resource_manager.load_map(map_name)
     map.resource_manager = resource_manager
-    map.last_check = 0
     map.tiles = NArray.object(map.width, map.height)
     map.converted_tiles.each_with_index do |row,i|
       row.each_with_index do |col,j|
@@ -94,8 +93,10 @@ class Map
 
   # returns and array of [x,y] to the center of the tile
   def tiles_to_coords(tile_x, tile_y)
-    [tile_x * @tile_size + @half_tile_size,
-      tile_y * @tile_size + @half_tile_size]
+#    [[tile_x * @tile_size - @half_tile_size,0].max,
+#      [tile_y * @tile_size - @half_tile_size].max]
+    [tile_x * @tile_size - @half_tile_size,
+      tile_y * @tile_size - @half_tile_size]
   end
 
   def recreate_map_image()
@@ -110,17 +111,6 @@ class Map
   end
 
   def update(time)
-    @last_check += time
-    if @last_check > CHECK_CONDITIONS_POLL_TIME
-      @last_check = 0
-      state = @check_conditions.call("TODO:GAME OBJECT HERE")
-      case state
-      when :victory
-        fire :victory
-      when :failure
-        fire :failure
-      end
-    end
   end
 
   def draw(destination)

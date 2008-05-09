@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 $: << "#{File.dirname(__FILE__)}/../config"
 require "fileutils"
+require 'map_script'
 
 class ResourceManager
   
@@ -10,7 +11,7 @@ class ResourceManager
   
   def load_map(map_name)
     map = YAML::load_file(MAP_PATH + map_name + ".yml")
-    map.check_conditions = instance_eval(File.open(MAP_PATH + map_name + ".rb").readlines.join("\n"))
+    map.script = MapScript.new(File.open(MAP_PATH + map_name + ".rb").readlines.join("\n"))
     map
   end
 

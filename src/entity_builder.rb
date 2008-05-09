@@ -6,7 +6,7 @@ require 'constructor'
 require 'attribute'
 
 class EntityBuilder
-  constructor :resource_manager, :animation_manager
+  constructor :resource_manager
   
   def setup()
     @gameplay_config = @resource_manager.load_entity_config "entity_defs"
@@ -34,7 +34,7 @@ class EntityBuilder
 
       # feel weird to do this here
       if components.include? Animated
-        @animation_manager.register_class entity_type 
+        klass.animated_class_setup @resource_manager, entity_type
       end
     end
     p "done."

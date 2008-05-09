@@ -12,6 +12,10 @@ module Drawable
 
   # requires the ent to be a sprite
   def draw(destination)
+    if @viewport.nil?
+      puts "race condition, why is @viewport nil?"
+      return nil 
+    end
     x,y = @rect.center 
     w = @viewport.world_width
     h = @viewport.world_height

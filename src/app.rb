@@ -17,7 +17,6 @@ require 'rubygame'
 include Rubygame
 
 require 'resource_manager'
-require 'animation_manager'
 require 'input_manager'
 require 'mouse_manager'
 require 'sound_manager'

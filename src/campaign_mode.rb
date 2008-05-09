@@ -16,8 +16,8 @@ class CampaignMode < BaseMode
 
   attr_accessor :mini_map, :font_manager
   constructor :resource_manager, :font_manager, :entity_manager,
-    :viewport, :snelps_screen, :network_manager, :animation_manager,
-    :mouse_manager, :entity_builder
+    :viewport, :snelps_screen, :network_manager, :mouse_manager,
+    :entity_builder
 
   def setup()
     base_setup
@@ -97,8 +97,6 @@ class CampaignMode < BaseMode
   end
 
   def start_play()
-    @entity_manager.setup
-
     #TODO get this from main_menu_mode
     # lets make the player a fire snelp
     snelp_index = Player::SNELPS.index :fire
@@ -108,19 +106,13 @@ class CampaignMode < BaseMode
     
     map_name = @current_stage[:map]
     @map = Map.load_from_file @resource_manager, map_name
-
-    @map.when :victory do
-      p "VICTORY!!"
-      fire :mode_change, :main_menu
-    end
-    @map.when :failure do
-      p "FAILURE!!"
-      fire :mode_change, :main_menu
-    end
     
     @viewport.setup
     @viewport.set_map_size(@map.pixel_width, @map.pixel_height)
     @map.viewport = @viewport
+
+    # do this after @viewport::setup
+    @entity_manager.setup
 
     @entity_manager.map = @map
     @entity_manager.setup
@@ -130,18 +122,33 @@ class CampaignMode < BaseMode
       @viewport.center_to x, y
     end
 
+    @map.script.when :create_entity do |ent_type,player,tile_x,tile_y|
+      # TODO this should push an event
+      x, y = @map.tiles_to_coords(tile_x,tile_y)
+      # TODO, is there a better way of getting the z here?
+      klass = Object.const_get Inflector.camelize(ent_type)
+      z = klass.default_z
+
+      if @entity_manager.has_obstacle?(tile_x, tile_y, z)
+        raise "obstacle: invalid map script #{player} #{ent_type} #{tile_x},#{tile_y},#{z}"
+      else
+        @entity_manager.create_entity(ent_type,x,y)
+      end
+    end
+
+    @map.start_script
     @playing = true
     # TODO take this out?
-    setup_test_units
+#    setup_test_units
     # fake out to pump turn events
 #    @turn_manager.start self
   end
 
   def setup_test_units()
     num_test_ents = 50
+    sleep 1
     Thread.new do
       ents = []
-      sleep 1
       p "setting up #{num_test_ents} entities ... "
       num_test_ents.times do
         created = false 

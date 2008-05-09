@@ -9,7 +9,7 @@ class EntityManager
   attr_accessor :map, :occupancy_grids, :entities
   can_fire :sound_play, :network_msg_to
 
-  constructor :viewport, :animation_manager, :sound_manager, :network_manager, :mouse_manager, :input_manager
+  constructor :viewport, :resource_manager, :sound_manager, :network_manager, :mouse_manager, :input_manager
   def setup()
     @trace = false
     @entities = []
@@ -46,7 +46,8 @@ class EntityManager
     # for now 266 is water, only flying entities can go on them
     begin
       occ = @occupancy_grids[z].nil? ? false : @occupancy_grids[z].occupied?(x, y)
-      water_check = @map.at(x,y) == 266 and z == 1
+      water_check = ((@map.at(x,y) == 266) and (z == 1))
+#      p "occupied:#{occ} water#{water_check}"
       return (occ or water_check)
     rescue Exception => ex
       p ex
@@ -128,7 +129,7 @@ class EntityManager
   end
   
   def create_entity(entity_type, x, y)
-    # TODO, send CREATE_entity CMD?
+    # TODO, send CREATE_ENTITY CMD?
     @@entity_count ||= 0
     @@entity_count += 1
     new_entity_id = @@entity_count #@game_server.create_entity(entity_type, x, y)
@@ -145,7 +146,7 @@ class EntityManager
 
       new_entity = klass.new(new_entity_id,
        {
-        :animation_manager => @animation_manager,
+        :resource_manager => @resource_manager,
         :sound_manager => @sound_manager,
         :viewport => @viewport,
         :entity_type => entity_type,
