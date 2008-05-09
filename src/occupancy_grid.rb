@@ -5,9 +5,13 @@ class OccupancyGrid
     @grid = NArray.object(width, height)
   end
 
-  def occupy(x, y)
+  def occupy(x, y, entity)
 #    @mutex.synchronize do
-      @grid[x,y] = 1
+      if free? x, y
+        @grid[x,y] = entity
+      else
+        raise "Occupancy Overlap"
+      end
 #    end
   end
 
@@ -25,6 +29,17 @@ class OccupancyGrid
 
   def occupied?(x,y)
     not free? x, y
+  end
+
+  def get_occupants(x,y,w,h)
+    occupants = {}
+    w.times do |r|
+      h.times do |c|
+        ent = @grid[x+r,y+c]
+        occupants[ent.server_id] = ent unless ent.nil?
+      end
+    end
+    occupants.values
   end
 
 end

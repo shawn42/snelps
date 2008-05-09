@@ -17,7 +17,6 @@ module Pathable
   end
 
   def path=(path)
-    stop_moving!
     @path = path
   end
 

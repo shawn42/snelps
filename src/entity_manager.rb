@@ -197,13 +197,20 @@ class EntityManager
       end
     end
 
-    # TODO, change this to use z ordering,
-    # ent manager should keep an array of the current available z values.
-    # those values should act as keys into the entity-z-hash
-    # [1,2,3,4]
-    # {1 => [ent,ent,ent], 2=> [ent... 
     @available_z_levels.each do |az|
-      @z_entities[az].each do |ze|
+
+      view_x = @viewport.x_offset
+      view_y = @viewport.y_offset
+      view_w = @viewport.width
+      view_h = @viewport.height
+      tl_tile = @map.coords_to_tiles view_x, view_y
+      br_tile = @map.coords_to_tiles view_x+view_w, view_y+view_h
+      x = tl_tile[0]
+      y = tl_tile[1]
+      w = br_tile[0]-x
+      h = br_tile[1]-y
+      @occupancy_grids[az].get_occupants(x,y,w,h).each do |ze|
+#      @z_entities[az].each do |ze|
         ze.draw destination
       end
     end

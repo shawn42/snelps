@@ -15,14 +15,20 @@ class Entity
   end
 
   def update(time)
-    self.class.instance_variable_get("@update_listeners").each do |meth_callback|
-      self.send(meth_callback, time)
+    update_listeners = self.class.instance_variable_get("@update_listeners")
+    unless update_listeners.nil?
+      update_listeners.each do |meth_callback|
+        self.send(meth_callback, time)
+      end
     end
   end
 
   def setup(*args)
-    self.class.instance_variable_get("@setup_listeners").each do |meth_callback|
-      self.send(meth_callback, *args)
+    setup_listeners = self.class.instance_variable_get("@setup_listeners")
+    unless setup_listeners.nil?
+      setup_listeners.each do |meth_callback|
+        self.send(meth_callback, *args)
+      end
     end
   end
 

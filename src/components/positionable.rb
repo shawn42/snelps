@@ -1,7 +1,6 @@
 module Positionable
 
   def self.included(target)
-    target.add_update_listener :update_positionable
     target.add_setup_listener :setup_positionable
   end
 
@@ -18,10 +17,7 @@ module Positionable
 
     @tile_x, @tile_y = @map.coords_to_tiles x, y
     @grid = args[:occupancy_grid]
-    @grid.occupy @tile_x, @tile_y
-  end
-
-  def update_positionable(time)
+    @grid.occupy @tile_x, @tile_y, self
   end
 
   def hit_by?(x, y)
