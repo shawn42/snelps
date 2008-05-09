@@ -32,10 +32,15 @@ class OccupancyGrid
   end
 
   def get_occupants(x,y,w,h)
+    # TODO may be excluding units half on/off?
     occupants = {}
-    w.times do |r|
-      h.times do |c|
-        ent = @grid[x+r,y+c]
+    rows = (x..x+w-1)
+    cols = (y..y+h-1)
+#    w.times do |r|
+    for r in rows
+      for c in cols
+#      h.times do |c|
+        ent = @grid[r,c]
         occupants[ent.server_id] = ent unless ent.nil?
       end
     end
