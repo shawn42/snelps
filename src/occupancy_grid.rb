@@ -32,10 +32,9 @@ class OccupancyGrid
   end
 
   def get_occupants(x,y,w,h)
-    # TODO may be excluding units half on/off?
     occupants = {}
-    rows = (x..x+w-1)
-    cols = (y..y+h-1)
+    rows = (x..x+w)
+    cols = (y..y+h)
 #    w.times do |r|
     for r in rows
       for c in cols
