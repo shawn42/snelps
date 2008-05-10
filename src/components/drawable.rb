@@ -1,6 +1,9 @@
 module Drawable 
   attr_accessor :selected, :trace
 
+  HB_HEIGHT = 2
+  HB_WIDTH = 20
+
   def self.included(target)
     target.add_setup_listener :setup_drawable
   end
@@ -50,6 +53,7 @@ module Drawable
       end
     end
 
+    # can I pull this out into a selectable componenet?
     if @selected
       w = @selected_image.w
       h = @selected_image.h
@@ -60,6 +64,17 @@ module Drawable
 
     @image.blit(destination, 
                 [x-@image.w/2,y-@image.w/2,@image.w,@image.h])
+
+    if @selected
+      hb_x = x - 10
+      hb_y = y - 20
+
+      destination.draw_box_s([hb_x,hb_y],
+        [hb_x+HB_WIDTH,hb_y+HB_HEIGHT], RED)
+      hb_fill = health/self.class.default_health * HB_WIDTH
+      destination.draw_box_s([hb_x,hb_y],
+        [hb_x+hb_fill,hb_y+HB_HEIGHT], GREEN)
+    end
   end
 
 end
