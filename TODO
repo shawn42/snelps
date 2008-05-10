@@ -10,6 +10,7 @@ MILESTONE #1 - "move units here" campaign
  - add structure placement "grid-locking"
  - add abilities to units (maybe not needed for this milestone)
  - add simple intro UI (map selection)
+ - clean up and add docs EVERYWHERE
 
 PROBLEMS
  - coords_to_tiles/unit placement is off
