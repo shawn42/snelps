@@ -212,11 +212,6 @@
   - :animated
   - :drawable
   :animations:
-    :selected:
-      :prefix: magiceffect
-      :suffix: r.png
-      :first: 0
-      :last: 0
     :idle:
       :prefix: ressource
       :suffix: .png
