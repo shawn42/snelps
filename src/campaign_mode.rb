@@ -82,6 +82,7 @@ class CampaignMode < BaseMode
   end
 
   def start(*args)
+    @map = nil
     fire :music_play, :ingame_background
     @campaign = @resource_manager.load_campaign(args.shift)
     @current_stage = @campaign[:stages].shift
@@ -115,6 +116,8 @@ class CampaignMode < BaseMode
     @entity_manager.setup
 
     @entity_manager.map = @map
+    # TODO WTF am i doing here... 
+    @map.entity_manager = @entity_manager
     @entity_manager.setup
 
     @mini_map = MiniMap.new @map, @viewport, @entity_manager
@@ -122,6 +125,11 @@ class CampaignMode < BaseMode
       @viewport.center_to x, y
     end
 
+    @map.script.when :victory do
+      # TODO add summary report page?
+      p "VICTORY"
+      fire :mode_change, :main_menu
+    end
     @map.script.when :create_entity do |ent_type,player,tile_x,tile_y|
       # TODO this should push an event
       x, y = @map.tiles_to_coords(tile_x,tile_y)

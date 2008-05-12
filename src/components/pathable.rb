@@ -25,7 +25,7 @@ module Pathable
     to = [to_x,to_y]
     Pathfinder.new(z, @entity_manager, @map.w, @map.h).find(from,to,max)
   end
-  
+
   # TODO clean up this code, there's duplicate code everywhere and its
   # too long of a method
   def update_movement(time)
@@ -34,8 +34,6 @@ module Pathable
         dest = @path.shift
 
         if @entity_manager.has_obstacle?(dest[0], dest[1], @entity_type, [self])
-          from = @map.coords_to_tiles(x,y)
-
           to = @path.pop
           while !to.nil? and @entity_manager.has_obstacle?(to[0], to[1], @entity_type, [self]) 
             to = @path.pop
@@ -66,9 +64,6 @@ module Pathable
             if @path.empty?
               stop_moving!
             else
-
-              from = [@tile_x, @tile_y]#@map.coords_to_tiles(x,y)
-
               to = @path.pop
               while !to.nil? and @entity_manager.has_obstacle?(to[0], to[1], z, [self]) 
                 to = @path.pop

@@ -1,6 +1,6 @@
 
 class Entity
-  attr_accessor :server_id, :entity_type
+  attr_accessor :server_id, :entity_type, :player_id
 
   def initialize(server_id, *args)
     @server_id = server_id

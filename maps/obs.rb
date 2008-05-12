@@ -44,12 +44,16 @@ create_entity :unit_bird, nil, 23, 23
 create_entity :unit_bird, nil, 23, 24
 
 
+create_entity :portal, nil, 0, 0
 
 create_entity :unit_worker, nil, 1, 2
 
-# TODO this isn't implemented yet
-add_zone_listener nil, 4, 4, 2, 2 do
-  puts "yar"
+# Discover 0,0
+add_trigger do
+  occs = get_occupants_at 0, 0, 1, 1
+  unless occs.empty?
+    fire :victory
+  end
 end
 
 

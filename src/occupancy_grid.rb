@@ -31,16 +31,20 @@ class OccupancyGrid
     not free? x, y
   end
 
-  def get_occupants(x,y,w,h)
+  def get_occupants(x,y,w,h,player_id=nil)
     occupants = {}
-    rows = (x..x+w)
-    cols = (y..y+h)
+    rows = (x..x+w-1)
+    cols = (y..y+h-1)
 #    w.times do |r|
     for r in rows
       for c in cols
 #      h.times do |c|
         ent = @grid[r,c]
-        occupants[ent.server_id] = ent unless ent.nil?
+        unless ent.nil? 
+          if player_id.nil? or ent.player_id == player_id
+            occupants[ent.server_id] = ent 
+          end
+        end
       end
     end
     occupants.values

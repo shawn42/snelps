@@ -12,6 +12,8 @@ class ResourceManager
   def load_map(map_name)
     map = YAML::load_file(MAP_PATH + map_name + ".yml")
     map.script = MapScript.new(File.open(MAP_PATH + map_name + ".rb").readlines.join("\n"))
+    map.resource_manager = self
+    map.script.map = map
     map
   end
 

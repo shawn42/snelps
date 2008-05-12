@@ -81,8 +81,11 @@ class EntityManager
         if entity.selected
           entity.selected = false
         else
-          selected_entity = entity
-          entity.selected = true
+          # TODO hack need to create "selectable" component
+          unless entity.class.default_animations[:selected].nil?
+            selected_entity = entity
+            entity.selected = true
+          end
         end
         break
       end
@@ -96,7 +99,6 @@ class EntityManager
 
           tile_x,tile_y = 
             @map.coords_to_tiles(world_x,world_y)
-
 
           # TODO properly pass around sound events, these should come from the audible component
           fire :sound_play, :unit_move
@@ -165,6 +167,8 @@ class EntityManager
 
       @id_entities[new_entity_id] = new_entity
       @entities << new_entity
+      # TODO ahhhhh
+      new_entity.animate
     rescue Exception => ex
       p ex
       caller.each do |c|
@@ -206,10 +210,10 @@ class EntityManager
       view_h = @viewport.height
       tl_tile = @map.coords_to_tiles view_x, view_y
       br_tile = @map.coords_to_tiles view_x+view_w, view_y+view_h
-      x = tl_tile[0]
-      y = tl_tile[1]
-      w = br_tile[0]-x
-      h = br_tile[1]-y
+      x = tl_tile[0]-1
+      y = tl_tile[1]-1
+      w = br_tile[0]-x+1
+      h = br_tile[1]-y+1
       @occupancy_grids[az].get_occupants(x,y,w,h).each do |ze|
 #      @z_entities[az].each do |ze|
         ze.draw destination

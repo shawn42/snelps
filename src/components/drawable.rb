@@ -19,15 +19,14 @@ module Drawable
       puts "race condition, why is @viewport nil?"
       return nil 
     end
-    x,y = @rect.center 
     w = @viewport.world_width
     h = @viewport.world_height
-    x,y = @viewport.world_to_view x, y
+    vx,vy = @viewport.world_to_view self.x, self.y
+    half_tile = @map.half_tile_size
 
     if @trace
       unless @dest.nil?
-        startx,starty = x,y
-        half_tile = @map.half_tile_size
+        startx,starty = vx,vy
 
         new_x,new_y = @viewport.world_to_view(@dest.x,@dest.y)
 
@@ -57,13 +56,14 @@ module Drawable
     if @selected
       w = @selected_image.w
       h = @selected_image.h
-      sx = x - (w/2)
-      sy = y - (h/2)
+      sx = vx - (w/2)
+      sy = vy - (h/2)
       @selected_image.blit(destination, [sx,sy,w,h])
     end
 
+#    puts "#{@rect.centerx}#{@rect.centery}:#{x}#{y}:#{vx}#{vy}"
     @image.blit(destination, 
-                [x-@image.w/2,y-@image.w/2,@image.w,@image.h])
+                [vx-@image.w/2,vy-@image.w/2])
 
     if @selected
       hb_x = x - 10

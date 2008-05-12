@@ -1,5 +1,6 @@
 --- 
 :unit_worker: 
+  :player_id: 0
   :z: 1
   :health: 100
   :components: 
@@ -69,6 +70,7 @@
   :attack_power: 10
   :speed: 60
 :unit_bird: 
+  :player_id: 0
   :z: 2
   :health: 100
   :components: 
@@ -220,3 +222,16 @@
       :suffix: .png
       :first: 2
       :last: 2
+:portal: 
+  :z: 0
+  :components: 
+  - :positionable
+  - :audible
+  - :animated
+  - :drawable
+  :animations:
+    :idle:
+      :prefix: area
+      :suffix: .png
+      :first: 8
+      :last: 15

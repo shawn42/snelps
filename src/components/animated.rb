@@ -86,11 +86,10 @@ module Animated
 
     @image = get_default_frame(@entity_type)
 
-    x = args[:x]
-    y = args[:y]
-		@rect = Rect.new(x,y,*@image.size)
-    @selected_image = get_selection_image(@entity_type).
-      zoom([0.25,0.25], true)
+    unless self.class.default_animations[:selected].nil?
+      @selected_image = get_selection_image(@entity_type).
+        zoom([0.25,0.25], true)
+    end
   end
 
   def next_frame()
@@ -117,7 +116,14 @@ module Animated
     return @animation_length unless @animation_length.nil?
 
     # TODO hack, ugly
-    set = self.class.default_animations[:moving][animation_image_set]
+    set = nil
+    moving_set = self.class.default_animations[:moving]
+    if !moving_set.nil? and moving_set.include? animation_image_set
+      set = moving_set[animation_image_set] 
+    else
+      set = self.class.default_animations[:idle]
+    end
+
     @animation_length = set.nil? ? 1 : set[:last]-set[:first]+1
   end
 
