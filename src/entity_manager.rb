@@ -125,7 +125,9 @@ class EntityManager
     for entity in @entities
       entity.selected = false
       if entity.in? rect
-        entity.selected = true
+        unless entity.class.default_animations[:selected].nil?
+          entity.selected = true
+        end
       end
     end
   end
