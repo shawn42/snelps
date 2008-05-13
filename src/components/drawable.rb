@@ -66,8 +66,8 @@ module Drawable
                 [vx-@image.w/2,vy-@image.w/2])
 
     if @selected
-      hb_x = x - 10
-      hb_y = y - 20
+      hb_x = vx - 10
+      hb_y = vy - 20
 
       destination.draw_box_s([hb_x,hb_y],
         [hb_x+HB_WIDTH,hb_y+HB_HEIGHT], RED)

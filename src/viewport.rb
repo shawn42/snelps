@@ -78,7 +78,6 @@ class Viewport
   end
 
   def center_to(x, y)
-    p "#{x},#{y}"
     @y_offset = [y - @height/2, 0].max
     @x_offset = [x - @width/2, 0].max
   end

@@ -44,13 +44,13 @@ create_entity :unit_bird, nil, 23, 23
 create_entity :unit_bird, nil, 23, 24
 
 
-create_entity :portal, nil, 0, 0
+create_entity :portal, nil, 59, 59
 
 create_entity :unit_worker, nil, 1, 2
 
 # Discover 0,0
 add_trigger do
-  occs = get_occupants_at 0, 0, 1, 1
+  occs = get_occupants_at 59, 59
   unless occs.empty?
     fire :victory
   end

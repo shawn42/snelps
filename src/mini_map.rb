@@ -5,7 +5,7 @@ class MiniMap
 
   can_fire :center_viewport
 
-  MINI_MAP_UPDATE_TIME = 500
+  MINI_MAP_UPDATE_TIME = 200
   MINI_MAP_X = 850
   MINI_MAP_Y = 160
   SCALE = 0.08

@@ -19,7 +19,7 @@ class MapScript
     instance_eval @script_text
   end
 
-  def get_occupants_at(x,y,w,h,player=nil)
+  def get_occupants_at(x,y,w=1,h=1,player=nil)
     # horrible hack just to see if it works, then i will fix the object
     # hierarchy 
     grids = @map.instance_variable_get("@entity_manager").instance_variable_get("@occupancy_grids")
