@@ -222,4 +222,13 @@ class EntityManager
       end
     end
   end
+
+  def get_occupants_at(x,y,w=1,h=1,player=nil)
+    occs = []
+    for z,grid in @occupancy_grids
+      occs << grid.get_occupants(x, y, w, h, player)
+      occs.flatten!
+    end
+    occs
+  end
 end

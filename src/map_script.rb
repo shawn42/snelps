@@ -22,13 +22,7 @@ class MapScript
   def get_occupants_at(x,y,w=1,h=1,player=nil)
     # horrible hack just to see if it works, then i will fix the object
     # hierarchy 
-    grids = @map.instance_variable_get("@entity_manager").instance_variable_get("@occupancy_grids")
-    occs = []
-    for z,grid in grids
-      occs << grid.get_occupants(x, y, w, h, 0)
-      occs.flatten!
-    end
-    occs
+    @map.instance_variable_get("@entity_manager").get_occupants_at(x, y, w, h, 0)
   end
 
   def update(time)
