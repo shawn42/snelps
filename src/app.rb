@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 $: << "#{File.dirname(__FILE__)}/../config"
 $PROFILING = false
+$_v = true
 
 require 'rubygems'
 if $PROFILING

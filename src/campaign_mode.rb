@@ -200,7 +200,6 @@ class CampaignMode < BaseMode
     @mini_map.update time unless @mini_map.nil?
     @map.update time unless @map.nil?
     @viewport.update time unless @viewport.nil?
-    @animation_manager.update time unless @animation_manager.nil?
     @entity_manager.update time unless @entity_manager.nil?
   end
   

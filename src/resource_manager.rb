@@ -29,9 +29,9 @@ class ResourceManager
     if ent_images[file_name].nil?
       image = nil
       begin
-        image = Rubygame::Surface.load_image(File.expand_path(DATA_PATH + "gfx/" + file_name))
+        image = Rubygame::Surface.load(File.expand_path(DATA_PATH + "gfx/" + file_name))
       rescue Exception => ex
-        image = Rubygame::Surface.load_image(File.expand_path(GDATA_PATH + "gfx/" + file_name))
+        image = Rubygame::Surface.load(File.expand_path(GDATA_PATH + "gfx/" + file_name))
       end
       ent_images[file_name] = image
     else
@@ -42,7 +42,7 @@ class ResourceManager
   def load_music(name)
     begin
       full_name = File.expand_path(DATA_PATH + "sound/" + name)
-      sound = Rubygame::Mixer::Music.load_audio(full_name)
+      sound = Rubygame::Music.load(full_name)
       return sound
     rescue Rubygame::SDLError => ex
       puts "Cannot load sound " + full_name + " : " + ex
@@ -53,7 +53,7 @@ class ResourceManager
   def load_sound(name)
     begin
       full_name = File.expand_path(DATA_PATH + "sound/" + name)
-      sound = Rubygame::Mixer::Sample.load_audio(full_name)
+      sound = Rubygame::Sound.load(full_name)
       return sound
     rescue Rubygame::SDLError => ex
       puts "Cannot load sound " + full_name + " : " + ex

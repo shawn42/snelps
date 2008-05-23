@@ -29,13 +29,13 @@ class SoundManager
 #      @background_music = @resource_manager.load_music("snelps_jungle.wav")
 #      @background_music = @resource_manager.load_music("Loop 1.ogg")
       @background_music = @resource_manager.load_music("Ethan1.ogg")
-      @background_music.fade_in 3
+#      @background_music.fade_in 3
       @background_music.fade_out 3
 
       @unit_move = @resource_manager.load_sound("whiff.ogg")
 
       @menu_music = @resource_manager.load_music("loop.ogg")
-      @menu_music.fade_in 3
+#      @menu_music.fade_in 3
       @menu_music.fade_out 3
       STDOUT.write "done.\n"
     end
@@ -45,10 +45,8 @@ class SoundManager
     if @enabled
       case what
       when :unit_move
-        # TODO add in locking to prevent the same sound from being
-        # played at the same time
         @sound_thread = Thread.new do
-          Mixer.play @unit_move, 1, 0
+          @unit_move.play
         end
       end
     end
@@ -58,15 +56,12 @@ class SoundManager
     if @enabled
       case what
       when :ingame_background
-        # TODO change to use new Mixer::Music class
         @sound_thread = Thread.new do
-          @background_music.play -1
-  #        Rubygame::Mixer::play(background_music,-1,-1)
+          @background_music.play :repeats => -1
         end
       when :menu_music
-        # TODO change to use new Mixer::Music class
         @sound_thread = Thread.new do
-          @menu_music.play -1
+          @menu_music.play :repeats => -1
         end
       end
     end
