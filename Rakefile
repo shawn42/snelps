@@ -27,9 +27,9 @@ end
 desc "Run an example map"
 task :run do |t|
   if Platform.mac?
-    sh "rsdl src/app.rb obs"
+    sh "rsdl src/app.rb"
   else
-    sh "ruby src/app.rb obs"
+    sh "ruby src/app.rb"
   end
 end
 
