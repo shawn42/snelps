@@ -55,8 +55,8 @@ class ModeController
 
   def update(time)
     @modes[@mode].update time
-    @snelps_screen.update
     draw
+    @snelps_screen.flip
   end
 
   def draw()

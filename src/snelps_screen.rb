@@ -4,6 +4,8 @@ class SnelpsScreen
   def setup()
     w,h = @config_manager[:screen_resolution]
     flags = []
+    flags << HWSURFACE
+    flags << DOUBLEBUF
     flags << FULLSCREEN if @config_manager[:fullscreen]
     @screen = Screen.set_mode [w,h], 0, flags
   end

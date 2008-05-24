@@ -16,7 +16,7 @@ class InputManager
     ]
     @clock = Clock.new
     #seems to max out at around 18 anyways
-    @clock.target_framerate = 17
+    @clock.target_framerate = 24
   end
 
   def main_loop(game)
