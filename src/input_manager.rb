@@ -15,8 +15,7 @@ class InputManager
       ResizeEvent
     ]
     @clock = Clock.new
-    #seems to max out at around 18 anyways
-    @clock.target_framerate = 24
+    @clock.target_framerate = 30
   end
 
   def main_loop(game)

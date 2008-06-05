@@ -8,4 +8,4 @@ _Requirements_
      - SDL_ttf 
      - SDL_gfx 
     
-    NArray (no gem available, download the source)
+    NArray (gem install narray)
