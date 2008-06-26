@@ -13,4 +13,5 @@ PROBLEMS
  - 
 
 BACKLOG
+ - remove entity_type from entity args, use class name magic?
  - add logger to app

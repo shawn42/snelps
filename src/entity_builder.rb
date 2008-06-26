@@ -3,6 +3,7 @@ require 'yaml'
 require 'entity'
 require 'inflector'
 require 'constructor'
+require 'animated'
 require 'attribute'
 
 class EntityBuilder
