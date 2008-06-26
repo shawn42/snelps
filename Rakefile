@@ -34,7 +34,7 @@ begin
   desc "Run all specs (tests)"
   Spec::Rake::SpecTask.new do |t|
     t.spec_files = FileList['specs/*_spec.rb']
-    t.spec_opts = ["--format", "specdoc"]
+#    t.spec_opts = ["--format", "specdoc"]
   end
 rescue LoadError
   task :spec do 
