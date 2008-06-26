@@ -17,7 +17,7 @@ class MiniMap
     @entity_manager = entity_manager
 
     surf = Surface.new [@map.pixel_width, @map.pixel_height]
-    @map.draw surf
+    @map.draw_full surf
     @map_image = surf.zoom [SCALE,SCALE], true
 
     @w = @viewport.width * SCALE

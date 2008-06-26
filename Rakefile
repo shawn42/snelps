@@ -19,12 +19,7 @@ Rake::RDocTask.new do |t|
 	t.options += RDOC_OPTIONS
 end
 
-desc "Update the data" 
-task :data do |t|
-  sh "./scripts/syncdata"
-end
-
-desc "Run an example map"
+desc "Run an Snelps"
 task :run do |t|
   if Platform.mac?
     sh "rsdl src/app.rb"
@@ -33,24 +28,20 @@ task :run do |t|
   end
 end
 
-desc "Run the editor"
-task :editor do |t|
-  if Platform.mac?
-    sh "rsdl src/ed_app.rb tmp 100"
-  else
-    sh "ruby src/ed_app.rb tmp 100"
+begin
+  require 'spec/rake/spectask'
+
+  desc "Run all specs (tests)"
+  Spec::Rake::SpecTask.new do |t|
+    t.spec_files = FileList['specs/*_spec.rb']
+    t.spec_opts = ["--format", "specdoc"]
+  end
+rescue LoadError
+  task :spec do 
+    puts "ERROR: RSpec is not installed?"
   end
 end
 
-desc "Run all the unit tests"
-task :test do |t|
-  puts "TODO: make this actually run all the tests..."
-  if Platform.mac?
-    sh "rsdl test/unit/*_test.rb"
-  else
-    sh "ruby test/unit/*_test.rb"
-  end
-end
 
 STATS_DIRECTORIES = [
   %w(Source            src/), 
