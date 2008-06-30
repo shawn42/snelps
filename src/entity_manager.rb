@@ -104,7 +104,6 @@ class EntityManager
           fire :sound_play, :unit_move
           cmd = "#{ENTITY_MOVE}:#{entity.server_id}:#{tile_x}:#{tile_y}"
           fire :network_msg_to, cmd
-#          @network_manager[:to_server].push cmd
         end
       end
     else

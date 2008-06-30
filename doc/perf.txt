@@ -1,392 +1,775 @@
+sanderson@shiny:~/code/snelps$ rsdl -rprofile src/app.rb 
+2008-06-30 16:27:11.620 rsdl[15429:10b] Warning once: This application, or a library it uses, is using NSQuickDrawView, which has been deprecated. Apps should cease use of QuickDraw and move to Quartz.
+"building entities.."
+"done."
 loading background music...
 done.
-loading images...
-done.
-KATHUMP:TOKEN
-"setup 100 units ... lets see em dance"
-KATHUMP:TOKEN
-KATHUMP:TOKEN
-drag received
-clicked
-KATHUMP:TOKEN
-Thread ID: 369824460
-Total: 21.23
-
- %self     total     self     wait    child    calls  name
-  0.00      0.00     0.00     0.00     0.00        3  Kernel#class (ruby_runtime:0}
-  0.00     20.07     0.00    20.07     0.00        2  Kernel#sleep (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00        3  Proc#call (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00        6  IO#write (ruby_runtime:0}
-  0.00      1.16     0.00     0.00     1.16        3  NetworkChannel#push (./network_channel.rb:16}
-  0.00      0.00     0.00     0.00     0.00        3  Array#== (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00        3  Array#include? (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00        3  Array#each (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00        3  Array#[] (ruby_runtime:0}
-  0.00     21.23     0.00    20.07     1.16        0  TurnManager#start (./turn_manager.rb:35}
-  0.00      1.16     0.00     1.16     0.00        3  Mutex#synchronize (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00        3  Publisher::InstanceMethods#ensure_valid (./../config/../lib/publisher.rb:76}
-  0.00      0.00     0.00     0.00     0.00        3  Publisher::InstanceMethods#fire (./../config/../lib/publisher.rb:66}
-  0.00      0.00     0.00     0.00     0.00        3  Module#class_eval (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00        3  MockNetworkManager#handle_server_msg (./network_manager.rb:43}
-  0.00      0.00     0.00     0.00     0.00        3  MockNetworkManager#[] (./network_manager.rb:57}
-  0.00      0.00     0.00     0.00     0.00        3  String#split (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00        6  Hash#[] (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00        3  Kernel#puts (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00        3  Kernel#nil? (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00        3  String#== (ruby_runtime:0}
-
-
-Thread ID: 370136080
-Total: 0.01
-
- %self     total     self     wait    child    calls  name
-25200.00      7.19     2.52     2.94     1.73    21622  Array#each_index (ruby_runtime:0}
-24500.00      3.63     2.45     0.15     1.03   475658  Array#== (ruby_runtime:0}
-23000.00      2.30     2.30     0.00     0.00   876897  Array#[] (ruby_runtime:0}
-17800.00      6.84     1.78     3.79     1.27    21622  Pathfinder#diagonal_heuristic (./pathfinding.rb:68}
-13400.00      5.24     1.34     0.31     3.59    24504  Array#include? (ruby_runtime:0}
-10100.00      1.01     1.01     0.00     0.00   440189  Fixnum#== (ruby_runtime:0}
-9900.00      3.13     0.99     1.40     0.74    21608  Pathfinder#is_valid (./pathfinding.rb:91}
-8800.00     26.93     0.88     2.88    23.17     5493  Array#each-4 (ruby_runtime:0}
-3600.00      0.36     0.36     0.00     0.00   124316  Fixnum#- (ruby_runtime:0}
-2500.00      0.83     0.25     0.45     0.13    32515  Pathfinder#extract_node (./pathfinding.rb:112}
-2400.00      0.24     0.24     0.00     0.00   101412  Float#> (ruby_runtime:0}
-2200.00      0.22     0.22     0.00     0.00    86488  Fixnum#abs (ruby_runtime:0}
-1800.00     29.83     0.18     0.61    29.04       90  Pathfinder#find (./pathfinding.rb:126}
-1600.00      0.16     0.16     0.00     0.00    24911  Array#<< (ruby_runtime:0}
-1500.00      0.78     0.15     0.33     0.30     2701  Pathfinder#adjacent_nodes (./pathfinding.rb:79}
-1400.00      0.14     0.14     0.00     0.00    21243  Array#insert (ruby_runtime:0}
-1400.00      7.34     0.14     0.00     7.20    21622  Queue#add_path (./pathfinding.rb:40}
-1400.00      0.27     0.14     0.13     0.00    21531  Map#has_obstacle (./map.rb:83}
-1300.00      7.42     0.13     0.45     6.84    21622  Pathfinder#make_NH (./pathfinding.rb:117}
-1200.00      0.15     0.12     0.00     0.03    21531  Array#each-5 (ruby_runtime:0}
-1200.00      0.12     0.12     0.00     0.00    38110  Fixnum#+ (ruby_runtime:0}
-1200.00      0.12     0.12     0.00     0.00    43444  Fixnum#* (ruby_runtime:0}
-900.00     12.55     0.09     0.26    12.20     2701  Pathfinder#successors (./pathfinding.rb:101}
-900.00      0.09     0.09     0.00     0.00    43216  Fixnum#< (ruby_runtime:0}
-900.00      0.09     0.09     0.00     0.00    45849  Fixnum#>= (ruby_runtime:0}
-700.00     29.98     0.07     0.05    29.86       90  Array#each-3 (ruby_runtime:0}
-500.00      0.20     0.05     0.00     0.15    21622  Enumerable#min (ruby_runtime:0}
-500.00      0.05     0.05     0.00     0.00    21531  Array#+ (ruby_runtime:0}
-400.00      0.04     0.04     0.00     0.00     5593  Array#size (ruby_runtime:0}
-400.00      0.04     0.04     0.00     0.00    21622  Float#+ (ruby_runtime:0}
-400.00      0.04     0.04     0.00     0.00     2519  Kernel#== (ruby_runtime:0}
-300.00      0.11     0.03     0.08     0.00     2792  Queue#shift (./pathfinding.rb:51}
-300.00      0.03     0.03     0.00     0.00    21622  Fixnum#<=> (ruby_runtime:0}
-300.00      0.03     0.03     0.00     0.00    21622  Float#* (ruby_runtime:0}
-300.00      0.03     0.03     0.00     0.00     5493  Fixnum#> (ruby_runtime:0}
-200.00      0.06     0.02     0.01     0.03      100  Unit#initialize (./unit.rb:15}
-100.00     30.47     0.01     0.44    30.02       90  Mutex#synchronize (ruby_runtime:0}
-100.00      0.01     0.01     0.00     0.00      200  Array#first (ruby_runtime:0}
-100.00      0.01     0.01     0.00     0.00       91  Map#coords_to_tiles (./map.rb:71}
-100.00      0.01     0.01     0.00     0.00      182  Publisher::InstanceMethods#ensure_valid (./../config/../lib/publisher.rb:76}
-100.00      0.01     0.01     0.00     0.00      100  Float#/ (ruby_runtime:0}
-100.00     30.01     0.01     0.02    29.98       90  UnitManager#handle_unit_move (./unit_manager.rb:29}
-100.00     30.48     0.01     0.00    30.47       90  NetworkChannel#push (./network_channel.rb:16}
-100.00      0.01     0.01     0.00     0.00      100  Rubygame::Surface#zoom (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00       91  MockNetworkManager#[] (./network_manager.rb:57}
-  0.00      0.00     0.00     0.00     0.00      191  Class#new-1 (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00      100  AnimatedObject#frame_count= (./animated_object.rb:22}
-  0.00     30.01     0.00     0.00    30.01       90  Proc#call (ruby_runtime:0}
-  0.00      0.06     0.00     0.00     0.06      191  Class#new (ruby_runtime:0}
-  0.00      0.09     0.00     0.00     0.09        0  GameClient#initialize (./game_client.rb:53}
-  0.00      0.00     0.00     0.00     0.00     1764  Hash#[] (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00      382  Kernel#rand (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00        1  Kernel#p (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00      100  Array#length (ruby_runtime:0}
-  0.00     30.01     0.00     0.00    30.01       90  Proc#call-1 (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00      100  AnimatedObject#last_animated_time= (./animated_object.rb:30}
-  0.00      0.00     0.00     0.00     0.00      182  Fixnum#div (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00       91  Pathfinder#initialize (./pathfinding.rb:62}
-  0.00      0.00     0.00     0.00     0.00       91  Queue#clear (./pathfinding.rb:34}
-  0.00      0.00     0.00     0.00     0.00      100  <Class::Array>#allocate (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00       91  NilClass#nil? (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00        2  IO#write (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00       91  Unit#idle? (./unit.rb:126}
-  0.00     30.01     0.00     0.00    30.01       90  MockNetworkManager#handle_server_msg (./network_manager.rb:43}
-  0.00      0.00     0.00     0.00     0.00       91  Rubygame::Rect#centerx (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:223}
-  0.00      0.00     0.00     0.00     0.00      182  String#== (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00        0  Kernel#loop (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00       90  AnimatedObject#animate (./animated_object.rb:42}
-  0.00      0.00     0.00     0.00     0.00      100  Map#pixel_height (./map.rb:36}
-  0.00      0.00     0.00     0.00     0.00      182  Integer#ceil (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00       91  Rubygame::Rect#centery (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:233}
-  0.00      0.09     0.00     0.03     0.06      100  UnitManager#create_unit (./unit_manager.rb:106}
-  0.00      0.00     0.00     0.00     0.00      100  AnimationManager#get_selection_image (./animation_manager.rb:27}
-  0.00      0.00     0.00     0.00     0.00      300  Kernel#=== (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00      100  AnimatedObject#frame_num= (./animated_object.rb:6}
-  0.00      0.01     0.00     0.00     0.01      100  AnimationManager#get_default_frame (./animation_manager.rb:23}
-  0.00      0.00     0.00     0.00     0.00      273  Fixnum#to_s (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00      100  AnimationManager#register (./animation_manager.rb:14}
-  0.00      0.00     0.00     0.00     0.00       91  Queue#initialize (./pathfinding.rb:29}
-  0.00      0.00     0.00     0.00     0.00      100  Float#coerce (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00      273  String#split (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00      100  Rubygame::Surface#size (ruby_runtime:0}
-  0.00     30.01     0.00     0.00    30.01       90  Array#each-2 (ruby_runtime:0}
-  0.00     30.01     0.00     0.00    30.01       90  NetworkChannel#push-1 (./network_channel.rb:16}
-  0.00      0.00     0.00     0.00     0.00     2882  Array#shift (ruby_runtime:0}
-  0.00      0.09     0.00     0.00     0.09        1  Integer#times (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00      364  Array#at (ruby_runtime:0}
-  0.00     30.01     0.00     0.00    30.01       90  Array#each-1 (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00      273  String#to_i (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00       91  Unit#y (./unit.rb:113}
-  0.00      0.00     0.00     0.00     0.00      182  Kernel#class (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00        1  String#inspect (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00      182  Module#class_eval (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00      100  Map#pixel_width (./map.rb:40}
-  0.00     30.01     0.00     0.00    30.01       90  Mutex#synchronize-1 (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00      100  Array#initialize (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00        0  Array#each (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00      191  <Class::Object>#allocate (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00       91  <Class::Queue>#allocate (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00       91  Kernel#nil? (ruby_runtime:0}
-  0.00      0.01     0.00     0.00     0.01      282  Fixnum#/ (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00        1  Integer#to_int (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00       91  Unit#x (./unit.rb:112}
-  0.00      0.00     0.00     0.00     0.00      100  Rubygame::Rect#initialize (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:86}
-  0.00     30.01     0.00     0.00    30.01       90  Publisher::InstanceMethods#fire-1 (./../config/../lib/publisher.rb:66}
-  0.00      0.03     0.00     0.00     0.03     2792  Queue#size (./pathfinding.rb:50}
-  0.00     30.02     0.00     0.00    30.02       90  Publisher::InstanceMethods#fire (./../config/../lib/publisher.rb:66}
-  0.00      0.00     0.00     0.00     0.00       90  Unit#path= (./unit.rb:41}
-
-
-Thread ID: 367252860
-Total: 0.01
-
- %self     total     self     wait    child    calls  name
-100.00      0.01     0.01     0.00     0.00       72  Module#class_eval (ruby_runtime:0}
-100.00      0.02     0.01     0.00     0.01       72  Publisher::InstanceMethods#ensure_valid (./../config/../lib/publisher.rb:76}
-  0.00      0.00     0.00     0.00     0.00       72  Fixnum#== (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00       72  String#to_i (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00       72  Proc#call (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00       72  Fixnum#to_s (ruby_runtime:0}
-  0.00      0.02     0.00     0.00     0.02       72  NetworkChannel#push (./network_channel.rb:16}
-  0.00      0.00     0.00     0.00     0.00       72  Array#== (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00       72  Array#include? (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00       72  Array#each (ruby_runtime:0}
-  0.00     26.71     0.00    26.71     0.00       72  Kernel#sleep (ruby_runtime:0}
-  0.00      0.02     0.00     0.00     0.02       72  Mutex#synchronize (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00       72  Kernel#class (ruby_runtime:0}
-  0.00      0.02     0.00     0.00     0.02       72  Publisher::InstanceMethods#fire (./../config/../lib/publisher.rb:66}
-  0.00      0.00     0.00     0.00     0.00      216  Fixnum#+ (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00        0  MockNetworkManager#initialize (./network_manager.rb:35}
-  0.00      0.00     0.00     0.00     0.00       72  TurnManager#handle_turn (./turn_manager.rb:12}
-  0.00      0.00     0.00     0.00     0.00       72  String#split (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00        0  Kernel#loop (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00      144  Hash#[] (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00       72  String#== (ruby_runtime:0}
-
-
-Thread ID: 20485880
-Total: 31.83
-
- %self     total     self     wait    child    calls  name
- 10.74     15.42     3.42     9.28     2.72   118340  Rubygame::Rect#initialize (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:86}
-  8.45     28.24     2.69     3.48    22.07     1920  Integer#times-1 (ruby_runtime:0}
-  4.87      2.07     1.55     0.00     0.52   355022  Kernel#=== (ruby_runtime:0}
-  4.12     17.89     1.31     0.00    16.58   118239  Rubygame::Surface#blit (ruby_runtime:0}
-  3.52      3.91     1.12     2.15     0.64   118200  Viewport#world_to_view (./viewport.rb:99}
-  2.89     16.64     0.92     0.00    15.72   118357  Class#new (ruby_runtime:0}
-  2.01      0.64     0.64     0.00     0.00   238235  Fixnum#- (ruby_runtime:0}
-  1.73      0.55     0.55     0.00     0.00   230826  Fixnum#* (ruby_runtime:0}
-  1.63      0.52     0.52     0.00     0.00   237283  Fixnum#== (ruby_runtime:0}
-  1.45      0.46     0.46     0.00     0.00   115200  NArray#[] (ruby_runtime:0}
-  1.19      0.38     0.38     0.00     0.00   118340  Array#length (ruby_runtime:0}
-  0.85      0.27     0.27     0.00     0.00   118340  Array#initialize (ruby_runtime:0}
-  0.75      0.24     0.24     0.00     0.00   118740  <Class::Array>#allocate (ruby_runtime:0}
-  0.53      1.42     0.17     0.11     1.14     3000  Unit#draw (./unit.rb:94}
-  0.47      0.87     0.15     0.27     0.45     2900  Unit#update_movement (./unit.rb:47}
-  0.28      3.30     0.09     0.47     2.74      162  Array#each (ruby_runtime:0}
-  0.19      0.06     0.06     0.00     0.00    24203  Array#at (ruby_runtime:0}
-  0.19      0.18     0.06     0.08     0.04     4355  Rubygame::Rect#centery (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:233}
-  0.16      0.05     0.05     0.00     0.00     8241  Float#+ (ruby_runtime:0}
-  0.16      0.35     0.05     0.19     0.11     5505  Rubygame::Rect#centerx (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:223}
-  0.09      0.09     0.03     0.00     0.06       33  <Module::Rubygame>#fetch_sdl_events (ruby_runtime:0}
-  0.09      0.03     0.03     0.00     0.00     7203  Fixnum#+ (ruby_runtime:0}
-  0.09      0.03     0.03     0.00     0.00     6016  Fixnum#/ (ruby_runtime:0}
-  0.09      0.03     0.03     0.00     0.00    12204  Fixnum#div (ruby_runtime:0}
-  0.09      0.45     0.03     0.00     0.42     3124  Rubygame::Rect#center (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:211}
-  0.09      0.03     0.03     0.00     0.00     1964  AnimatedObject#last_animated_time (./animated_object.rb:26}
-  0.06      0.02     0.02     0.00     0.00     8650  Float#- (ruby_runtime:0}
-  0.06      0.02     0.02     0.00     0.00     1296  AnimatedObject#last_animated_time= (./animated_object.rb:30}
-  0.06      0.12     0.02     0.00     0.10     2381  Unit#x (./unit.rb:112}
-  0.06     28.26     0.02     0.00    28.24       32  Integer#times (ruby_runtime:0}
-  0.06      0.89     0.02     0.00     0.87     2900  Unit#update (./unit.rb:37}
-  0.06      0.02     0.02     0.00     0.00     2900  AnimatedObject#animating? (./animated_object.rb:46}
-  0.03      0.01     0.01     0.00     0.00       88  Pathfinder#is_valid (./pathfinding.rb:91}
-  0.03      0.01     0.01     0.00     0.00     1354  Ruby3d::Vector#y (ruby_runtime:0}
-  0.03      0.01     0.01     0.00     0.00     4901  NilClass#nil? (ruby_runtime:0}
-  0.03      0.01     0.01     0.00     0.00     1261  Float#* (ruby_runtime:0}
-  0.03      0.01     0.01     0.00     0.00     3017  Rubygame::Surface#h (ruby_runtime:0}
-  0.03      0.01     0.01     0.00     0.00     1266  Float#< (ruby_runtime:0}
-  0.03      0.03     0.01     0.00     0.02      100  Rubygame::Rect#collide_rect? (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:488}
-  0.03      0.01     0.01     0.00     0.00     1604  AnimatedObject#stop_animating (./animated_object.rb:38}
-  0.03      0.01     0.01     0.00     0.00       30  Kernel#== (ruby_runtime:0}
-  0.03      0.01     0.01     0.00     0.00      100  Rubygame::Rect#x (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:149}
-  0.03      0.01     0.01     0.00     0.00      124  Map#tiles_to_coords (./map.rb:76}
-  0.03      0.01     0.01     0.00     0.00       32  Rubygame::Screen#update (ruby_runtime:0}
-  0.03      0.01     0.01     0.00     0.00     2344  Array#[]= (ruby_runtime:0}
-  0.03      0.11     0.01     0.07     0.03     1172  Rubygame::Rect#centerx= (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:227}
-  0.03     28.27     0.01     0.00    28.26       32  Map#draw (./map.rb:87}
-  0.03      0.08     0.01     0.07     0.00     1172  Rubygame::Rect#centery= (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:237}
-  0.03      0.06     0.01     0.00     0.05        1  Array#each-5 (ruby_runtime:0}
-  0.03      0.01     0.01     0.00     0.00     5187  Array#[] (ruby_runtime:0}
-  0.03      0.01     0.01     0.00     0.00      100  Rubygame::Rect#collide_point? (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:482}
-  0.03      0.05     0.01     0.00     0.04       23  Array#each-6 (ruby_runtime:0}
-  0.03      0.01     0.01     0.00     0.00      100  <Class::Rubygame::Rect>#new_from_object (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:109}
-  0.03      0.14     0.01     0.13     0.00     1256  AnimatedObject#next_frame_num (./animated_object.rb:10}
-  0.03      0.01     0.01     0.00     0.00     1172  Ruby3d::Vector#* (ruby_runtime:0}
-  0.03      0.01     0.01     0.00     0.00       89  Pathfinder#diagonal_heuristic (./pathfinding.rb:68}
-  0.03      0.01     0.01     0.00     0.00       89  Array#each_index (ruby_runtime:0}
-  0.03      0.01     0.01     0.00     0.00     2504  Ruby3d::Vector#x (ruby_runtime:0}
-  0.03      0.15     0.01     0.00     0.14      628  AnimatedObject#next_frame (./animated_object.rb:14}
-  0.03      0.01     0.01     0.00     0.00      796  Fixnum#< (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00       33  Rubygame::EventQueue#push (/usr/local/lib/ruby/site_ruby/1.8/rubygame/queue.rb:82}
-  0.00      0.00     0.00     0.00     0.00       32  Array#clear (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00       14  Publisher::InstanceMethods#ensure_valid (./../config/../lib/publisher.rb:76}
-  0.00     31.83     0.00     0.00    31.83        1  InputManager#main_loop (./input_manager.rb:15}
-  0.00      0.00     0.00     0.00     0.00        1  Needle::Lifecycle::Singleton#call (/usr/local/lib/ruby/gems/1.8/gems/needle-1.3.0/lib/needle/lifecycle/singleton.rb:38}
-  0.00      0.06     0.00     0.00     0.06        1  UnitManager#handle_unit_move (./unit_manager.rb:29}
-  0.00      0.00     0.00     0.00     0.00        1  Queue#clear (./pathfinding.rb:34}
-  0.00      0.00     0.00     0.00     0.00       88  Array#each-7 (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00     2629  Kernel#nil? (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00       32  Rubygame::Clock#tick (/usr/local/lib/ruby/site_ruby/1.8/rubygame/clock.rb:116}
-  0.00      0.00     0.00     0.00     0.00     1266  Float#abs (ruby_runtime:0}
-  0.00      0.05     0.00     0.00     0.05        1  Pathfinder#find (./pathfinding.rb:126}
-  0.00      0.00     0.00     0.00     0.00        2  String#== (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00      209  Range#include? (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00        1  Queue#initialize (./pathfinding.rb:29}
-  0.00      0.00     0.00     0.00     0.00        3  String#split (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00      103  Array#<< (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00        2  Rubygame::MouseUpEvent#initialize (/usr/local/lib/ruby/site_ruby/1.8/rubygame/event.rb:188}
-  0.00      0.11     0.00     0.07     0.04      100  Unit#in? (./unit.rb:115}
-  0.00      0.00     0.00     0.00     0.00      100  Rubygame::Rect#right (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:191}
-  0.00      0.00     0.00     0.00     0.00     1256  Fixnum#% (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00       32  Fixnum#<= (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00      124  Module#=== (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00      100  Rubygame::Rect#y (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:159}
-  0.00      0.00     0.00     0.00     0.00        3  Fixnum#to_s (ruby_runtime:0}
-  0.00      0.06     0.00     0.00     0.06        1  Array#each-4 (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00        1  <Class::Queue>#allocate (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00        1  Needle::ServicePoint#instance (/usr/local/lib/ruby/gems/1.8/gems/needle-1.3.0/lib/needle/service-point.rb:115}
-  0.00      0.00     0.00     0.00     0.00       20  Array#first (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00      335  Float#<=> (ruby_runtime:0}
-  0.00      0.06     0.00     0.00     0.06        1  Array#each-3 (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00        1  Unit#path= (./unit.rb:41}
-  0.00      0.00     0.00     0.00     0.00      248  <Class::Ruby3d::Vector>#new (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00       10  Viewport#scroll (./viewport.rb:70}
-  0.00      0.00     0.00     0.00     0.00       32  <Class::Rubygame::Clock>#delay (ruby_runtime:0}
-  0.00      0.21     0.00     0.00     0.21        3  Array#each-2 (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00        2  Float#/ (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00        2  <Module::Rubygame>#key2str (/usr/local/lib/ruby/site_ruby/1.8/rubygame/event.rb:32}
-  0.00      0.01     0.00     0.00     0.01      134  Array#include? (ruby_runtime:0}
-  0.00      0.21     0.00     0.00     0.21       12  Array#each-1 (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00        1  Rubygame::Rect#bottom (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:201}
-  0.00      0.00     0.00     0.00     0.00     1371  Fixnum#> (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00      100  Rubygame::Rect#h (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:177}
-  0.00      0.00     0.00     0.00     0.00        1  Pathfinder#initialize (./pathfinding.rb:62}
-  0.00      0.01     0.00     0.00     0.01       89  Pathfinder#make_NH (./pathfinding.rb:117}
-  0.00      0.00     0.00     0.00     0.00       16  Module#== (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00       26  Rubygame::Rect#t (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:159}
-  0.00      1.75     0.00     0.00     1.75       32  UnitManager#draw (./unit_manager.rb:132}
-  0.00      0.00     0.00     0.00     0.00        2  Integer#ceil (ruby_runtime:0}
-  0.00      0.21     0.00     0.00     0.21       12  Publisher::InstanceMethods#fire (./../config/../lib/publisher.rb:66}
-  0.00     31.53     0.00     0.00    31.53       32  GameClient#update (./game_client.rb:81}
-  0.00      0.00     0.00     0.00     0.00      100  Rubygame::Rect#left (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:149}
-  0.00      0.00     0.00     0.00     0.00        1  Rubygame::Rect#top (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:159}
-  0.00      0.06     0.00     0.00     0.06        1  Proc#call-2 (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00        2  Float#ceil (ruby_runtime:0}
-  0.00      0.05     0.00     0.04     0.01     1231  Unit#y (./unit.rb:113}
-  0.00      0.00     0.00     0.00     0.00      462  Float#> (ruby_runtime:0}
-  0.00      0.06     0.00     0.00     0.06        1  Publisher::InstanceMethods#fire-1 (./../config/../lib/publisher.rb:66}
-  0.00      0.00     0.00     0.00     0.00       30  Kernel#class (ruby_runtime:0}
-  0.00     31.83     0.00     0.00    31.83        1  Kernel#loop (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00      196  Rubygame::Rect#r (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:191}
-  0.00      0.01     0.00     0.00     0.01      100  Unit#hit_by? (./unit.rb:121}
-  0.00      0.06     0.00     0.00     0.06        1  Proc#call-1 (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00      137  Array#shift (ruby_runtime:0}
-  0.00      0.21     0.00     0.00     0.21       12  Proc#call (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00     1298  AnimatedObject#animate (./animated_object.rb:42}
-  0.00      0.00     0.00     0.00     0.00        2  Kernel#puts (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00        2  Array#sort (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00       12  Queue#size (./pathfinding.rb:50}
-  0.00      0.00     0.00     0.00     0.00       23  Array#size (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00       12  Queue#shift (./pathfinding.rb:51}
-  0.00      0.02     0.00     0.02     0.00        1  Rubygame::KeyDownEvent#initialize (/usr/local/lib/ruby/site_ruby/1.8/rubygame/event.rb:98}
-  0.00      0.00     0.00     0.00     0.00       10  MouseManager#mouse_motion (./mouse_manager.rb:21}
-  0.00      0.00     0.00     0.00     0.00      628  AnimatedObject#animation_direction (./animated_object.rb:50}
-  0.00      0.06     0.00     0.00     0.06        1  Publisher::InstanceMethods#fire-2 (./../config/../lib/publisher.rb:66}
-  0.00      0.90     0.00     0.00     0.90       32  UnitManager#update (./unit_manager.rb:126}
-  0.00      0.00     0.00     0.00     0.00       11  Pathfinder#adjacent_nodes (./pathfinding.rb:79}
-  0.00      0.00     0.00     0.00     0.00       89  Enumerable#min (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00      134  Pathfinder#extract_node (./pathfinding.rb:112}
-  0.00      0.00     0.00     0.00     0.00       14  Module#class_eval (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00      203  Fixnum#>= (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00      356  Fixnum#abs (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00       16  Viewport#max_up? (./viewport.rb:58}
-  0.00      0.00     0.00     0.00     0.00       64  <Class::Rubygame::Clock>#runtime (ruby_runtime:0}
-  0.00      0.06     0.00     0.00     0.06        1  Mutex#synchronize-1 (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00        1  Kernel#throw (ruby_runtime:0}
-  0.00      0.30     0.00     0.00     0.30       33  Rubygame::EventQueue#each (/usr/local/lib/ruby/site_ruby/1.8/rubygame/queue.rb:99}
-  0.00     31.83     0.00     0.00    31.83        1  SnelpsApp#main_loop (app.rb:58}
-  0.00      0.00     0.00     0.00     0.00        1  Needle::Container#find_definition (/usr/local/lib/ruby/gems/1.8/gems/needle-1.3.0/lib/needle/container.rb:289}
-  0.00      0.01     0.00     0.00     0.01      300  Rubygame::Rect#normalize (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:539}
-  0.00      0.00     0.00     0.00     0.00        2  Map#coords_to_tiles (./map.rb:71}
-  0.00      0.08     0.00     0.02     0.06        1  Mutex#synchronize (ruby_runtime:0}
-  0.00     31.83     0.00     0.00    31.83        0  SnelpsApp#run (app.rb:76}
-  0.00      0.00     0.00     0.00     0.00        1  Needle::Container#[] (/usr/local/lib/ruby/gems/1.8/gems/needle-1.3.0/lib/needle/container.rb:304}
-  0.00      0.00     0.00     0.00     0.00        3  String#to_i (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00      226  <Class::Object>#allocate (ruby_runtime:0}
-  0.00      0.01     0.00     0.00     0.01      300  Rubygame::Rect#normalize! (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:546}
-  0.00      0.00     0.00     0.00     0.00      392  Rubygame::Rect#l (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:149}
-  0.00      0.00     0.00     0.00     0.00      391  Fixnum#<=> (ruby_runtime:0}
-  0.00      0.06     0.00     0.00     0.06        1  MockNetworkManager#handle_server_msg (./network_manager.rb:43}
-  0.00      0.00     0.00     0.00     0.00        1  Rubygame::KeyUpEvent#initialize (/usr/local/lib/ruby/site_ruby/1.8/rubygame/event.rb:119}
-  0.00     30.18     0.00     0.04    30.14       32  GameClient#draw (./game_client.rb:89}
-  0.00      0.00     0.00     0.00     0.00        1  Class#new-1 (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00      101  Comparable#between? (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00      124  Array#empty? (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00       16  Viewport#do_scroll (./viewport.rb:34}
-  0.00      0.00     0.00     0.00     0.00       33  Array#delete_if (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00      151  Float#coerce (ruby_runtime:0}
-  0.00      0.10     0.00     0.00     0.10        1  UnitManager#handle_mouse_click (./unit_manager.rb:51}
-  0.00      0.00     0.00     0.00     0.00        0  SnelpsApp#shutdown (app.rb:63}
-  0.00      0.00     0.00     0.00     0.00       17  Array#last (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00        3  Rubygame::Surface#draw_box_s (ruby_runtime:0}
-  0.00      0.21     0.00     0.00     0.21        2  MouseManager#mouse_up (./mouse_manager.rb:36}
-  0.00      0.00     0.00     0.00     0.00      400  Kernel#dup (ruby_runtime:0}
-  0.00     31.83     0.00     0.00    31.83        1  Kernel#catch (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00       16  Viewport#max_left? (./viewport.rb:54}
-  0.00      0.01     0.00     0.00     0.01      696  Array#== (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00        2  Rubygame::MouseDownEvent#initialize (/usr/local/lib/ruby/site_ruby/1.8/rubygame/event.rb:167}
-  0.00      0.00     0.00     0.00     0.00        4  IO#write (ruby_runtime:0}
-  0.00      0.06     0.00     0.00     0.06        1  NetworkChannel#push-1 (./network_channel.rb:16}
-  0.00      0.00     0.00     0.00     0.00        1  MockNetworkManager#[] (./network_manager.rb:57}
-  0.00      0.00     0.00     0.00     0.00       32  Viewport#update (./viewport.rb:24}
-  0.00      0.00     0.00     0.00     0.00     1279  Hash#[] (ruby_runtime:0}
-  0.00      0.08     0.00     0.00     0.08        1  NetworkChannel#push (./network_channel.rb:16}
-  0.00      0.00     0.00     0.00     0.00       88  Map#has_obstacle (./map.rb:83}
-  0.00      0.44     0.00     0.00     0.44       32  AnimationManager#update (./animation_manager.rb:31}
-  0.00      0.00     0.00     0.00     0.00     9033  Rubygame::Surface#w (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00       16  Array#push (ruby_runtime:0}
-  0.00      0.04     0.00     0.04     0.00       10  Rubygame::MouseMotionEvent#initialize (/usr/local/lib/ruby/site_ruby/1.8/rubygame/event.rb:148}
-  0.00      0.09     0.00     0.00     0.09       33  Rubygame::EventQueue#fetch_sdl_events (/usr/local/lib/ruby/site_ruby/1.8/rubygame/queue.rb:110}
-  0.00      0.02     0.00     0.02     0.00       32  MouseManager#draw (./mouse_manager.rb:14}
-  0.00      0.00     0.00     0.00     0.00       85  Array#insert (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00      400  Array#initialize_copy (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00      201  Viewport#view_to_world (./viewport.rb:104}
-  0.00      0.01     0.00     0.00     0.01       89  Queue#add_path (./pathfinding.rb:40}
-  0.00      0.00     0.00     0.00     0.00      124  Ruby3d::Vector#normalize! (ruby_runtime:0}
-  0.00      0.01     0.00     0.00     0.01      124  Unit#set_destination! (./unit.rb:79}
-  0.00      0.00     0.00     0.00     0.00        6  Kernel#kind_of? (ruby_runtime:0}
-  0.00      0.11     0.00     0.00     0.11        1  UnitManager#handle_mouse_drag (./unit_manager.rb:92}
-  0.00      0.00     0.00     0.00     0.00      100  Rubygame::Rect#w (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:169}
-  0.00      0.03     0.00     0.00     0.03       11  Pathfinder#successors (./pathfinding.rb:101}
-  0.00      0.00     0.00     0.00     0.00       16  Viewport#max_right? (./viewport.rb:62}
-  0.00      0.00     0.00     0.00     0.00       33  Array#flatten (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00        2  MouseManager#mouse_down (./mouse_manager.rb:27}
-  0.00      0.00     0.00     0.00     0.00        3  Rubygame::Surface#draw_box (ruby_runtime:0}
-  0.00      0.00     0.00     0.00     0.00       13  Rubygame::Rect#b (/usr/local/lib/ruby/site_ruby/1.8/rubygame/rect.rb:201}
-  0.00      0.00     0.00     0.00     0.00       88  Array#+ (ruby_runtime:0}
-
-
+Framerate:2.06535544292378
+  %   cumulative   self              self     total
+ time   seconds   seconds    calls  ms/call  ms/call  name
+ 29.71    33.14     33.14     9453     3.51    13.08  Range#each
+ 13.75    48.48     15.34     2234     6.87    27.03  Integer#times
+  7.36    56.69      8.21   402463     0.02     0.02  NArray#[]
+  7.21    64.73      8.04   394379     0.02     0.02  NilClass#nil?
+  5.51    70.87      6.14      363    16.91    23.99  Kernel.sleep
+  3.48    74.75      3.88     5702     0.68    26.35  Array#each
+  2.91    78.00      3.25   144737     0.02     0.02  Array#[]
+  1.86    80.08      2.08    91142     0.02     0.02  Fixnum#==
+  1.76    82.04      1.96    66499     0.03     0.03  Fixnum#*
+  1.72    83.96      1.92     6792     0.28     0.87  Rubygame::Surface#blit
+  1.65    85.80      1.84     6882     0.27     0.53  Rubygame::Rect#initialize
+  1.38    87.34      1.54     1199     1.28     2.04  LinkedList#each_element
+  1.34    88.84      1.50    65536     0.02     0.02  Rubygame::Surface#get_at
+  1.29    90.28      1.44    28311     0.05     0.07  Kernel.===
+  1.23    91.65      1.37     2175     0.63     2.11  Drawable.draw
+  1.12    92.90      1.25     3809     0.33     0.49  ResourceManager#load_image
+  0.80    93.79      0.89      704     1.26     2.20  Pathfinder#diagonal_heuristic
+  0.65    94.51      0.72    20923     0.03     0.03  Node#x
+  0.58    95.16      0.65    22599     0.03     0.03  Fixnum#-
+  0.54    95.76      0.60     5776     0.10     0.18  Viewport#world_to_view
+  0.47    96.28      0.52    18844     0.03     0.03  Rubygame::Surface#set_at
+  0.41    96.74      0.46    17134     0.03     0.03  Kernel.nil?
+  0.40    97.19      0.45    15179     0.03     0.03  Fixnum#+
+  0.39    97.62      0.43     3177     0.14     0.20  Rubygame::Rect#centerx
+  0.37    98.03      0.41    21060     0.02     0.02  Hash#[]
+  0.31    98.38      0.35      520     0.67     2.08  Pathable.update_movement
+  0.31    98.73      0.35    10396     0.03     0.03  Module#===
+  0.30    99.07      0.34      661     0.51     0.51  Rubygame::Surface#draw_box_s
+  0.30    99.40      0.33     1013     0.33     0.70  Animated.next_frame
+  0.30    99.73      0.33     2288     0.14     0.48  Animated.update_animated
+  0.29   100.05      0.32     2288     0.14     1.95  Entity#update
+  0.27   100.35      0.30     9403     0.03     4.65  Class#new
+  0.27   100.65      0.30      913     0.33     0.81  EntityManager#has_obstacle?
+  0.26   100.94      0.29      360     0.81     1.03  Map#coords_to_tiles
+  0.25   101.22      0.28      825     0.34     1.42  Pathfinder#is_valid?
+  0.24   101.49      0.27     3017     0.09     0.16  Rubygame::Rect#centery
+  0.24   101.76      0.27     6882     0.04     0.04  Array#initialize
+  0.24   102.03      0.27     6299     0.04     0.04  Node#y
+  0.22   102.27      0.24     7288     0.03     0.03  Array#length
+  0.21   102.50      0.23    13953     0.02     0.02  Array#at
+  0.20   102.72      0.22     2977     0.07     0.23  Positionable.y
+  0.18   102.92      0.20     3938     0.05     0.05  LinkedList::ListElem#next
+  0.18   103.12      0.20      469     0.43     0.75  LinkedList#place
+  0.16   103.30      0.18     3425     0.05     0.05  Kernel.instance_variable_get
+  0.16   103.48      0.18      144     1.25    26.60  Gem::Specification#initialize
+  0.16   103.66      0.18     3137     0.06     0.28  Positionable.x
+  0.15   103.83      0.17      157     1.08    64.01  Kernel.gem_original_require
+  0.14   103.99      0.16     3476     0.05     8.74  Kernel.send
+  0.13   104.14      0.15     6632     0.02     0.02  Fixnum#div
+  0.13   104.29      0.15     2310     0.06     0.06  Float#-
+  0.13   104.44      0.15     7317     0.02     0.02  NArray#[]=
+  0.13   104.58      0.14     4591     0.03     0.03  Kernel.class
+  0.13   104.72      0.14    12509     0.01     0.01  Kernel.==
+  0.13   104.86      0.14     3760     0.04     0.05  Struct#==
+  0.12   104.99      0.13      402     0.32     1.12  Gem::Version#normalize
+  0.11   105.11      0.12        7    17.14    44.29  YAML::Syck::Parser#load
+  0.11   105.23      0.12      775     0.15     2.85  Enumerable.find
+  0.10   105.34      0.11     1917     0.06     0.06  Struct#initialize
+  0.10   105.45      0.11     6623     0.02     0.02  Fixnum#>
+  0.10   105.56      0.11      219     0.50     0.68  Rubygame::Rect#centery=
+  0.10   105.67      0.11       43     2.56     2.79  LinkedList#<<
+  0.09   105.77      0.10     2803     0.04     0.04  Fixnum#<
+  0.09   105.87      0.10     1839     0.05     0.05  Fixnum#>=
+  0.09   105.97      0.10     4300     0.02     0.03  #<YAML::Syck::Resolver:0x155660c0>.node_import
+  0.09   106.07      0.10      512     0.20   119.75  Publisher::InstanceMethods.fire
+  0.08   106.16      0.09     2941     0.03     0.03  Module#method_added
+  0.08   106.25      0.09      537     0.17     0.19  Rubygame::Surface#load
+  0.08   106.34      0.09      512     0.18     3.01  PriorityQueue#insert
+  0.08   106.43      0.09      219     0.41     0.41  Rubygame::Rect#centerx=
+  0.08   106.52      0.09     7681     0.01     0.01  Node#h
+  0.07   106.60      0.08      704     0.11     0.23  Enumerable.min
+  0.07   106.68      0.08     1013     0.08     0.18  Animated.animation_length
+  0.07   106.76      0.08      175     0.46     6.46  AbsoluteLayout#draw
+  0.07   106.84      0.08      402     0.20     0.62  Gem::Version#build_array_from_version_string
+  0.07   106.92      0.08      936     0.09     0.09  String#to_s
+  0.07   107.00      0.08      228     0.35    78.82  Rubygame::EventQueue#each
+  0.07   107.08      0.08     4064     0.02     0.02  Hash#[]=
+  0.07   107.16      0.08       44     1.82     5.45  Positionable.setup_positionable
+  0.07   107.24      0.08      687     0.12     2.71  PriorityQueue#find
+  0.06   107.31      0.07      546     0.13     0.16  LinkedList::ListElem#new
+  0.06   107.38      0.07     1017     0.07     0.18  OccupancyGrid#free?
+  0.06   107.45      0.07      227     0.31   282.38  ModeController#update
+  0.06   107.52      0.07     4286     0.02     0.02  Fixnum#to_s
+  0.06   107.59      0.07     2629     0.03     0.05  Kernel.dup
+  0.06   107.66      0.07      213     0.33    70.85  Kernel.require
+  0.06   107.73      0.07      154     0.45     1.56  Button#draw
+  0.06   107.80      0.07      987     0.07     0.07  String#gsub
+  0.05   107.86      0.06       44     1.36     3.64  Rubygame::Rect#collide_rect?
+  0.05   107.92      0.06      156     0.38     9.10  Wanderer.update_wanderer
+  0.05   107.98      0.06      227     0.26     0.26  Array#clear
+  0.05   108.04      0.06        1    60.00 82180.00  Kernel.loop
+  0.05   108.10      0.06      144     0.42    27.01  Kernel.eval
+  0.05   108.16      0.06      144     0.42    27.71  Gem::SourceIndex#load_specification
+  0.05   108.22      0.06      147     0.41     0.48  Gem::Specification#installation_path
+  0.05   108.28      0.06      588     0.10     0.60  Array#map
+  0.05   108.34      0.06      900     0.07     0.09  Numeric#nonzero?
+  0.05   108.40      0.06      933     0.06     0.30  OccupancyGrid#occupied?
+  0.04   108.45      0.05      228     0.22     0.26  Rubygame.fetch_sdl_events
+  0.04   108.50      0.05       44     1.14    11.59  EntityManager#create_entity
+  0.04   108.55      0.05     2288     0.02     0.02  Animated.animating?
+  0.04   108.60      0.05      101     0.50     1.58  Pathfinder#adjacent_nodes
+  0.04   108.65      0.05      313     0.16     0.16  Hash#values
+  0.04   108.70      0.05        3    16.67    53.33  Array#sort
+  0.04   108.75      0.05      402     0.12     1.32  Gem::Version#version=
+  0.04   108.80      0.05     4608     0.01     0.01  Kernel.instance_variable_set
+  0.04   108.85      0.05      126     0.40     2.78  Gem::Dependency#initialize
+  0.04   108.90      0.05      119     0.42     0.42  Gem::Specification#description=
+  0.04   108.95      0.05      144     0.35     0.42  Gem::Specification#summary=
+  0.04   109.00      0.05      256     0.20     1.37  Gem::Requirement#create
+  0.04   109.05      0.05      913     0.05     0.07  Map#at
+  0.04   109.10      0.05     1371     0.04     0.10  Node#new
+  0.04   109.15      0.05      983     0.05     0.05  Fixnum#<=>
+  0.04   109.19      0.04     2823     0.01     0.01  Fixnum#abs
+  0.04   109.23      0.04     3556     0.01     0.01  LinkedList::ListElem#obj
+  0.04   109.27      0.04       38     1.05     1.05  Rubygame::Surface#new
+  0.04   109.31      0.04      386     0.10     0.13  Array#include?
+  0.04   109.35      0.04     1767     0.02     0.02  Array#initialize_copy
+  0.04   109.39      0.04      697     0.06     0.06  String#strip
+  0.04   109.43      0.04      402     0.10     1.64  Gem::Version#initialize
+  0.04   109.47      0.04      786     0.05     0.05  Symbol#to_s
+  0.04   109.51      0.04      129     0.31  1452.95  Hash#each
+  0.04   109.55      0.04       17     2.35   462.35  Pathfinder#find
+  0.04   109.59      0.04       30     1.33     1.33  Button#hit_by?
+  0.04   109.63      0.04      292     0.14     0.24  Rubygame::Ftor#unit
+  0.04   109.67      0.04      178     0.22     0.62  Rubygame::Rect#normalize!
+  0.04   109.71      0.04      227     0.18     0.22  Rubygame::Clock#tick
+  0.04   109.75      0.04      720     0.06     0.06  Integer#floor
+  0.04   109.79      0.04        7     5.71     5.71  Hash#include?
+  0.04   109.83      0.04     5516     0.01     0.01  Fixnum#/
+  0.03   109.86      0.03     1193     0.03     0.03  LinkedList::ListElem#prev=
+  0.03   109.89      0.03     4550     0.01     0.01  Rubygame::Surface#w
+  0.03   109.92      0.03     1193     0.03     0.03  LinkedList::ListElem#next=
+  0.03   109.95      0.03       72     0.42     0.42  Dir#[]
+  0.03   109.98      0.03        2    15.00    15.00  Gem::Platform#new
+  0.03   110.01      0.03      151     0.20     0.60  Array#collect
+  0.03   110.04      0.03      481     0.06     0.06  Kernel.respond_to?
+  0.03   110.07      0.03      252     0.12     0.12  Symbol#yaml_new
+  0.03   110.10      0.03       16     1.87  6632.50  DIY::Context#construct_object
+  0.03   110.13      0.03      373     0.08    57.75  Mutex#synchronize
+  0.02   110.15      0.02       84     0.24     0.24  Map#tiles_to_coords
+  0.02   110.17      0.02      150     0.13   277.13  CampaignMode#update
+  0.02   110.19      0.02      228     0.09     0.44  Rubygame::EventQueue#fetch_sdl_events
+  0.02   110.21      0.02     1176     0.02     0.02  LinkedList::ListElem#prev
+  0.02   110.23      0.02       77     0.26    14.03  MainMenuMode#draw
+  0.02   110.25      0.02      202     0.10     0.10  Kernel.is_a?
+  0.02   110.27      0.02     2184     0.01     0.01  Rubygame::Surface#h
+  0.02   110.29      0.02     1175     0.02     0.02  String#+
+  0.02   110.31      0.02      402     0.05     0.10  Gem::Version#correct?
+  0.02   110.33      0.02      900     0.02     0.02  Fixnum#zero?
+  0.02   110.35      0.02      876     0.02     0.02  Array#empty?
+  0.02   110.37      0.02      258     0.08     1.98  Gem::Requirement#parse
+  0.02   110.39      0.02      146     0.14     0.62  Gem::Specification#full_gem_path
+  0.02   110.41      0.02      685     0.03     0.03  Regexp#===
+  0.02   110.43      0.02      300     0.07     0.07  Gem::Specification#platform
+  0.02   110.45      0.02        1    20.00    20.00  Rubygame.init
+  0.02   110.47      0.02       63     0.32     0.32  Gem::Specification#executables=
+  0.02   110.49      0.02        1    20.00    20.00  Rubygame::Screen#set_mode
+  0.02   110.51      0.02      199     0.10     0.10  String#gsub!
+  0.02   110.53      0.02      144     0.14     0.28  Rubygame::Color::ColorRGB#initialize
+  0.02   110.55      0.02      188     0.11     0.11  IO#read
+  0.02   110.57      0.02      144     0.14     0.14  Gem::Specification#files=
+  0.02   110.59      0.02      403     0.05     0.05  String#scan
+  0.02   110.61      0.02     1479     0.01     0.01  String#to_i
+  0.02   110.63      0.02      630     0.03     0.03  Node#cost
+  0.02   110.65      0.02       66     0.30     0.30  Tree#default_z
+  0.02   110.67      0.02     1027     0.02     0.02  Animated.animation_image_set
+  0.01   110.68      0.01      843     0.01     0.01  Rubygame::Ftor#initialize
+  0.01   110.69      0.01       26     0.38     3.46  MapScript#get_occupants_at
+  0.01   110.70      0.01       22     0.45     0.45  Animal#z
+  0.01   110.71      0.01        5     2.00   114.00  Kernel.instance_eval
+  0.01   110.72      0.01      118     0.08     0.25  LinkedList#shift
+  0.01   110.73      0.01       84     0.12     0.12  Animated.animate
+  0.01   110.74      0.01      120     0.08     0.67  Inflector.camelize
+  0.01   110.75      0.01      136     0.07     0.07  UnitBird#health
+  0.01   110.76      0.01      136     0.07     0.15  Viewport#view_to_world
+  0.01   110.77      0.01       52     0.19     1.15  MiniMap#draw
+  0.01   110.78      0.01       90     0.11     0.78  Rubygame::Rect#collide_point?
+  0.01   110.79      0.01       50     0.20   525.40  ModeController#dispatch_mode_event
+  0.01   110.80      0.01       84     0.12     0.36  OccupancyGrid#occupy
+  0.01   110.81      0.01       40     0.25     1.50  Movable.set_destination!
+  0.01   110.82      0.01      984     0.01     0.01  Array#<<
+  0.01   110.83      0.01       44     0.23     0.45  Drawable.setup_drawable
+  0.01   110.84      0.01      150     0.07   137.60  CampaignMode#draw
+  0.01   110.85      0.01      490     0.02     0.02  Hash#default
+  0.01   110.86      0.01      292     0.03     0.03  Math.hypot
+  0.01   110.87      0.01      228     0.04     0.09  Rubygame::EventQueue#push
+  0.01   110.88      0.01       14     0.71     4.29  MainMenuMode#on_mouse_motion
+  0.01   110.89      0.01        1    10.00    10.00  Rubygame::Mixer.open_audio
+  0.01   110.90      0.01      227     0.04     0.04  Rubygame::Screen#flip
+  0.01   110.91      0.01      144     0.07     0.69  Gem::GemPathSearcher#lib_dirs_for
+  0.01   110.92      0.01      144     0.07     0.07  Kernel.binding
+  0.01   110.93      0.01      302     0.03     0.03  Array#join
+  0.01   110.94      0.01      289     0.03     0.03  Kernel.untaint
+  0.01   110.95      0.01      576     0.02     0.02  Kernel.Array
+  0.01   110.96      0.01      125     0.08     3.04  Gem::Specification#add_dependency_with_type
+  0.01   110.97      0.01        3     3.33    13.33  Hash#each_pair
+  0.01   110.98      0.01      115     0.09     0.09  Module#class_eval
+  0.01   110.99      0.01       21     0.48     0.48  Gem::Specification#attribute
+  0.01   111.00      0.01       15     0.67     0.67  DIY::ObjectDef#underscore
+  0.01   111.01      0.01      125     0.08     3.12  Gem::Specification#add_dependency
+  0.01   111.02      0.01      213     0.05     0.05  Array#pop
+  0.01   111.03      0.01      144     0.07     0.21  Rubygame::Color::Palette#sanitize_name
+  0.01   111.04      0.01       78     0.13     0.51  Array#select
+  0.01   111.05      0.01       32     0.31     0.63  DIY::Context#extra_inputs_has
+  0.01   111.06      0.01       16     0.63     0.63  Enumerable.inject
+  0.01   111.07      0.01      144     0.07     0.07  Time#local
+  0.01   111.08      0.01       16     0.63     0.63  Kernel.clone
+  0.01   111.09      0.01       59     0.17     0.17  Gem::Specification#rdoc_options=
+  0.01   111.10      0.01      199     0.05     0.15  Config.expand
+  0.01   111.11      0.01       84     0.12     0.12  Module#include
+  0.01   111.12      0.01      283     0.04     0.04  Class#inherited
+  0.01   111.13      0.01       90     0.11     0.11  Module#attr_accessor
+  0.01   111.14      0.01       93     0.11     0.11  String#[]
+  0.01   111.15      0.01       84     0.12     0.12  Module#define_method
+  0.01   111.16      0.01      144     0.07    17.43  Gem::Specification#assign_defaults
+  0.01   111.17      0.01      216     0.05     0.05  Kernel.object_id
+  0.01   111.18      0.01      288     0.03     0.03  Kernel.initialize_copy
+  0.01   111.19      0.01      253     0.04     0.16  YAML::Syck::Resolver#transfer
+  0.01   111.20      0.01      258     0.04     2.05  Gem::Requirement#initialize
+  0.01   111.21      0.01      372     0.03     0.03  String#==
+  0.01   111.22      0.01      290     0.03     0.14  Gem::Specification#full_name
+  0.01   111.23      0.01      233     0.04     0.04  File#join
+  0.01   111.24      0.01        1    10.00    10.00  Tree#animated_class_setup
+  0.01   111.25      0.01      903     0.01     0.01  String#<=>
+  0.01   111.26      0.01      144     0.07     1.25  Gem::Version#create
+  0.01   111.27      0.01       69     0.14     0.29  Gem::Version#<=>
+  0.01   111.28      0.01      687     0.01     0.01  File#expand_path
+  0.01   111.29      0.01      180     0.06     0.06  Array#first
+  0.01   111.30      0.01       44     0.23     8.86  Entity#setup
+  0.01   111.31      0.01        1    10.00    20.00  SoundManager#initialize
+  0.01   111.32      0.01       52     0.19     0.38  Viewport#update
+  0.01   111.33      0.01        1    10.00 24050.00  EntityBuilder#build_dynamic_classes
+  0.01   111.34      0.01      210     0.05     0.05  Rubygame::Rect#l
+  0.01   111.35      0.01        8     1.25     1.25  Thread#initialize
+  0.01   111.36      0.01      227     0.04    98.81  ModeController#draw
+  0.01   111.37      0.01       29     0.34     0.34  Class#constructor_keys
+  0.01   111.38      0.01      118     0.08     0.25  LinkedList#empty?
+  0.01   111.39      0.01      216     0.05     0.05  UnitBird#player_id
+  0.01   111.40      0.01       44     0.23     0.45  Animated.setup_animated
+  0.01   111.41      0.01       14     0.71     3.57  AbsoluteLayout#mouse_motion
+  0.01   111.42      0.01       90     0.11     0.11  Rubygame::Rect#left
+  0.01   111.43      0.01       44     0.23     0.23  Animated.get_default_frame
+  0.01   111.44      0.01      136     0.07     0.07  UnitBird#default_health
+  0.01   111.45      0.01      229     0.04     0.09  SnelpsScreen#method_missing
+  0.01   111.46      0.01      520     0.02     2.10  Pathable.update_pathable
+  0.01   111.47      0.01      438     0.02     0.02  Array#[]=
+  0.01   111.48      0.01      219     0.05     0.05  Rubygame::Ftor#*
+  0.01   111.49      0.01      687     0.01     0.01  Node#h=
+  0.01   111.50      0.01      372     0.03    46.08  NetworkChannel#push
+  0.01   111.51      0.01        6     1.67     1.67  Rubygame.key2str
+  0.01   111.52      0.01      170     0.06     0.06  Array#flatten!
+  0.01   111.53      0.01      292     0.03     0.07  Rubygame::Ftor#magnitude
+  0.00   111.53      0.00        1     0.00  4070.00  Array#reverse_each
+  0.00   111.53      0.00      118     0.00     0.00  Node#parent
+  0.00   111.53      0.00        1     0.00     0.00  SnelpsScreen#_validate_constructor_args
+  0.00   111.53      0.00        2     0.00  4365.00  StoryStack#click
+  0.00   111.53      0.00      209     0.00     0.00  Kernel.kind_of?
+  0.00   111.53      0.00        2     0.00     0.00  Gem.default_dir
+  0.00   111.53      0.00        2     0.00     0.00  YAML::Syck::Resolver#initialize
+  0.00   111.53      0.00        1     0.00     0.00  Comparable.==
+  0.00   111.53      0.00        4     0.00     0.00  Rubygame::Sound#play
+  0.00   111.53      0.00        1     0.00   260.00  ResourceManager#load_map
+  0.00   111.53      0.00        5     0.00     0.00  Positionable.included
+  0.00   111.53      0.00        2     0.00     0.00  Viewport#setup
+  0.00   111.53      0.00        1     0.00    30.00  SnelpsApp#initialize
+  0.00   111.53      0.00        4     0.00     0.00  Portal#default_animations
+  0.00   111.53      0.00      100     0.00     0.00  Tree#default_animations
+  0.00   111.53      0.00        1     0.00     0.00  InputManager#_validate_constructor_args
+  0.00   111.53      0.00       90     0.00     0.00  Rubygame::Rect#right
+  0.00   111.53      0.00       44     0.00     0.00  Audible.setup_audible
+  0.00   111.53      0.00       38     0.00     0.00  Rubygame::Surface#initialize
+  0.00   111.53      0.00      394     0.00     0.00  Module#==
+  0.00   111.53      0.00        4     0.00     0.00  UnitBird#__z__
+  0.00   111.53      0.00        3     0.00  2920.00  AbsoluteLayout#click
+  0.00   111.53      0.00       36     0.00     0.00  Rubygame::MouseMotionEvent#initialize
+  0.00   111.53      0.00        1     0.00     0.00  Gem::Specification#loaded?
+  0.00   111.53      0.00      103     0.00     0.10  Enumerable.member?
+  0.00   111.53      0.00       44     0.00     0.00  Rubygame::Rect#y
+  0.00   111.53      0.00      144     0.00     0.00  String#=~
+  0.00   111.53      0.00        1     0.00     0.00  Gem::Specification#runtime_dependencies
+  0.00   111.53      0.00      596     0.00     0.00  Float#/
+  0.00   111.53      0.00       59     0.00     0.00  Module#included
+  0.00   111.53      0.00        1     0.00     0.00  Module#public_class_method
+  0.00   111.53      0.00        1     0.00     0.00  EntityManager#handle_key_up
+  0.00   111.53      0.00        1     0.00    10.00  MainMenuMode#initialize
+  0.00   111.53      0.00       27     0.00  1366.67  MiniMap#render
+  0.00   111.53      0.00        2     0.00     0.00  main.include
+  0.00   111.53      0.00        1     0.00 28840.00  SnelpsApp#setup
+  0.00   111.53      0.00        3     0.00     0.00  Rubygame::TTF#new
+  0.00   111.53      0.00        1     0.00    10.00  Inflector.inflections
+  0.00   111.53      0.00      364     0.00     0.00  Float#floor
+  0.00   111.53      0.00        6     0.00     0.00  NetworkManager#[]
+  0.00   111.53      0.00        7     0.00     0.00  YAML::Syck::Parser#initialize
+  0.00   111.53      0.00        3     0.00     0.00  Movable.included
+  0.00   111.53      0.00        7     0.00     0.00  YAML.parser
+  0.00   111.53      0.00       17     0.00     0.00  Pathfinder#initialize
+  0.00   111.53      0.00        1     0.00     0.00  Rubygame.quit
+  0.00   111.53      0.00        1     0.00  8730.00  CampaignMode#start_play
+  0.00   111.53      0.00      481     0.00     0.00  Symbol#===
+  0.00   111.53      0.00       60     0.00     0.00  Array#push
+  0.00   111.53      0.00        1     0.00     0.00  Kernel.singleton_methods
+  0.00   111.53      0.00      152     0.00     0.00  File#directory?
+  0.00   111.53      0.00        2     0.00     0.00  MiniMap#hit_by?
+  0.00   111.53      0.00        1     0.00  4410.00  Gem.searcher
+  0.00   111.53      0.00       13     0.00     0.00  Publisher.can_fire
+  0.00   111.53      0.00       26     0.00     0.00  Viewport#max_left?
+  0.00   111.53      0.00        1     0.00  8730.00  StoryStack#story_finished
+  0.00   111.53      0.00       10     0.00     0.00  File#exist?
+  0.00   111.53      0.00      144     0.00     0.21  Gem::Specification#date=
+  0.00   111.53      0.00      159     0.00     0.00  String#downcase
+  0.00   111.53      0.00        9     0.00     0.00  IO#write
+  0.00   111.53      0.00        1     0.00     0.00  TurnManager#_validate_constructor_args
+  0.00   111.53      0.00       12     0.00     0.00  Gem::Specification#overwrite_accessor
+  0.00   111.53      0.00        2     0.00     0.00  Thread#critical=
+  0.00   111.53      0.00        1     0.00     0.00  Hash#clear
+  0.00   111.53      0.00        1     0.00     0.00  Rubygame::Clock#initialize
+  0.00   111.53      0.00        4     0.00  2135.00  EntityManager#handle_entity_move
+  0.00   111.53      0.00        1     0.00     0.00  Module#yaml_tag_read_class
+  0.00   111.53      0.00        1     0.00     0.00  GameClient#_validate_constructor_args
+  0.00   111.53      0.00        1     0.00     0.00  GameClient#setup
+  0.00   111.53      0.00       44     0.00     0.00  Array#delete
+  0.00   111.53      0.00       26     0.00     0.38  Viewport#do_scroll
+  0.00   111.53      0.00       17     0.00     0.00  Pathable.path=
+  0.00   111.53      0.00        5     0.00  3492.00  BaseMode#handle_click
+  0.00   111.53      0.00       26     0.00     0.00  Kernel.rand
+  0.00   111.53      0.00        1     0.00     0.00  MapScript#add_trigger
+  0.00   111.53      0.00       10     0.00     0.00  Animated.get_selection_image
+  0.00   111.53      0.00       15     0.00     0.00  UnitBird#default_animations
+  0.00   111.53      0.00        1     0.00     0.00  Module#undef_method
+  0.00   111.53      0.00        1     0.00 82180.00  InputManager#main_loop
+  0.00   111.53      0.00        1     0.00     0.00  Kernel.proc
+  0.00   111.53      0.00        5     0.00     0.00  Gem::Platform#==
+  0.00   111.53      0.00       44     0.00     0.00  Rubygame::Rect#r
+  0.00   111.53      0.00        1     0.00     0.00  Time#now
+  0.00   111.53      0.00      270     0.00     0.00  Exception#initialize
+  0.00   111.53      0.00        8     0.00     0.00  Kernel.hash
+  0.00   111.53      0.00        1     0.00     0.00  Time#at
+  0.00   111.53      0.00        2     0.00     0.00  Time#to_i
+  0.00   111.53      0.00       52     0.00     0.00  MouseManager#draw
+  0.00   111.53      0.00       72     0.00     0.00  Gem.suffix_pattern
+  0.00   111.53      0.00        1     0.00     0.00  EntityBuilder#_validate_constructor_args
+  0.00   111.53      0.00        1     0.00    20.00  SnelpsScreen#initialize
+  0.00   111.53      0.00        5     0.00    16.00  Class#initialize
+  0.00   111.53      0.00        6     0.00  2943.33  MouseManager#mouse_up
+  0.00   111.53      0.00      292     0.00     0.00  Gem::Version#to_s
+  0.00   111.53      0.00        3     0.00     0.00  BaseMode#handle_key_up
+  0.00   111.53      0.00       26     0.00     0.00  MouseManager#screen_scrolled
+  0.00   111.53      0.00        2     0.00     0.00  MainMenuMode#start
+  0.00   111.53      0.00       40     0.00     0.25  Rubygame::Rect#center
+  0.00   111.53      0.00        1     0.00    20.00  SnelpsScreen#setup
+  0.00   111.53      0.00       20     0.00     0.00  Module#extend_object
+  0.00   111.53      0.00        1     0.00     0.00  Date::Infinity#-@
+  0.00   111.53      0.00        5     0.00     0.00  Animated.included
+  0.00   111.53      0.00        2     0.00     0.00  Numeric#imag
+  0.00   111.53      0.00       52     0.00     0.00  Array#insert
+  0.00   111.53      0.00        6     0.00     0.00  Gem::Platform#to_s
+  0.00   111.53      0.00        1     0.00 82180.00  Kernel.catch
+  0.00   111.53      0.00        2     0.00  2035.00  Gem.source_index
+  0.00   111.53      0.00        1     0.00     0.00  CampaignMode#stop
+  0.00   111.53      0.00      182     0.00     0.00  Module#private
+  0.00   111.53      0.00        1     0.00    10.00  ModeController#initialize
+  0.00   111.53      0.00       44     0.00     9.09  Entity#initialize
+  0.00   111.53      0.00        1     0.00    10.00  BaseMode#modal_dialog
+  0.00   111.53      0.00        1     0.00   130.00  Animal#animated_class_setup
+  0.00   111.53      0.00        5     0.00     0.00  NArray#object
+  0.00   111.53      0.00       66     0.00     0.00  Gem::Specification#extra_rdoc_files=
+  0.00   111.53      0.00       22     0.00     0.00  Viewport#scroll
+  0.00   111.53      0.00       55     0.00     0.00  Gem::Specification#test_files=
+  0.00   111.53      0.00        1     0.00     0.00  InputManager#initialize
+  0.00   111.53      0.00        7     0.00     0.00  Array#compact
+  0.00   111.53      0.00        1     0.00     0.00  Inflector::Inflections#initialize
+  0.00   111.53      0.00      119     0.00     0.00  Array#unshift
+  0.00   111.53      0.00      827     0.00     0.00  Float#*
+  0.00   111.53      0.00      128     0.00     0.00  Module#module_eval
+  0.00   111.53      0.00        1     0.00     0.00  Rubygame::Clock#framerate
+  0.00   111.53      0.00        1     0.00   200.00  CampaignMode#on_mouse_drag
+  0.00   111.53      0.00        7     0.00     0.00  Animal#default_animations
+  0.00   111.53      0.00       98     0.00     6.84  Dialog#draw
+  0.00   111.53      0.00        1     0.00     0.00  GameClient#initialize
+  0.00   111.53      0.00        7     0.00     0.00  Gem::Specification#required_attribute
+  0.00   111.53      0.00      724     0.00     0.00  Float#to_f
+  0.00   111.53      0.00        1     0.00     0.00  Gem::Requirement#normalize
+  0.00   111.53      0.00        4     0.00     0.00  Module#attr
+  0.00   111.53      0.00      150     0.00     0.00  Kernel.block_given?
+  0.00   111.53      0.00        1     0.00     0.00  Kernel.puts
+  0.00   111.53      0.00        3     0.00     0.00  Enumerable.to_a
+  0.00   111.53      0.00        5     0.00     0.00  Rubygame::Rect#b
+  0.00   111.53      0.00        1     0.00     0.00  Gem.default_path
+  0.00   111.53      0.00      194     0.00     0.00  String#upcase
+  0.00   111.53      0.00        1     0.00     0.00  Kernel.throw
+  0.00   111.53      0.00        4     0.00     0.00  UnitBird#__health__
+  0.00   111.53      0.00       29     0.00     0.00  Viewport#max_right?
+  0.00   111.53      0.00       12     0.00     0.00  UnitBird#default_z
+  0.00   111.53      0.00        3     0.00     0.00  Hash#initialize
+  0.00   111.53      0.00        8     0.00     1.25  Thread#new
+  0.00   111.53      0.00        1     0.00     0.00  Gem.path
+  0.00   111.53      0.00        4     0.00     0.00  Rubygame::Surface#fill
+  0.00   111.53      0.00       25     0.00     0.00  Viewport#max_bottom?
+  0.00   111.53      0.00        1     0.00  4850.00  Map#draw_full
+  0.00   111.53      0.00        3     0.00     0.00  Map#pixel_width
+  0.00   111.53      0.00        3     0.00  2913.33  StoryStack#next_frame
+  0.00   111.53      0.00        1     0.00     0.00  ModeController#_validate_constructor_args
+  0.00   111.53      0.00       36     0.00     0.00  Hash#has_key?
+  0.00   111.53      0.00        1     0.00     0.00  Gem.marshal_version
+  0.00   111.53      0.00        1     0.00     0.00  NetworkManager#initialize
+  0.00   111.53      0.00        1     0.00     0.00  MouseManager#initialize
+  0.00   111.53      0.00        2     0.00     0.00  UnitWorker#default_z
+  0.00   111.53      0.00        1     0.00     0.00  Time#gmt_offset
+  0.00   111.53      0.00       52     0.00   709.62  MiniMap#update
+  0.00   111.53      0.00        1     0.00     0.00  Singleton.append_features
+  0.00   111.53      0.00     1013     0.00     0.00  Fixnum#%
+  0.00   111.53      0.00       80     0.00     0.00  Kernel.freeze
+  0.00   111.53      0.00       10     0.00     0.00  Movable.stop_moving!
+  0.00   111.53      0.00       16     0.00     1.25  DIY::ObjectDef#initialize
+  0.00   111.53      0.00        3     0.00     0.00  Rubygame::Music#play
+  0.00   111.53      0.00        1     0.00     0.00  Rubygame::Surface#flip
+  0.00   111.53      0.00     2817     0.00     0.00  Float#+
+  0.00   111.53      0.00        1     0.00     0.00  Dialog#apply?
+  0.00   111.53      0.00        1     0.00     0.00  Object#yaml_tag_subclasses?
+  0.00   111.53      0.00        7     0.00     0.00  Kernel.lambda
+  0.00   111.53      0.00        1     0.00     0.00  Gem::Requirement#satisfied_by?
+  0.00   111.53      0.00        5     0.00     0.00  Drawable.included
+  0.00   111.53      0.00      182     0.00     0.00  Rubygame::Surface#draw_circle_s
+  0.00   111.53      0.00       58     0.00     1.90  Module#attribute
+  0.00   111.53      0.00       15     0.00     0.00  Class#superclass
+  0.00   111.53      0.00        1     0.00    10.00  Gem.activate
+  0.00   111.53      0.00        1     0.00 111020.00  SnelpsApp#run
+  0.00   111.53      0.00       90     0.00     0.22  Comparable.between?
+  0.00   111.53      0.00        6     0.00     0.00  Rubygame::MouseUpEvent#initialize
+  0.00   111.53      0.00        1     0.00 24050.00  EntityBuilder#setup
+  0.00   111.53      0.00        1     0.00     0.00  ConfigManager#setup
+  0.00   111.53      0.00       10     0.00     0.00  ConfigManager#[]
+  0.00   111.53      0.00       12     0.00     0.00  Module#method_removed
+  0.00   111.53      0.00        1     0.00  4230.00  Gem::GemPathSearcher#init_gemspecs
+  0.00   111.53      0.00        1     0.00     0.00  ConfigManager#initialize
+  0.00   111.53      0.00        1     0.00     0.00  ResourceManager#load_sound
+  0.00   111.53      0.00       34     0.00     0.00  Rubygame::Surface#size
+  0.00   111.53      0.00       75     0.00     0.67  Gem::Specification#required_rubygems_version=
+  0.00   111.53      0.00        2     0.00  4350.00  CampaignMode#on_click
+  0.00   111.53      0.00        1     0.00    10.00  ResourceManager#load_campaign
+  0.00   111.53      0.00        1     0.00     0.00  Dialog#apply
+  0.00   111.53      0.00        1     0.00     0.00  Regexp#escape
+  0.00   111.53      0.00       58     0.00     0.00  Array#size
+  0.00   111.53      0.00        2     0.00     5.00  Button#initialize
+  0.00   111.53      0.00        3     0.00     0.00  Rubygame::NamedResource.included
+  0.00   111.53      0.00       16     0.00     0.00  DIY::ObjectDef#camelize
+  0.00   111.53      0.00      100     0.00     0.00  Module#module_function
+  0.00   111.53      0.00        1     0.00    10.00  Dialog#initialize
+  0.00   111.53      0.00        3     0.00     0.00  ResourceManager#load_ttf_font
+  0.00   111.53      0.00        1     0.00     0.00  Array#concat
+  0.00   111.53      0.00        1     0.00   200.00  BaseMode#handle_mouse_drag
+  0.00   111.53      0.00        1     0.00    40.00  Gem::GemPathSearcher#find
+  0.00   111.53      0.00        1     0.00     0.00  Gem.load_path_insert_index
+  0.00   111.53      0.00        7     0.00     0.00  YAML.resolver
+  0.00   111.53      0.00       29     0.00     0.00  Regexp#initialize
+  0.00   111.53      0.00        1     0.00     0.00  Array#uniq!
+  0.00   111.53      0.00       26     0.00     3.46  MapScript#update_triggers
+  0.00   111.53      0.00        2     0.00     0.00  UnitWorker#default_animations
+  0.00   111.53      0.00       62     0.00    11.94  Enumerable.each_with_index
+  0.00   111.53      0.00        2     0.00     0.00  ResourceManager#load_music
+  0.00   111.53      0.00        1     0.00     0.00  Fixnum#-@
+  0.00   111.53      0.00        1     0.00  4070.00  Gem::SourceIndex#load_gems_in
+  0.00   111.53      0.00       30     0.00     0.00  Gem::Specification#extensions=
+  0.00   111.53      0.00       16     0.00     0.63  DIY::Context#get_class_for_name_with_module_delimeters
+  0.00   111.53      0.00        2     0.00     0.00  Gem::Platform#initialize
+  0.00   111.53      0.00        1     0.00 23620.00  UnitBird#animated_class_setup
+  0.00   111.53      0.00       88     0.00     0.80  Positionable.hit_by?
+  0.00   111.53      0.00      630     0.00     0.00  Node#dir
+  0.00   111.53      0.00        3     0.00     0.00  Animal#speed
+  0.00   111.53      0.00      130     0.00     0.00  Fixnum#<=
+  0.00   111.53      0.00       44     0.00     0.00  Rubygame::Rect#h
+  0.00   111.53      0.00        2     0.00     5.00  StoryStack#render
+  0.00   111.53      0.00       39     0.00  2100.51  DIY::Context#get_object
+  0.00   111.53      0.00        1     0.00     0.00  Gem::Requirement#satisfy?
+  0.00   111.53      0.00        1     0.00    20.00  CampaignMode#start
+  0.00   111.53      0.00        2     0.00     0.00  Button#render
+  0.00   111.53      0.00       24     0.00     0.00  Module#protected
+  0.00   111.53      0.00        1     0.00     0.00  Hash#merge
+  0.00   111.53      0.00        1     0.00     0.00  Viewport#_validate_constructor_args
+  0.00   111.53      0.00      158     0.00     0.00  File#dirname
+  0.00   111.53      0.00       28     0.00     0.00  Kernel.instance_variables
+  0.00   111.53      0.00        1     0.00     0.00  InputManager#setup
+  0.00   111.53      0.00       13     0.00     0.00  Rubygame::Surface#zoom
+  0.00   111.53      0.00        4     0.00  2135.00  CampaignMode#on_network
+  0.00   111.53      0.00       44     0.00     0.00  Rubygame::Rect#new_from_object
+  0.00   111.53      0.00        1     0.00     0.00  Bignum#%
+  0.00   111.53      0.00        5     0.00     2.00  Inflector::Inflections#irregular
+  0.00   111.53      0.00        2     0.00     0.00  Hash#invert
+  0.00   111.53      0.00      180     0.00   437.67  Proc#call
+  0.00   111.53      0.00        1     0.00   570.00  Map#start_script
+  0.00   111.53      0.00        5     0.00     0.00  Module#const_set
+  0.00   111.53      0.00       17     0.00     0.00  LinkedList#initialize
+  0.00   111.53      0.00      228     0.00     0.04  Array#delete_if
+  0.00   111.53      0.00        2     0.00     0.00  AbsoluteLayout#initialize
+  0.00   111.53      0.00        1     0.00     0.00  Regexp#to_s
+  0.00   111.53      0.00        1     0.00     0.00  Kernel.singleton_method_removed
+  0.00   111.53      0.00        2     0.00  4370.00  Dialog#on_click
+  0.00   111.53      0.00        3     0.00     0.00  Rubygame::KeyUpEvent#initialize
+  0.00   111.53      0.00       77     0.00     0.00  MainMenuMode#update
+  0.00   111.53      0.00        3     0.00     0.00  Pathable.included
+  0.00   111.53      0.00        1     0.00    10.00  StoryDialog#setup
+  0.00   111.53      0.00      227     0.00     0.00  Rubygame::Clock#delay
+  0.00   111.53      0.00       25     0.00     0.40  Module#yaml_as
+  0.00   111.53      0.00        1     0.00     0.00  Kernel.instance_of?
+  0.00   111.53      0.00       60     0.00     0.00  Symbol#to_i
+  0.00   111.53      0.00       13     0.00     0.00  Module#remove_method
+  0.00   111.53      0.00        1     0.00     0.00  Gem::Specification#original_name
+  0.00   111.53      0.00        6     0.00     0.00  Float#>=
+  0.00   111.53      0.00       52     0.00    85.00  EntityManager#update
+  0.00   111.53      0.00        6     0.00     0.00  UnitBird#__player_id__
+  0.00   111.53      0.00        1     0.00     0.00  UnitWorker#__speed__
+  0.00   111.53      0.00        1     0.00    30.00  CampaignMode#initialize
+  0.00   111.53      0.00        1     0.00     0.00  TurnManager#setup
+  0.00   111.53      0.00        1     0.00     0.00  Gem.set_home
+  0.00   111.53      0.00      134     0.00     0.60  Rubygame::Rect#normalize
+  0.00   111.53      0.00       45     0.00     0.00  Float#coerce
+  0.00   111.53      0.00        3     0.00     0.00  Date::Infinity#initialize
+  0.00   111.53      0.00        1     0.00     0.00  Object#Complex
+  0.00   111.53      0.00       17     0.00     0.00  Hash#initialize_copy
+  0.00   111.53      0.00        7     0.00    44.29  IO#open
+  0.00   111.53      0.00       98     0.00     3.57  StoryStack#draw
+  0.00   111.53      0.00        2     0.00     0.00  CampaignMode#on_key_up
+  0.00   111.53      0.00      131     0.00     0.00  Hash#keys
+  0.00   111.53      0.00        1     0.00     0.00  Gem::Version#to_ints
+  0.00   111.53      0.00        2     0.00     0.00  Gem::Specification#attributes
+  0.00   111.53      0.00      111     0.00     0.00  Hash#delete
+  0.00   111.53      0.00       86     0.00     0.00  Module#append_features
+  0.00   111.53      0.00        2     0.00     0.00  BaseMode#base_setup
+  0.00   111.53      0.00       44     0.00     4.55  Positionable.in?
+  0.00   111.53      0.00       36     0.00     1.94  MouseManager#mouse_motion
+  0.00   111.53      0.00        3     0.00     0.00  EntityManager#setup
+  0.00   111.53      0.00        6     0.00     0.00  Rubygame::MouseDownEvent#initialize
+  0.00   111.53      0.00        1     0.00     0.00  Gem::Specification#sort_obj
+  0.00   111.53      0.00        1     0.00     0.00  Gem::SourceIndex#each
+  0.00   111.53      0.00       39     0.00     0.00  DIY::Lookup#initialize
+  0.00   111.53      0.00        2     0.00     0.00  Comparable.<
+  0.00   111.53      0.00        1     0.00  4410.00  Gem::GemPathSearcher#initialize
+  0.00   111.53      0.00       22     0.00     0.00  CampaignMode#on_mouse_motion
+  0.00   111.53      0.00        7     0.00     0.00  File#initialize
+  0.00   111.53      0.00        1     0.00  4840.00  Map#recreate_map_image
+  0.00   111.53      0.00        1     0.00  3300.00  Map#load_from_file
+  0.00   111.53      0.00       22     0.00     0.00  Inflector::Inflections#plural
+  0.00   111.53      0.00        1     0.00  4070.00  Gem::SourceIndex#refresh!
+  0.00   111.53      0.00        1     0.00     0.00  Viewport#set_map_size
+  0.00   111.53      0.00      270     0.00     0.00  Exception#set_backtrace
+  0.00   111.53      0.00       15     0.00     1.33  Class#constructor
+  0.00   111.53      0.00        4     0.00     0.00  Array#+
+  0.00   111.53      0.00        1     0.00     0.00  Gem::SourceIndex#search
+  0.00   111.53      0.00      118     0.00     0.25  PriorityQueue#empty?
+  0.00   111.53      0.00       30     0.00     2.67  Enumerable.map
+  0.00   111.53      0.00        1     0.00     0.00  MainMenuMode#_validate_constructor_args
+  0.00   111.53      0.00      353     0.00     0.00  Array#flatten
+  0.00   111.53      0.00        1     0.00    20.00  Button#click
+  0.00   111.53      0.00       13     0.00   103.85  Pathable.create_new_path
+  0.00   111.53      0.00        1     0.00     0.00  FontManager#initialize
+  0.00   111.53      0.00        1     0.00     0.00  File#file?
+  0.00   111.53      0.00       25     0.00     0.00  String#dump
+  0.00   111.53      0.00       53     0.00   696.42  EntityManager#get_occupants_at
+  0.00   111.53      0.00        1     0.00     0.00  Float#to_s
+  0.00   111.53      0.00        1     0.00     0.00  Inflector::Inflections#instance
+  0.00   111.53      0.00       51     0.00     0.00  Module#attr_reader
+  0.00   111.53      0.00        1     0.00     0.00  Gem::SourceIndex#initialize
+  0.00   111.53      0.00        3     0.00     0.00  Animal#__wandering_idle_time__
+  0.00   111.53      0.00        3     0.00     0.00  Float#<=
+  0.00   111.53      0.00      227     0.00   282.38  GameClient#update
+  0.00   111.53      0.00        1     0.00    30.00  DIY::Context#initialize
+  0.00   111.53      0.00        1     0.00    10.00  EntityManager#_validate_constructor_args
+  0.00   111.53      0.00        2     0.00     0.00  String#inspect
+  0.00   111.53      0.00       29     0.00     0.00  Inflector::Inflections#singular
+  0.00   111.53      0.00      606     0.00     0.00  Array#last
+  0.00   111.53      0.00       69     0.00     0.14  Array#<=>
+  0.00   111.53      0.00        1     0.00     0.00  MainMenuMode#stop
+  0.00   111.53      0.00       17     0.00     0.00  LinkedList#append
+  0.00   111.53      0.00        1     0.00     0.00  Hash#merge!
+  0.00   111.53      0.00        1     0.00    10.00  Portal#animated_class_setup
+  0.00   111.53      0.00        3     0.00     0.00  Wanderer.setup_wanderer
+  0.00   111.53      0.00        1     0.00    10.00  StoryStack#initialize
+  0.00   111.53      0.00        1     0.00     0.00  Dialog#on_network
+  0.00   111.53      0.00        1     0.00     0.00  Kernel.singleton_method_undefined
+  0.00   111.53      0.00       44     0.00     0.00  Rubygame::Rect#w
+  0.00   111.53      0.00        1     0.00    50.00  ResourceManager#load_entity_config
+  0.00   111.53      0.00        1     0.00     0.00  MainMenuMode#on_key_up
+  0.00   111.53      0.00        1     0.00    30.00  Hash#each_value
+  0.00   111.53      0.00       26     0.00     0.00  String#succ
+  0.00   111.53      0.00        1     0.00     0.00  IO#readlines
+  0.00   111.53      0.00       57     0.00     0.00  Module#attr_writer
+  0.00   111.53      0.00        7     0.00     0.00  Date#once
+  0.00   111.53      0.00        1     0.00     0.00  Array#-
+  0.00   111.53      0.00        1     0.00     0.00  Bignum#+
+  0.00   111.53      0.00        1     0.00 24100.00  EntityBuilder#initialize
+  0.00   111.53      0.00        6     0.00     0.00  MouseManager#mouse_down
+  0.00   111.53      0.00       34     0.00     0.00  Object#metaclass
+  0.00   111.53      0.00      227     0.00    98.72  BaseMode#handle_draw
+  0.00   111.53      0.00        7     0.00     0.00  Regexp#quote
+  0.00   111.53      0.00        1     0.00     0.00  Gem::Dependency#version_requirements
+  0.00   111.53      0.00        2     0.00  4350.00  EntityManager#handle_mouse_click
+  0.00   111.53      0.00        3     0.00     0.00  Animal#__range__
+  0.00   111.53      0.00        1     0.00     0.00  Exception#to_s
+  0.00   111.53      0.00        9     0.00     0.00  Gem::Specification#array_attribute
+  0.00   111.53      0.00        3     0.00     0.00  Module#method_undefined
+  0.00   111.53      0.00        1     0.00     0.00  Rubygame::Clock#lifetime
+  0.00   111.53      0.00      337     0.00     0.00  Float#abs
+  0.00   111.53      0.00       23     0.00     0.00  Publisher::InstanceMethods.ensure_valid
+  0.00   111.53      0.00        3     0.00     0.00  Animal#range
+  0.00   111.53      0.00        5     0.00  1708.00  BaseMode#handle_network
+  0.00   111.53      0.00        3     0.00    13.33  FileUtils.collect_method
+  0.00   111.53      0.00      144     0.00     0.28  Gem::SourceIndex#add_spec
+  0.00   111.53      0.00        1     0.00     0.00  Rubygame::EventQueue#initialize
+  0.00   111.53      0.00        1     0.00     0.00  Gem::Specification#read_only
+  0.00   111.53      0.00        1     0.00     0.00  FontManager#setup
+  0.00   111.53      0.00       72     0.00     0.56  Gem::GemPathSearcher#matching_file
+  0.00   111.53      0.00       52     0.00     3.08  Map#draw
+  0.00   111.53      0.00        3     0.00     0.00  Animal#__z__
+  0.00   111.53      0.00       52     0.00     1.73  MapScript#update
+  0.00   111.53      0.00        1     0.00     0.00  MapScript#initialize
+  0.00   111.53      0.00        1     0.00     0.00  SoundManager#_validate_constructor_args
+  0.00   111.53      0.00        2     0.00     0.00  Array#index
+  0.00   111.53      0.00        5     0.00     0.00  Audible.included
+  0.00   111.53      0.00       71     0.00     0.00  String#to_sym
+  0.00   111.53      0.00        1     0.00     0.00  Rubygame::Clock#target_framerate=
+  0.00   111.53      0.00      312     0.00   165.77  OccupancyGrid#get_occupants
+  0.00   111.53      0.00        2     0.00     0.00  Struct#new
+  0.00   111.53      0.00        1     0.00    10.00  ModeController#setup
+  0.00   111.53      0.00       43     0.00     1.40  Gem::Requirement#default
+  0.00   111.53      0.00        1     0.00     0.00  Gem.dir
+  0.00   111.53      0.00        1     0.00     0.00  Time#initialize
+  0.00   111.53      0.00        1     0.00     0.00  Singleton.__init__
+  0.00   111.53      0.00      426     0.00     0.00  String#intern
+  0.00   111.53      0.00        1     0.00     0.00  Gem::SourceIndex#installed_spec_directories
+  0.00   111.53      0.00        6     0.00    51.67  YAML.load_file
+  0.00   111.53      0.00        1     0.00     0.00  Viewport#initialize
+  0.00   111.53      0.00        1     0.00 82180.00  SnelpsApp#main_loop
+  0.00   111.53      0.00        4     0.00     0.00  ENV.[]
+  0.00   111.53      0.00        1     0.00    10.00  MainMenuMode#setup
+  0.00   111.53      0.00        1     0.00   120.00  UnitWorker#animated_class_setup
+  0.00   111.53      0.00      574     0.00     0.00  String#initialize_copy
+  0.00   111.53      0.00        1     0.00     0.00  Complex#initialize
+  0.00   111.53      0.00        1     0.00  8730.00  Dialog#close
+  0.00   111.53      0.00        1     0.00     0.00  String#chomp!
+  0.00   111.53      0.00       17     0.00     0.00  PriorityQueue#initialize
+  0.00   111.53      0.00        1     0.00     0.00  YAML::Syck::Resolver#use_types_at
+  0.00   111.53      0.00        2     0.00     0.00  Rubygame::ActiveEvent#initialize
+  0.00   111.53      0.00      456     0.00     0.00  Rubygame::Clock#runtime
+  0.00   111.53      0.00        1     0.00    30.00  DIY::Context#from_file
+  0.00   111.53      0.00        1     0.00     0.00  UnitWorker#__player_id__
+  0.00   111.53      0.00       33     0.00     0.00  OccupancyGrid#leave
+  0.00   111.53      0.00        2     0.00     0.00  Gem.ensure_gem_subdirectories
+  0.00   111.53      0.00        6     0.00     0.00  Gem::Platform#to_a
+  0.00   111.53      0.00        6     0.00     0.00  IO#binmode
+  0.00   111.53      0.00        1     0.00     0.00  Gem.set_paths
+  0.00   111.53      0.00      109     0.00     0.00  Array#shift
+  0.00   111.53      0.00       25     0.00     0.00  YAML.tag_class
+  0.00   111.53      0.00       26     0.00     0.00  Gem::Specification#requirements=
+  0.00   111.53      0.00        1     0.00     0.00  Gem.suffixes
+  0.00   111.53      0.00        1     0.00     0.00  Gem::SourceIndex#find_name
+  0.00   111.53      0.00       20     0.00     0.00  Kernel.extend
+  0.00   111.53      0.00       15     0.00     0.00  FileUtils.private_module_function
+  0.00   111.53      0.00        1     0.00  2670.00  Map#load_images
+  0.00   111.53      0.00        3     0.00     6.67  ModeController#change_mode_to
+  0.00   111.53      0.00       27     0.00     0.00  Entity#add_setup_listener
+  0.00   111.53      0.00        1     0.00     0.00  Enumerable.all?
+  0.00   111.53      0.00        1     0.00     0.00  MouseManager#setup
+  0.00   111.53      0.00        3     0.00     0.00  NetworkChannel#initialize
+  0.00   111.53      0.00      131     0.00     0.00  Module#const_get
+  0.00   111.53      0.00        1     0.00     0.00  Time#-
+  0.00   111.53      0.00       31     0.00     0.00  Array#reverse
+  0.00   111.53      0.00      180     0.00     0.00  String#split
+  0.00   111.53      0.00        1     0.00     0.00  Enumerable.sort_by
+  0.00   111.53      0.00        3     0.00    13.33  Rubygame::Color::Palette#initialize
+  0.00   111.53      0.00        4     0.00     0.00  Gem::Specification#attribute_alias_singular
+  0.00   111.53      0.00      270     0.00     0.00  Exception#backtrace
+  0.00   111.53      0.00        2     0.00     0.00  Numeric#real
+  0.00   111.53      0.00        3     0.00     0.00  Float#<=>
+  0.00   111.53      0.00       26     0.00     0.00  Viewport#max_up?
+  0.00   111.53      0.00        6     0.00     0.00  UnitBird#__speed__
+  0.00   111.53      0.00        3     0.00     0.00  Array#sort!
+  0.00   111.53      0.00        5     0.00  1708.00  NetworkManager#handle_server_msg
+  0.00   111.53      0.00       32     0.00     0.00  Range#initialize
+  0.00   111.53      0.00        1     0.00     0.00  Rubygame::TTF#setup
+  0.00   111.53      0.00        1     0.00     0.00  Wanderer.included
+  0.00   111.53      0.00        2     0.00     0.00  Rubygame::Music#stop
+  0.00   111.53      0.00        2     0.00     0.00  Portal#default_z
+  0.00   111.53      0.00       22     0.00     0.00  UnitBird#z
+  0.00   111.53      0.00      156     0.00     0.00  Movable.idle?
+  0.00   111.53      0.00        6     0.00     0.00  Animal#default_z
+  0.00   111.53      0.00       44     0.00    12.73  MapScript#create_entity
+  0.00   111.53      0.00        3     0.00     0.00  OccupancyGrid#initialize
+  0.00   111.53      0.00        7     0.00     0.00  Rubygame::TTF#render
+  0.00   111.53      0.00        1     0.00     0.00  CampaignMode#_validate_constructor_args
+  0.00   111.53      0.00        2     0.00     0.00  Kernel.p
+  0.00   111.53      0.00        1     0.00   200.00  EntityManager#handle_mouse_drag
+  0.00   111.53      0.00        1     0.00     0.00  ResourceManager#initialize
+  0.00   111.53      0.00        2     0.00     0.00  StoryStack#hit_by?
+  0.00   111.53      0.00       55     0.00     0.18  Gem::Specification#required_ruby_version=
+  0.00   111.53      0.00       20     0.00     0.00  Module#extended
+  0.00   111.53      0.00      139     0.00     0.00  Module#public
+  0.00   111.53      0.00        1     0.00     0.00  FontManager#load_available_fonts
+  0.00   111.53      0.00        3     0.00     3.33  SoundManager#play
+  0.00   111.53      0.00        7     0.00     0.00  FontManager#render
+  0.00   111.53      0.00        2     0.00     0.00  Rubygame::Music#load
+  0.00   111.53      0.00        1     0.00     0.00  FontManager#_validate_constructor_args
+  0.00   111.53      0.00      118     0.00     0.25  PriorityQueue#best
+  0.00   111.53      0.00        9     0.00     0.00  Entity#add_update_listener
+  0.00   111.53      0.00       16     0.00     0.00  DIY::ObjectDef#singleton?
+  0.00   111.53      0.00        1     0.00     0.00  TurnManager#initialize
+  0.00   111.53      0.00        3     0.00     0.00  Map#pixel_height
+  0.00   111.53      0.00        1     0.00    20.00  MainMenuMode#on_click
+  0.00   111.53      0.00        1     0.00    30.00  CampaignMode#setup
+  0.00   111.53      0.00        1     0.00     0.00  Inflector::Inflections#uncountable
+  0.00   111.53      0.00        1     0.00     0.00  Singleton.included
+  0.00   111.53      0.00      782     0.00     0.00  Kernel.singleton_method_added
+  0.00   111.53      0.00        1     0.00     0.00  ConfigManager#_validate_constructor_args
+  0.00   111.53      0.00        4     0.00     0.00  SoundManager#play_sound
+  0.00   111.53      0.00       26     0.00     0.00  UnitWorker#player_id
+  0.00   111.53      0.00        1     0.00    10.00  SoundManager#setup
+  0.00   111.53      0.00      266     0.00     0.00  Rubygame::Surface#draw_box
+  0.00   111.53      0.00        1     0.00  4860.00  MiniMap#initialize
+  0.00   111.53      0.00        2     0.00     0.00  Rubygame::Music#fade_out
+  0.00   111.53      0.00        3     0.00     0.00  Animal#__speed__
+  0.00   111.53      0.00        1     0.00     0.00  Rubygame::Sound#load
+  0.00   111.53      0.00        1     0.00     0.00  Exception#message
+  0.00   111.53      0.00        7     0.00     0.00  YAML::Syck::Parser#set_resolver
+  0.00   111.53      0.00        1     0.00   570.00  MapScript#start
+  0.00   111.53      0.00        1     0.00     0.00  SnelpsApp#shutdown
+  0.00   111.53      0.00       44     0.00     0.00  Rubygame::Rect#x
+  0.00   111.53      0.00        6     0.00     0.00  IO#close
+  0.00   111.53      0.00        3     0.00     0.00  Animal#wandering_idle_time
+  0.00   111.53      0.00       24     0.00     0.00  Module#alias_method
+  0.00   111.53      0.00       23     0.00     0.43  Publisher::InstanceMethods.when
+  0.00   111.53      0.00        2     0.00     0.00  ResourceManager#load_config
+  0.00   111.53      0.00        2     0.00 14420.00  DIY::Context#[]
+  0.00   111.53      0.00        3     0.00     0.00  AbsoluteLayout#add
+  0.00   111.53      0.00        7     0.00    44.29  YAML.load
+  0.00   111.53      0.00        2     0.00     0.00  Rubygame::Color::Palette#include
+  0.00   111.53      0.00      133     0.00     0.08  Gem::Specification#authors=
+  0.00   111.53      0.00      144     0.00     1.25  Gem::Specification#version=
+  0.00   111.53      0.00        1     0.00  8730.00  Dialog#close_callback
+  0.00   111.53      0.00        1     0.00     0.00  Dir#glob
+  0.00   111.53      0.00       42     0.00     0.00  Module#private_class_method
+  0.00   111.53      0.00       20     0.00     0.00  Float#==
+  0.00   111.53      0.00      261     0.00     0.00  Animated.stop_animating
+  0.00   111.53      0.00        1     0.00     0.00  UnitWorker#speed
+  0.00   111.53      0.00      337     0.00     0.00  Float#<
+  0.00   111.53      0.00       17     0.00     0.00  Rubygame::Rect#t
+  0.00   111.53      0.00        4     0.00     0.00  Object#initialize
+  0.00   111.53      0.00        1     0.00  4070.00  Gem::SourceIndex#from_gems_in
+  0.00   111.53      0.00       52     0.00     1.73  Map#update
+  0.00   111.53      0.00        2     0.00     0.00  SoundManager#stop
+  0.00   111.53      0.00        1     0.00     0.00  IO#puts
+  0.00   111.53      0.00        2     0.00    15.00  Gem::Specification#platform=
+  0.00   111.53      0.00        3     0.00     3.33  Rubygame::KeyDownEvent#initialize
+  0.00   111.53      0.00        1     0.00  4070.00  Gem::SourceIndex#from_installed_gems
+  0.00   111.53      0.00      126     0.00     0.00  Gem::Specification#dependencies
+  0.00   111.53      0.00        1     0.00    30.00  DIY::Context#from_yaml
+  0.00   111.53      0.00       24     0.00     0.00  Array#==
+  0.00   111.53      0.00        1     0.00    10.00  EntityManager#initialize
+  0.00   111.53      0.00       36     0.00     1.67  BaseMode#handle_mouse_motion
+  0.00   111.53      0.00        6     0.00     0.00  UnitBird#speed
+  0.00   111.53      0.00      529     0.00     0.00  LinkedList::ListElem#obj=
+  0.00   111.53      0.00        1     0.00     0.00  Integer#to_int
+  0.00   111.53      0.00       10     0.00     0.00  Pathable.setup_pathable
+  0.00   111.53      0.00       10     0.00     0.00  Movable.setup_movable
+  0.00   111.53      0.00       52     0.00   382.88  EntityManager#draw
+  0.00   111.53      0.00        1     0.00     0.00  Date::Infinity#d
+  0.00   111.53      0.00        1     0.00     0.00  MouseManager#_validate_constructor_args
+  0.00   111.53      0.00        1     0.00 111530.00  #toplevel
