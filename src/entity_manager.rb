@@ -23,10 +23,16 @@ class EntityManager
 
   # TODO actual target "locking"
   def handle_attack(cmd)
-    handle_move cmd
+    fire :sound_play, :ent_attack
+    move_entity cmd
   end
 
   def handle_move(cmd)
+    fire :sound_play, :ent_move
+    move_entity cmd
+  end
+
+  def move_entity(cmd)
     move_cmd,entity_id,dest_tile_x,dest_tile_y = cmd.split ':'
     entity_id = entity_id.to_i
     dest_tile_x = dest_tile_x.to_i
@@ -150,8 +156,6 @@ class EntityManager
         tile_x,tile_y = 
           @map.coords_to_tiles(world_x,world_y)
 
-        # TODO properly pass around sound events, these should come from the audible component
-        fire :sound_play, @current_action.downcase.to_sym
         cmd = "#{@current_action}:#{entity.server_id}:#{tile_x}:#{tile_y}"
         fire :network_msg_to, cmd
       end
