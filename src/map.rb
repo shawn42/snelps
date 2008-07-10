@@ -122,10 +122,8 @@ class Map
     recreate_map_image if @background_image.nil?
 #    @background_image.blit destination, @viewport.world_to_view(0,0)
     # draw only the visible?
-    y_off = @viewport.screen_y_offset
-    x_off = @viewport.screen_x_offset
     @background_image.blit destination, [0,0], 
-      [@viewport.x_offset+x_off,@viewport.y_offset+y_off,@viewport.width,@viewport.height]
+      [@viewport.x_offset,@viewport.y_offset,@viewport.width,@viewport.height]
   end
 end
 

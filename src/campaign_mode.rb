@@ -78,7 +78,9 @@ class CampaignMode < BaseMode
     pieces = event.split(':')
     case pieces[0]
     when ENTITY_MOVE
-      @entity_manager.handle_entity_move event
+      @entity_manager.handle_move event
+    when ENTITY_ATTACK
+      @entity_manager.handle_attack event
     when PLAYER_JOIN
       # parse player from event
       id = pieces[2].to_i

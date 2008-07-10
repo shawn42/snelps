@@ -6,14 +6,14 @@ class EntityManager
   extend Publisher
   include Commands
 
-  attr_accessor :map, :occupancy_grids, :entities, :selected_entities
+  attr_accessor :map, :occupancy_grids, :selected_entities, :current_action
   can_fire :sound_play, :network_msg_to
 
   constructor :viewport, :resource_manager, :sound_manager, :network_manager, :mouse_manager, :input_manager
   def setup()
     @trace = false
-    @entities = []
     @selected_entities = {}
+    @current_action = ENTITY_MOVE
 
     @available_z_levels = []
     @z_entities = {}
@@ -21,16 +21,19 @@ class EntityManager
     @occupancy_grids = {}
   end
 
-  def handle_entity_move(cmd)
+  # TODO actual target "locking"
+  def handle_attack(cmd)
+    handle_move cmd
+  end
+
+  def handle_move(cmd)
     move_cmd,entity_id,dest_tile_x,dest_tile_y = cmd.split ':'
     entity_id = entity_id.to_i
     dest_tile_x = dest_tile_x.to_i
     dest_tile_y = dest_tile_y.to_i
     
     entity = @id_entities[entity_id]
-#    tile_x,tile_y = 
-#      @map.coords_to_tiles(entity.x,entity.y)
-    
+
     from = [entity.tile_x,entity.tile_y]
     to = [dest_tile_x,dest_tile_y]
     unless has_obstacle?(dest_tile_x, dest_tile_y, entity.z)
@@ -46,10 +49,10 @@ class EntityManager
 
   def has_obstacle?(x, y, z, ignore_objects = [])
     # for now 266 is water, only flying entities can go on them
+    # TODO can we just make the water tiles be ents on lvl 1?
     begin
       occ = @occupancy_grids[z].nil? ? false : @occupancy_grids[z].occupied?(x, y)
       water_check = ((@map.at(x,y) == 266) and (z == 1))
-#      p "occupied:#{occ} water#{water_check}"
       return (occ or water_check)
     rescue Exception => ex
       p ex
@@ -61,20 +64,25 @@ class EntityManager
     case event.key
     when K_T
       @trace = !@trace
-      for entity in @entities
+      for entity in @id_entities.values
         entity.trace = @trace
       end
     when K_R
       # report (mostly for debugging)
-      for entity in @entities
+      for entity in @id_entities.values
         puts entity
       end
+    when K_M
+      @current_action = ENTITY_MOVE
+    when K_A
+      @current_action = ENTITY_ATTACK
     end
   end
   
   # select all entities within this world coord box
   def select_in(x,y,dx=0,dy=0)
     selection_change = false
+    dragging = (dx > 0 or dy > 0)
 
     world_x, world_y = @viewport.view_to_world(x, y)
     world_dx, world_dy = @viewport.view_to_world(x+dx, y+dy)
@@ -90,28 +98,37 @@ class EntityManager
     tdx = 1 if tdx == 0
     tdy = 1 if tdy == 0
 
-    # get occupancy_grid ents at tx, ty
-
     newly_selected_entities = {}
     for z, grid in @occupancy_grids
       grid_ents = grid.get_occupants tile_x, tile_y, tdx, tdy
       unless grid_ents.empty?
         selection_change = true
-        entity = grid_ents.first
-        if entity.is? :selectable
-          unless entity.selected?
-            if entity.is? :selectable
-              entity.select
-              newly_selected_entities[entity.server_id] = entity
+        for entity in grid_ents
+          if entity.is? :selectable
+            # still select if we are dragging, but if clicking we 
+            # don't want them selected anymore
+            if dragging
+              if entity.is? :selectable
+                newly_selected_entities[entity.server_id] = entity
+              end
+            else
+              if entity.is? :selectable
+                unless entity.selected?
+                  newly_selected_entities[entity.server_id] = entity
+                end
+              end
             end
           end
         end
       end
     end
 
-    if selection_change
+    if selection_change or dragging
       clear_entity_selection 
-      @selected_entities[entity.server_id] = entity
+      for ent in newly_selected_entities.values
+        ent.select
+      end
+      @selected_entities = newly_selected_entities
     end
 
     selection_change
@@ -119,8 +136,7 @@ class EntityManager
 
   def clear_entity_selection()
     for ent_id in @selected_entities.keys
-      @selected_entities[ent_id].deselect
-      @selected_entities.delete ent_id
+      @selected_entities.delete(ent_id).deselect
     end
   end
 
@@ -135,8 +151,8 @@ class EntityManager
           @map.coords_to_tiles(world_x,world_y)
 
         # TODO properly pass around sound events, these should come from the audible component
-        fire :sound_play, :unit_move
-        cmd = "#{ENTITY_MOVE}:#{entity.server_id}:#{tile_x}:#{tile_y}"
+        fire :sound_play, @current_action.downcase.to_sym
+        cmd = "#{@current_action}:#{entity.server_id}:#{tile_x}:#{tile_y}"
         fire :network_msg_to, cmd
       end
     end
@@ -198,9 +214,8 @@ class EntityManager
       @z_entities[z] << new_entity
 
       @id_entities[new_entity_id] = new_entity
-      @entities << new_entity
       # TODO ahhhhh
-      new_entity.animate
+      new_entity.animate if new_entity.is? :animated
     rescue Exception => ex
       p ex
       caller.each do |c|
@@ -211,7 +226,7 @@ class EntityManager
   end
 
   def update(time)
-    for entity in @entities
+    for entity in @id_entities.values
       entity.update(time)
     end
   end

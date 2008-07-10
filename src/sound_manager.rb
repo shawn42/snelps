@@ -32,7 +32,8 @@ class SoundManager
 #      @background_music.fade_in 3
       @background_music.fade_out 3
 
-      @unit_move = @resource_manager.load_sound("whiff.ogg")
+      @ent_move = @resource_manager.load_sound("whiff.ogg")
+      @ent_attack = @resource_manager.load_sound("attack.ogg")
 
       @menu_music = @resource_manager.load_music("loop.ogg")
 #      @menu_music.fade_in 3
@@ -44,9 +45,13 @@ class SoundManager
   def play_sound(what)
     if @enabled
       case what
-      when :unit_move
+      when :ent_move
         @sound_thread = Thread.new do
-          @unit_move.play
+          @ent_move.play
+        end
+      when :ent_attack
+        @sound_thread = Thread.new do
+          @ent_attack.play
         end
       end
     end
