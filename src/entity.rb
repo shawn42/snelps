@@ -36,4 +36,8 @@ class Entity
     @setup_listeners ||= [] 
     @setup_listeners << meth
   end
+
+  def is?(behaviour)
+    components.include? behaviour
+  end
 end

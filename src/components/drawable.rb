@@ -1,5 +1,5 @@
 module Drawable 
-  attr_accessor :selected, :trace
+  attr_accessor :trace
 
   HB_HEIGHT = 2
   HB_WIDTH = 20
@@ -53,7 +53,7 @@ module Drawable
     end
 
     # can I pull this out into a selectable componenet?
-    if @selected
+    if is? :selectable and selected?
       w = @selected_image.w
       h = @selected_image.h
       sx = vx - (w/2)
@@ -65,7 +65,7 @@ module Drawable
     @image.blit(destination, 
                 [vx-@image.w/2,vy-@image.w/2])
 
-    if @selected
+    if is? :selectable and selected?
       hb_x = vx - 10
       hb_y = vy - 20
 

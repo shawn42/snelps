@@ -36,6 +36,24 @@ begin
     t.spec_files = FileList['specs/*_spec.rb']
     t.spec_opts = ["--format", "specdoc"]
   end
+
+  rule(/spec:.+/) do |t|
+    name = t.name.gsub("spec:","")
+
+    path = File.join( File.dirname(__FILE__),'specs','%s_spec.rb'%name )
+
+    if File.exist? path
+      Spec::Rake::SpecTask.new(name) do |t|
+      t.spec_files = [path]
+    end
+
+    puts "\nRunning spec/%s_spec.rb"%[name]
+      Rake::Task[name].invoke
+    else
+      puts "File does not exist: %s"%path
+    end
+  end
+
 rescue LoadError
   task :spec do 
     puts "ERROR: RSpec is not installed?"

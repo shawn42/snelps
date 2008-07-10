@@ -6,13 +6,15 @@ class EntityManager
   extend Publisher
   include Commands
 
-  attr_accessor :map, :occupancy_grids, :entities
+  attr_accessor :map, :occupancy_grids, :entities, :selected_entities
   can_fire :sound_play, :network_msg_to
 
   constructor :viewport, :resource_manager, :sound_manager, :network_manager, :mouse_manager, :input_manager
   def setup()
     @trace = false
     @entities = []
+    @selected_entities = {}
+
     @available_z_levels = []
     @z_entities = {}
     @id_entities = {}
@@ -70,48 +72,84 @@ class EntityManager
     end
   end
   
+  # select all entities within this world coord box
+  def select_in(x,y,dx=0,dy=0)
+    selection_change = false
+
+    world_x, world_y = @viewport.view_to_world(x, y)
+    world_dx, world_dy = @viewport.view_to_world(x+dx, y+dy)
+
+    tile_x,tile_y = 
+      @map.coords_to_tiles(world_x,world_y)
+    tile_dx,tile_dy = 
+      @map.coords_to_tiles(world_dx,world_dy)
+
+    tdx = tile_dx - tile_x
+    tdy = tile_dy - tile_y
+
+    tdx = 1 if tdx == 0
+    tdy = 1 if tdy == 0
+
+    # get occupancy_grid ents at tx, ty
+
+    newly_selected_entities = {}
+    for z, grid in @occupancy_grids
+      grid_ents = grid.get_occupants tile_x, tile_y, tdx, tdy
+      unless grid_ents.empty?
+        selection_change = true
+        entity = grid_ents.first
+        if entity.is? :selectable
+          unless entity.selected?
+            if entity.is? :selectable
+              entity.select
+              newly_selected_entities[entity.server_id] = entity
+            end
+          end
+        end
+      end
+    end
+
+    if selection_change
+      clear_entity_selection 
+      @selected_entities[entity.server_id] = entity
+    end
+
+    selection_change
+  end
+
+  def clear_entity_selection()
+    for ent_id in @selected_entities.keys
+      @selected_entities[ent_id].deselect
+      @selected_entities.delete ent_id
+    end
+  end
+
+  def do_action(x,y)
+    # TODO perform given action on selected units (move, attack, etc)
+    for id, entity in @selected_entities
+      if entity.is? :pathable
+        # we clicked to send them an order
+        world_x, world_y = @viewport.view_to_world(x, y)
+
+        tile_x,tile_y = 
+          @map.coords_to_tiles(world_x,world_y)
+
+        # TODO properly pass around sound events, these should come from the audible component
+        fire :sound_play, :unit_move
+        cmd = "#{ENTITY_MOVE}:#{entity.server_id}:#{tile_x}:#{tile_y}"
+        fire :network_msg_to, cmd
+      end
+    end
+  end
+
   def handle_mouse_click(event)
     pos = event.pos
     x = pos.first
     y = pos.last
-    selected_entity = nil
 
-    for entity in @entities
-      if entity.hit_by? pos[0], pos[1]
-        if entity.selected
-          entity.selected = false
-        else
-          # TODO hack need to create "selectable" component
-          unless entity.class.default_animations[:selected].nil?
-            selected_entity = entity
-            entity.selected = true
-          end
-        end
-        break
-      end
-    end
-
-    if selected_entity.nil?
-      for entity in @entities
-        if entity.selected and entity.respond_to? :path=
-          # we clicked to send them an order
-          world_x, world_y = @viewport.view_to_world(x, y)
-
-          tile_x,tile_y = 
-            @map.coords_to_tiles(world_x,world_y)
-
-          # TODO properly pass around sound events, these should come from the audible component
-          fire :sound_play, :unit_move
-          cmd = "#{ENTITY_MOVE}:#{entity.server_id}:#{tile_x}:#{tile_y}"
-          fire :network_msg_to, cmd
-        end
-      end
-    else
-      for entity in @entities
-        unless entity == selected_entity
-          entity.selected = false
-        end
-      end
+    # if we are not selecting ents, do action
+    unless select_in x, y
+      do_action x, y
     end
   end
 
@@ -119,16 +157,9 @@ class EntityManager
     pos = event.pos
 		x_array = [x, pos.first].sort
 		y_array = [y, pos.last].sort
-    rect = Rect.new(x_array.first,y_array.first, x_array.last -
-                     x_array.first ,y_array.last - y_array.first)
-    for entity in @entities
-      entity.selected = false
-      if entity.in? rect
-        unless entity.class.default_animations[:selected].nil?
-          entity.selected = true
-        end
-      end
-    end
+    # TODO change to use select_in
+    select_in x_array.first,y_array.first, x_array.last -
+                     x_array.first ,y_array.last - y_array.first
   end
   
   def create_entity(entity_type, x, y)

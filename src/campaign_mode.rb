@@ -1,5 +1,6 @@
 require 'commands'
 require 'publisher'
+#require 'game_server'
 require 'base_mode'
 require 'player'
 require 'map'
@@ -21,6 +22,11 @@ class CampaignMode < BaseMode
 
   def setup()
     base_setup
+
+    # TODO, campaign and map we are on?
+#    args = {}
+    #    add exec call here?
+#    @server = GameServer.new.start_campaign_mode(args)
 
     @entity_manager.when :sound_play do |snd|
       fire :sound_play, snd

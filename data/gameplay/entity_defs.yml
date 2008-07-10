@@ -4,6 +4,7 @@
   :z: 1
   :health: 100
   :components: 
+  - :selectable
   - :positionable
   - :movable
   - :pathable
@@ -74,6 +75,7 @@
   :z: 2
   :health: 100
   :components: 
+  - :selectable
   - :positionable
   - :movable
   - :pathable
