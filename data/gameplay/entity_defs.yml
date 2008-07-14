@@ -4,6 +4,7 @@
   :z: 1
   :health: 100
   :components: 
+  - :able
   - :selectable
   - :positionable
   - :movable
@@ -75,6 +76,7 @@
   :z: 2
   :health: 100
   :components: 
+  - :able
   - :selectable
   - :positionable
   - :movable
@@ -142,6 +144,7 @@
   :z: 2
   :health: 10
   :components: 
+  - :able
   - :positionable
   - :movable
   - :pathable
@@ -209,6 +212,7 @@
 :tree: 
   :z: 1
   :components: 
+  - :able
   - :positionable
   - :audible
   - :animated
@@ -222,6 +226,7 @@
 :portal: 
   :z: 0
   :components: 
+  - :able
   - :positionable
   - :audible
   - :animated

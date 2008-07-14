@@ -17,7 +17,6 @@ module Positionable
     @rect = Rect.new args[:x]-half_tile_size,args[:y]-half_tile_size,tile_size,tile_size
 
     @tile_x, @tile_y = @map.coords_to_tiles x, y
-#    p "setup_positionable [#{@rect.centerx},#{@rect.centery}]:[#{args[:x]},#{args[:y]}]:[#{x},#{y}]:[#{@tile_x},#{@tile_y}]"
     @grid = args[:occupancy_grid]
     @grid.occupy @tile_x, @tile_y, self
   end

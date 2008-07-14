@@ -37,7 +37,15 @@ class Entity
     @setup_listeners << meth
   end
 
-  def is?(behaviour)
-    components.include? behaviour
+  def is?(behavior)
+    components.include? behavior
+  end
+
+  # assertion check for component dependencies
+  # TODO, this causes a strage error, should shutdown game?!
+  def require_components(*behaviors)
+    for behavior in behaviors
+      raise "#{behavior} behavior required" unless is? behavior
+    end
   end
 end

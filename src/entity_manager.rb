@@ -2,17 +2,20 @@ require 'pathfinder_ll'
 require 'publisher'
 require 'commands'
 require 'entity'
+require 'entity_selection'
 class EntityManager
   extend Publisher
   include Commands
 
-  attr_accessor :map, :occupancy_grids, :selected_entities, :current_action
+  attr_accessor :map, :occupancy_grids, :current_selection, :current_action, :selections
   can_fire :sound_play, :network_msg_to
 
   constructor :viewport, :resource_manager, :sound_manager, :network_manager, :mouse_manager, :input_manager
   def setup()
     @trace = false
-    @selected_entities = {}
+    
+    # stores the selections for later retrieval
+    @selections = {}
     @current_action = ENTITY_MOVE
 
     @available_z_levels = []
@@ -82,6 +85,38 @@ class EntityManager
       @current_action = ENTITY_MOVE
     when K_A
       @current_action = ENTITY_ATTACK
+    when K_1
+      change_group_selection event, 1
+    when K_2
+      change_group_selection event, 2
+    when K_3
+      change_group_selection event, 3
+    when K_4
+      change_group_selection event, 4
+    when K_5
+      change_group_selection event, 5
+    when K_6
+      change_group_selection event, 6
+    when K_7
+      change_group_selection event, 7
+    when K_8
+      change_group_selection event, 8
+    when K_9
+      change_group_selection event, 9
+    when K_0
+      change_group_selection event, 0
+    end
+  end
+
+  # update the current group selection based on whether the CRTL keys are press
+  # with the number.
+  def change_group_selection(event, num)
+    if event.mods.include? K_LCTRL or event.mods.include? K_RCTRL
+      @selections[num] = @current_selection 
+    else
+      clear_entity_selection
+      @current_selection = @selections[num]
+      @current_selection.select unless @current_selection.nil?
     end
   end
   
@@ -104,7 +139,7 @@ class EntityManager
     tdx = 1 if tdx == 0
     tdy = 1 if tdy == 0
 
-    newly_selected_entities = {}
+    newly_current_selection = {}
     for z, grid in @occupancy_grids
       grid_ents = grid.get_occupants tile_x, tile_y, tdx, tdy
       unless grid_ents.empty?
@@ -115,12 +150,12 @@ class EntityManager
             # don't want them selected anymore
             if dragging
               if entity.is? :selectable
-                newly_selected_entities[entity.server_id] = entity
+                newly_current_selection[entity.server_id] = entity
               end
             else
               if entity.is? :selectable
                 unless entity.selected?
-                  newly_selected_entities[entity.server_id] = entity
+                  newly_current_selection[entity.server_id] = entity
                 end
               end
             end
@@ -131,33 +166,32 @@ class EntityManager
 
     if selection_change or dragging
       clear_entity_selection 
-      for ent in newly_selected_entities.values
-        ent.select
-      end
-      @selected_entities = newly_selected_entities
+      @current_selection.deselect unless @current_selection.nil?
+      @current_selection = EntitySelection.new newly_current_selection
     end
 
     selection_change
   end
 
   def clear_entity_selection()
-    for ent_id in @selected_entities.keys
-      @selected_entities.delete(ent_id).deselect
-    end
+    @current_selection.deselect unless @current_selection.nil?
+    @current_selection = nil
   end
 
   def do_action(x,y)
     # TODO perform given action on selected units (move, attack, etc)
-    for id, entity in @selected_entities
-      if entity.is? :pathable
-        # we clicked to send them an order
-        world_x, world_y = @viewport.view_to_world(x, y)
+    if @current_selection
+      for id, entity in @current_selection.entities
+        if entity.is? :pathable
+          # we clicked to send them an order
+          world_x, world_y = @viewport.view_to_world(x, y)
 
-        tile_x,tile_y = 
-          @map.coords_to_tiles(world_x,world_y)
+          tile_x,tile_y = 
+            @map.coords_to_tiles(world_x,world_y)
 
-        cmd = "#{@current_action}:#{entity.server_id}:#{tile_x}:#{tile_y}"
-        fire :network_msg_to, cmd
+          cmd = "#{@current_action}:#{entity.server_id}:#{tile_x}:#{tile_y}"
+          fire :network_msg_to, cmd
+        end
       end
     end
   end

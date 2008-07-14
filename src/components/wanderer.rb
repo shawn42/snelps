@@ -7,6 +7,7 @@ module Wanderer
   end
 
   def setup_wanderer(args)
+    require_components :pathable, :movable, :positionable, :able
     @orig_x = @tile_x
     @orig_y = @tile_y
     self.range

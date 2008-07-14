@@ -6,7 +6,8 @@ module Pathable
   end
 
   def setup_pathable(args)
-    # requires positionable to be included prior
+    require_components :positionable, :movable
+
     @grid = args[:occupancy_grid]
     @entity_manager = args[:entity_manager]
   end
@@ -97,6 +98,4 @@ module Pathable
       stop_animating 
     end
   end
-  
-
 end
