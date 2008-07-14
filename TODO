@@ -12,6 +12,7 @@ MILESTONE #1 - "move units here" campaign
 
 PROBLEMS
  - how will things handle images larger than the size of a tile?
+ - new selection code doesn't allow the player to send a unit to the portal
 
 BACKLOG
  - add logger to app

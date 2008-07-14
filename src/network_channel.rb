@@ -15,4 +15,9 @@ class NetworkChannel
       fire :msg_received, obj
     end
   end
+
+  def <<(cmd)
+    push cmd
+  end
+
 end

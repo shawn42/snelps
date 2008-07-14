@@ -48,11 +48,19 @@ class NetworkManager
     begin
       unless msg.nil?
         cmd = msg.split(':')[0]
-        if cmd == HEARTBEAT
-          puts msg
-        else
-          msg += ":1" if cmd == PLAYER_JOIN
-          @channels[:from_server].push msg
+        case cmd
+          when HEARTBEAT
+            puts msg
+          when PLAYER_JOIN
+            msg += ":1"
+            @channels[:from_server].push msg
+          when ENTITY_CREATE
+            @ent_id ||= 0
+            @ent_id += 1
+            msg += ":#{@ent_id}"
+            @channels[:from_server].push msg
+          else
+            @channels[:from_server].push msg
         end
       end
     rescue Exception => ex

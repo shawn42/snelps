@@ -37,6 +37,7 @@ class EntityManager
 
   def move_entity(cmd)
     move_cmd,entity_id,dest_tile_x,dest_tile_y = cmd.split ':'
+
     entity_id = entity_id.to_i
     dest_tile_x = dest_tile_x.to_i
     dest_tile_y = dest_tile_y.to_i
@@ -143,11 +144,12 @@ class EntityManager
     for z, grid in @occupancy_grids
       grid_ents = grid.get_occupants tile_x, tile_y, tdx, tdy
       unless grid_ents.empty?
-        selection_change = true
         for entity in grid_ents
-          if entity.is? :selectable
+          # TODO, unhardcode the player id
+          if entity.is? :selectable and entity.player_id == 1
             # still select if we are dragging, but if clicking we 
             # don't want them selected anymore
+            selection_change = true
             if dragging
               if entity.is? :selectable
                 newly_current_selection[entity.server_id] = entity
@@ -217,12 +219,7 @@ class EntityManager
                      x_array.first ,y_array.last - y_array.first
   end
   
-  def create_entity(entity_type, x, y)
-    # TODO, send CREATE_ENTITY CMD?
-    @@entity_count ||= 0
-    @@entity_count += 1
-    new_entity_id = @@entity_count #@game_server.create_entity(entity_type, x, y)
-    
+  def create_entity(p_id, entity_type, x, y, ent_id)
     begin
       klass = Object.const_get Inflector.camelize(entity_type)
       z = klass.default_z
@@ -233,13 +230,13 @@ class EntityManager
       end
       @z_entities[z] ||= []
 
-      new_entity = klass.new(new_entity_id,
+      new_entity = klass.new(ent_id,
        {
         :resource_manager => @resource_manager,
         :sound_manager => @sound_manager,
         :viewport => @viewport,
         :entity_type => entity_type,
-        :server_id => new_entity_id,
+        :server_id => ent_id,
         :occupancy_grid => @occupancy_grids[z],
         :map => @map,
         :entity_manager => self,
@@ -248,12 +245,12 @@ class EntityManager
         :trace => @trace
        }
       )
+      # TODO should I pull this up into args params?
+      new_entity.player_id = p_id
 
-      # TODO should this be the ONLY storage of ents?
       @z_entities[z] << new_entity
+      @id_entities[ent_id] = new_entity
 
-      @id_entities[new_entity_id] = new_entity
-      # TODO ahhhhh
       new_entity.animate if new_entity.is? :animated
     rescue Exception => ex
       p ex
@@ -301,7 +298,6 @@ class EntityManager
       w = br_tile[0]-x+1
       h = br_tile[1]-y+1
       @occupancy_grids[az].get_occupants(x,y,w,h).each do |ze|
-#      @z_entities[az].each do |ze|
         ze.draw destination
       end
     end
@@ -314,5 +310,18 @@ class EntityManager
       occs.flatten!
     end
     occs
+  end
+
+  # called to generate ENTITY_CREATE cmd
+  def create_entity_cmd(p_id,ent_type,tile_x,tile_y)
+    [ENTITY_CREATE,p_id,ent_type,tile_x,tile_y].join ":"
+  end
+
+  # called when an ENTITY_CREATE cmd comes in
+  # ie ENTITY_CREATE:player_id:ent_type:x:y:ent_id
+  def handle_create(cmd)
+    create_cmd,p_id,ent_type,tile_x,tile_y,ent_id = cmd.split ':'
+    p_id = p_id.nil? ? nil : p_id.to_i
+    create_entity p_id, ent_type.to_sym, tile_x.to_i, tile_y.to_i, ent_id.to_i
   end
 end

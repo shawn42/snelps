@@ -63,7 +63,7 @@ class MiniMap
 
     # hard code the player for now (they can only see where their
     # entities are
-    for ent in @entity_manager.get_occupants_at(0,0,@map.w,@map.h,0)
+    for ent in @entity_manager.get_occupants_at(0,0,@map.w,@map.h,1)
       entx = ent.x * SCALE
       enty = ent.y * SCALE
       @image.draw_circle_s [entx.floor,enty.floor], 1, RED

@@ -1,6 +1,5 @@
 require 'commands'
 require 'publisher'
-#require 'game_server'
 require 'base_mode'
 require 'player'
 require 'map'
@@ -22,11 +21,6 @@ class CampaignMode < BaseMode
 
   def setup()
     base_setup
-
-    # TODO, campaign and map we are on?
-#    args = {}
-    #    add exec call here?
-#    @server = GameServer.new.start_campaign_mode(args)
 
     @entity_manager.when :sound_play do |snd|
       fire :sound_play, snd
@@ -77,6 +71,8 @@ class CampaignMode < BaseMode
     # TODO, shouldn't do this, these should come from the turn manager
     pieces = event.split(':')
     case pieces[0]
+    when ENTITY_CREATE
+      @entity_manager.handle_create event
     when ENTITY_MOVE
       @entity_manager.handle_move event
     when ENTITY_ATTACK
@@ -120,11 +116,10 @@ class CampaignMode < BaseMode
     @viewport.set_map_size(@map.pixel_width, @map.pixel_height)
     @map.viewport = @viewport
 
-    # do this after @viewport::setup
     @entity_manager.setup
 
     @entity_manager.map = @map
-    # TODO WTF am i doing here... 
+
     @map.entity_manager = @entity_manager
     @entity_manager.setup
 
@@ -138,8 +133,8 @@ class CampaignMode < BaseMode
       p "VICTORY"
       fire :mode_change, :main_menu
     end
+
     @map.script.when :create_entity do |ent_type,player,tile_x,tile_y|
-      # TODO this should push an event
       x, y = @map.tiles_to_coords(tile_x,tile_y)
       # TODO, is there a better way of getting the z here?
       klass = Object.const_get Inflector.camelize(ent_type)
@@ -148,59 +143,13 @@ class CampaignMode < BaseMode
       if @entity_manager.has_obstacle?(tile_x, tile_y, z)
         raise "obstacle: invalid map script #{player} #{ent_type} #{tile_x},#{tile_y},#{z}"
       else
-        @entity_manager.create_entity(ent_type,x,y)
+        cmd = @entity_manager.create_entity_cmd(player,ent_type,x,y)
+        @network_manager[:to_server] << cmd
       end
     end
 
     @map.start_script
     @playing = true
-    # TODO take this out?
-#    setup_test_units
-    # fake out to pump turn events
-#    @turn_manager.start self
-  end
-
-  def setup_test_units()
-    num_test_ents = 50
-    sleep 1
-    Thread.new do
-      ents = []
-      p "setting up #{num_test_ents} entities ... "
-      num_test_ents.times do
-        created = false 
-        rand_types = [:worker,:bird,:animal,:tree]
-        type = rand_types[rand(rand_types.size)]
-        until created do
-          x,y = rand(@map.pixel_width), rand(@map.pixel_height)
-          tile_x, tile_y = @map.coords_to_tiles(x,y)
-          # TODO, is there a better way of getting the z here?
-          klass = Object.const_get Inflector.camelize(type)
-          z = klass.default_z
-
-          unless @entity_manager.has_obstacle?(tile_x, tile_y, z)
-            ents << @entity_manager.create_entity(type,x,y)
-            created = true
-          end
-        end
-      end
-      p " ... lets see em dance"
-#      loop do
-#        begin
-#          for entity in ents
-#            if entity.idle? and entity.entity_type != :animal
-#              x = rand(@map.w)
-#              y = rand(@map.h)
-#              cmd = "#{ENTITY_MOVE}:#{entity.server_id}:#{x}:#{y}"
-#              fire :network_msg_to, cmd
-#            end
-#          end
-#          sleep 5
-#        rescue Exception => ex
-#          p "boom"
-#          p ex
-#        end
-#      end
-    end
   end
 
   def update(time)

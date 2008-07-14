@@ -19,12 +19,21 @@ Rake::RDocTask.new do |t|
 	t.options += RDOC_OPTIONS
 end
 
-desc "Run an Snelps"
+desc "Run Snelps"
 task :run do |t|
   if Platform.mac?
     sh "rsdl src/app.rb"
   else
     sh "ruby src/app.rb"
+  end
+end
+
+desc "profile Snelps"
+task :profile do |t|
+  if Platform.mac?
+    sh "rsdl -r profile src/app.rb"
+  else
+    sh "ruby -r profile src/app.rb"
   end
 end
 

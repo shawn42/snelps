@@ -18,18 +18,6 @@ class Map
 
   alias :w :width
   alias :h :height
-  # TODO, this doesn't get called for maps loaded from file
-#  def setup(args = {})
-#    @entity_manager = args[:entity_manager]
-#    @width = args[:width].nil? ? 6 : args[:width]
-#    @height = args[:height].nil? ? 6 : args[:height]
-#
-#    # nubmer of pixels of each tile
-#    @tile_size = args[:tile_size].nil? ? 32 : args[:tile_size]
-#    @tiles = args[:tiles].nil? ? NArray.object(@width, @height) : args[:tiles]
-#    @half_tile_size = (@tile_size / 2.0).floor
-#    load_images
-#  end
 
   def start_script()
     @script.start

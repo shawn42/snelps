@@ -4,14 +4,11 @@ class Dialog
   
   def initialize(parent, *args)
     @parent = parent
+    @layout = parent
     @font_manager = parent.font_manager
     @x = 0
     @y = 0
     setup *args
-  end
-
-  def setup()
-    @layout = AbsoluteLayout.new self, @font_manager
   end
 
   def on_mouse_motion(event)

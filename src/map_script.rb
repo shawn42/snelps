@@ -22,7 +22,7 @@ class MapScript
   def get_occupants_at(x,y,w=1,h=1,player=nil)
     # horrible hack just to see if it works, then i will fix the object
     # hierarchy 
-    @map.instance_variable_get("@entity_manager").get_occupants_at(x, y, w, h, 0)
+    @map.instance_variable_get("@entity_manager").get_occupants_at(x, y, w, h, player)
   end
 
   def update(time)

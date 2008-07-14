@@ -12,10 +12,10 @@ class BaseMode
     md = klass.new(self, *args)
     md.on_close = block if block_given?
     md.when :destroy_modal_dialog do |d|
+      @modal_dialogs.pop
       if d.apply?
         d.close_callback
       end
-      @modal_dialogs.pop
     end
     @modal_dialogs << md
   end
