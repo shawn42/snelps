@@ -39,6 +39,7 @@ entity_manager:
     - network_manager
     - mouse_manager
     - input_manager
+    - ability_manager
 main_menu_mode:
   compose:
     - font_manager
@@ -66,5 +67,8 @@ config_manager:
   compose:
     - resource_manager
 entity_builder:
+  compose:
+    - resource_manager
+ability_manager:
   compose:
     - resource_manager

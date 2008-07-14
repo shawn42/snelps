@@ -1,5 +1,6 @@
 
 MILESTONE #1 - "move units here" campaign
+ - create ability panel in gui to display currently available abilities
  - create Element class to parent Button,Checkbox,StoryStack
  - Maps need to know if X,Y has an obsticle
    - tile number ranges? (http://www.gamedev.net/reference/articles/article728.asp)
@@ -10,8 +11,7 @@ MILESTONE #1 - "move units here" campaign
  - clean up and add docs EVERYWHERE
 
 PROBLEMS
- - 
+ - how will things handle images larger than the size of a tile?
 
 BACKLOG
- - remove entity_type from entity args, use class name magic?
  - add logger to app

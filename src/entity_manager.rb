@@ -7,10 +7,10 @@ class EntityManager
   extend Publisher
   include Commands
 
-  attr_accessor :map, :occupancy_grids, :current_selection, :current_action, :selections
+  attr_accessor :map, :occupancy_grids, :current_selection, :current_action, :selections, :current_abilities
   can_fire :sound_play, :network_msg_to
 
-  constructor :viewport, :resource_manager, :sound_manager, :network_manager, :mouse_manager, :input_manager
+  constructor :viewport, :resource_manager, :sound_manager, :network_manager, :mouse_manager, :input_manager, :ability_manager
   def setup()
     @trace = false
     
@@ -170,6 +170,7 @@ class EntityManager
       @current_selection = EntitySelection.new newly_current_selection
     end
 
+    @current_abilities = @ability_manager.abilities_for @current_selection
     selection_change
   end
 

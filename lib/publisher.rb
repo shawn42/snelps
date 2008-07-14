@@ -1,6 +1,6 @@
 #
-# :subscribe: public method for subscribing to events (aka 'subscribe', 'on', 'when')
-# :fire: protected method for firing events (aka 'fire', 'emit', 'notify')
+# subscribe: public method for subscribing to events (aka 'subscribe', 'on', 'when')
+# fire: protected method for firing events (aka 'fire', 'emit', 'notify')
 # Example:
 #   class Car < Thinger
 #     extend Publisher

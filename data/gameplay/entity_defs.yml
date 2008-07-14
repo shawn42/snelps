@@ -1,5 +1,5 @@
 --- 
-:unit_worker: 
+:worker: 
   :player_id: 0
   :z: 1
   :health: 100
@@ -71,7 +71,7 @@
   :range: 5
   :attack_power: 10
   :speed: 60
-:unit_bird: 
+:bird: 
   :player_id: 0
   :z: 2
   :health: 100

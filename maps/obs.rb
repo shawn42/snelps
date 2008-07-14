@@ -36,17 +36,17 @@ create_entity :animal, nil, 24, 25
 create_entity :animal, nil, 14, 25
 create_entity :animal, nil, 28, 5
 
-create_entity :unit_bird, nil, 2, 2
-create_entity :unit_bird, nil, 22, 22
-create_entity :unit_bird, nil, 22, 23
-create_entity :unit_bird, nil, 23, 22
-create_entity :unit_bird, nil, 23, 23
-create_entity :unit_bird, nil, 23, 24
+create_entity :bird, nil, 2, 2
+create_entity :bird, nil, 22, 22
+create_entity :bird, nil, 22, 23
+create_entity :bird, nil, 23, 22
+create_entity :bird, nil, 23, 23
+create_entity :bird, nil, 23, 24
 
 
 create_entity :portal, nil, 59, 59
 
-create_entity :unit_worker, nil, 1, 2
+create_entity :worker, nil, 1, 2
 
 # Discover 0,0
 add_trigger do

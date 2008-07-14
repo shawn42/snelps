@@ -168,7 +168,7 @@ class CampaignMode < BaseMode
       p "setting up #{num_test_ents} entities ... "
       num_test_ents.times do
         created = false 
-        rand_types = [:unit_worker,:unit_bird,:animal,:tree]
+        rand_types = [:worker,:bird,:animal,:tree]
         type = rand_types[rand(rand_types.size)]
         until created do
           x,y = rand(@map.pixel_width), rand(@map.pixel_height)

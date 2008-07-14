@@ -1,0 +1,21 @@
+===================================
+=   ____             _            =
+=  / ___| _ __   ___| |_ __  ___  =
+=  \___ \| '_ \ / _ \ | '_ \/ __| =
+=   ___) | | | |  __/ | |_) \__ \ =
+=  |____/|_| |_|\___|_| .__/|___/ =
+=                     |_|         =
+===================================
+
+To play:
+type rake
+
+Controls:
+T - turn on pathfinding tracing
+A - change into attack mode
+M - change into move mode
+
+CTRL-# - saves the current unit selection into that number
+# - retrieve the saved selection of units
+
+ESC/Q - go back a screen / quit

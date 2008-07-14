@@ -10,7 +10,7 @@ class EntityBuilder
   constructor :resource_manager
   
   def setup()
-    @gameplay_config = @resource_manager.load_entity_config "entity_defs"
+    @gameplay_config = @resource_manager.load_gameplay_config "entity_defs"
     build_dynamic_classes
   end
 

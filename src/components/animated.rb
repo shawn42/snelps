@@ -8,51 +8,51 @@ module Animated
     target.add_setup_listener :setup_animated
     target.add_update_listener :update_animated
     target.metaclass.send :define_method, :animated_class_setup do |resource_manager, ent_type|
-    @resource_manager = resource_manager
-    @images = {}
-    for action, images in default_animations
-      if images.has_key? :prefix
-        # single direction
-        @images[action] = []
-        f = images[:first]
-        l = images[:last]
-        range = Range.new f, l
-        range.each do |i|
-          file_name = "#{images[:prefix]}#{i}#{images[:suffix]}"
-          img = @resource_manager.load_image(file_name,ent_type)
-          @images[action] << img
-        end
-      else
-        # many directions
-        for k, v in images
-          # TODO actually use the action...
-          @images[k] = []
-          f = v[:first]
-          l = v[:last]
+      @resource_manager = resource_manager
+      @images = {}
+      for action, images in default_animations
+        if images.has_key? :prefix
+          # single direction
+          @images[action] = []
+          f = images[:first]
+          l = images[:last]
           range = Range.new f, l
           range.each do |i|
-            file_name = "#{v[:prefix]}#{i}#{v[:suffix]}"
+            file_name = "#{images[:prefix]}#{i}#{images[:suffix]}"
             img = @resource_manager.load_image(file_name,ent_type)
+            @images[action] << img
+          end
+        else
+          # many directions
+          for k, v in images
+            # TODO actually use the action...
+            @images[k] = []
+            f = v[:first]
+            l = v[:last]
+            range = Range.new f, l
+            range.each do |i|
+              file_name = "#{v[:prefix]}#{i}#{v[:suffix]}"
+              img = @resource_manager.load_image(file_name,ent_type)
 
-            # red tint please...
-            if ent_type == :unit_bird
-              img.w.times do |c|
-                img.h.times do |r|
-                  oc = img.get_at(r,c)
-                  unless oc[3] == 1
-                    new_color = [oc[0]*1.69,oc[1]*0.09,oc[2]*0.09, oc[3]]
-                    img.set_at [r,c], new_color
+              # red tint please...
+              if ent_type == :bird
+                img.w.times do |c|
+                  img.h.times do |r|
+                    oc = img.get_at(r,c)
+                    unless oc[3] == 1
+                      new_color = [oc[0]*1.69,oc[1]*0.09,oc[2]*0.09, oc[3]]
+                      img.set_at [r,c], new_color
+                    end
                   end
                 end
               end
+
+              @images[k] << img
+
             end
-
-            @images[k] << img
-
-          end
-        end 
+          end 
+        end
       end
-    end
 
     end
   end

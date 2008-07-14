@@ -84,7 +84,7 @@ class ResourceManager
     end
   end
 
-  def load_entity_config(name)
+  def load_gameplay_config(name)
     YAML::load_file(ENTITY_DATA_PATH + name + ".yml")
   end
 

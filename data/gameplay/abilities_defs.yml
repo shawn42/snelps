@@ -1,0 +1,32 @@
+--- 
+:movements: 
+  :bridge: 
+    :entities: 
+      :entity: 4
+      :engineer: 2
+:attacks: 
+  :sledghammer: 
+    :speed: 4
+    :damage: 40
+    :entities: 
+      :entity: 4
+    :button: resource12.png
+    :animations:
+      :prefix: resource
+      :suffix: .png
+      :first: 12
+      :last: 18
+  :slingshot: 
+    :speed: 8
+    :damage: 60
+    :range: 60
+    :entities: 
+      :entity: 4
+      :bird: 2
+      :engineer: 2
+    :button: resource19.png
+    :animations:
+      :prefix: resource
+      :suffix: .png
+      :first: 19
+      :last: 20
