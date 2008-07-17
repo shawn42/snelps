@@ -12,6 +12,7 @@
   - :audible
   - :animated
   - :drawable
+  - :melee_attacker
   :sounds:
   - :selected: worker_select.wav
   - :acknowledge: worker_ack.wav
@@ -84,6 +85,7 @@
   - :audible
   - :animated
   - :drawable
+  - :melee_attacker
   :animations:
     :selected:
       :prefix: magiceffect

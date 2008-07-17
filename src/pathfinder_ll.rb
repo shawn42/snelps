@@ -5,28 +5,19 @@ class Pathfinder
   TRAVEL_COST_STRAIGHT = 10
   TRAVEL_COST_DIAG = 14
 
-  attr_accessor :consideration_count, :diagonal_heuristics_count
-
   def initialize(entity_z, entity_manager, width, height)
     @width = width
     @height = height
     @entity_manager = entity_manager
     @entity_z = entity_z
-    @consideration_count = 0
-    @diagonal_heuristics_count = 0
   end
 
   # NOT USED
-  def manhatan_heuristic(c,t)
+  def self.manhatan_heuristic(c,t)
     return ((c.x-t.x).abs + (c.y-t.y).abs) * TRAVEL_COST_STRAIGHT
   end
 
-  def diagonal_heuristic(c,t)
-#    cx = c.x
-#    cy = c.y
-#    tx = t[0]
-#    ty = t[1]
-    @diagonal_heuristics_count += 1
+  def self.diagonal_heuristic(c,t)
     h_diagonal = [(c.x-t.x).abs, (c.y-t.y).abs].min
     h_straight = ((c.x-t.x).abs + (c.y-t.y).abs)
     return TRAVEL_COST_DIAG * h_diagonal + TRAVEL_COST_STRAIGHT * (h_straight - 2*h_diagonal)
@@ -36,14 +27,6 @@ class Pathfinder
   def adjacent_nodes(n)
     x = n.x
     y = n.y
-#    [ [x-1, y, :w, TRAVEL_COST_STRAIGHT], 
-#      [x+1, y, :e, TRAVEL_COST_STRAIGHT],
-#      [x, y-1, :n, TRAVEL_COST_STRAIGHT],
-#      [x, y+1, :s, TRAVEL_COST_STRAIGHT], 
-#      [x-1, y-1, :nw, TRAVEL_COST_DIAG], 
-#      [x-1, y+1, :sw, TRAVEL_COST_DIAG],
-#      [x+1, y-1, :ne, TRAVEL_COST_DIAG], 
-#      [x+1, y+1, :se, TRAVEL_COST_DIAG ] ]
     [ 
       Node.new(x-1, y-1, :nw, TRAVEL_COST_DIAG,nil,nil),
       Node.new(x-1, y+1, :sw, TRAVEL_COST_DIAG,nil,nil),
@@ -79,7 +62,7 @@ class Pathfinder
     start_node = Node.new start[0], start[1], nil,nil,nil,nil
     # keep these in order, lowest h to highest
 #    open = PriorityQueue.new([[start[0],start[1], :n, 0], diagonal_heuristic(start,target), nil])
-    open = PriorityQueue.new(Node.new(start_node.x,start_node.y, :n, 0, diagonal_heuristic(start_node,target_node), nil))
+    open = PriorityQueue.new(Node.new(start_node.x,start_node.y, :n, 0, Pathfinder.diagonal_heuristic(start_node,target_node), nil))
     @open = open
 
     #    create the closed list of nodes, initially empty
@@ -89,7 +72,6 @@ class Pathfinder
     until open.empty? # or max iterations hit
       nh_node = open.best
 
-      @consideration_count += 1
       if nh_node.h == 0 #nh_node.x == target_node.x and nh_node.y == target_node.y
         # walk back up the parents of nh
         path = [] 
@@ -112,7 +94,7 @@ class Pathfinder
             # path (meh...)
             next if closed.find{|node| node.x == neighbor.x and node.y == neighbor.y}
 
-            neighbor.h = diagonal_heuristic(neighbor, target_node)
+            neighbor.h = Pathfinder.diagonal_heuristic(neighbor, target_node)
 
             open_neighbor = open.find(neighbor)
 
@@ -244,8 +226,6 @@ if $0 == __FILE__ #or true
   path = pf.find([4,4],[3,3], 50)
 #  pf.to_ascii
   p(Time.now - start)
-  puts "nodes considered:[#{pf.consideration_count}]"
-  puts "heuristics calc'd:[#{pf.diagonal_heuristics_count}]"
   puts "path size:[#{path.size}]" unless path.nil?
   p path
 end

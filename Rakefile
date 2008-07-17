@@ -6,9 +6,16 @@ task :default => :run
 
 RDOC_INCLUDES = %w(
 	TODO
+	MANUAL.txt
 	src/*.rb
+	src/gui/*.rb
+	src/components/*.rb
+	maps/*.yml
+	maps/*.rb
+	data/gameplay/*.yml
 	lib/*.rb
 	config/*.rb
+	config/*.yml
 )
 
 RDOC_OPTIONS = ['-a', '-S', '-t Snelps Documentation']
@@ -72,8 +79,8 @@ end
 
 STATS_DIRECTORIES = [
   %w(Source            src/), 
-  %w(Unit\ tests        test/),
-  %w(Libraries          lib/),
+  %w(Unit\ tests       specs/),
+  %w(Libraries         lib/),
 ].collect { |name, dir| [ name, "#{APP_ROOT}/#{dir}" ] }.select { |name, dir| File.directory?(dir) }
 
 desc "Report code statistics (KLOCs, etc) from the application"
