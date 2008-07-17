@@ -1,6 +1,8 @@
 module MeleeAttacker
   DEFAULT_MELEE_RANGE = 15
-  DEFAULT_MELEE_DAMAGE = 15
+  DEFAULT_MELEE_DAMAGE = 3
+
+  TARGETING_UPDATE_TIME = 300
 
   def self.included(target)
     target.add_setup_listener :setup_melee_attacker
@@ -10,12 +12,24 @@ module MeleeAttacker
   def setup_melee_attacker(args)
     require_components :pathable
     @abilities << :melee_attack
+
+    @targeting_time = 0
   end
 
   # check status of moving vs attacking
   # - is he running away?
   # - can I reach him now?
+  # TODO, what do I do when I am done attacking?
+  # say from another command being issued?
   def update_melee_attacker(time)
+    if @current_target
+      if @targeting_time > TARGETING_UPDATE_TIME
+        attack_entity :target => @current_target 
+        @targeting_time = 0
+      else
+        @targeting_time += time
+      end
+    end
   end
 
   def melee_attack(args)
@@ -29,15 +43,9 @@ module MeleeAttacker
 
   # attack at a particular location on the map
   def attack_location(args)
-    attack_cmd,entity_id,dest_tile_x,dest_tile_y = cmd.split ':'
-
-    entity_id = entity_id.to_i
-    dest_tile_x = dest_tile_x.to_i
-    dest_tile_y = dest_tile_y.to_i
-    
-    entity = @entity_manager.find_entity_by_id entity_id
-
-    entity.path_to dest_tile_x, dest_tile_y if entity.is? :pathable
+    target = args[:target]
+    path_to target.tile_x, target.tile_y 
+    # TODO set some sort of anger flag
   end
 
 
@@ -56,16 +64,7 @@ module MeleeAttacker
       melee_damage target
     else
       # move closer
-      # TODO make pathfinder able to ignore a particular object(s)
-      from = [tile_x, tile_y]
-      to = [target.tile_x, target.tile_y]
-      max = 80
-      new_path = Pathfinder.new(z, @entity_manager, @map.w, @map.h).find(from,to,max)
-      if new_path.nil?
-        stop_animating
-      else
-        self.path = new_path
-      end
+      path_to target.tile_x, target.tile_y, [target]
 
       #save anger for later
       @current_target = target

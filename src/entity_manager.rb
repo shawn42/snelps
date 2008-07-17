@@ -32,15 +32,15 @@ class EntityManager
   def handle_attack(cmd)
     fire :sound_play, :ent_attack
     attack_cmd,entity_id,tile_x,tile_y = cmd.split ':'
+    ent = @id_entities[entity_id.to_i]
     # if targetable ent is at x, y
     ents = get_occupants_at(tile_x.to_i, tile_y.to_i)
     targetable_ents = ents.select{|e|e.player_id != 1}
     if targetable_ents.empty?
       # TODO set aggressive mode?
-      move_entity cmd
-#      ent.melee_attack :target => [tile_x,tile_y]
+#      move_entity cmd
+      ent.melee_attack :target => [tile_x,tile_y]
     else
-      ent = @id_entities[entity_id.to_i]
       # TODO lock onto this unit
       p "ATTACK!!! #{ent.server_id} => #{targetable_ents.first.server_id}"
       ent.melee_attack :target => targetable_ents.first
@@ -68,7 +68,15 @@ class EntityManager
   def has_obstacle?(x, y, z, ignore_objects = [])
     # for now 266 is water, only flying entities can go on them
     begin
-      occ = @occupancy_grids[z].nil? ? false : @occupancy_grids[z].occupied?(x, y)
+      occs = @occupancy_grids[z].nil? ? [] : @occupancy_grids[z].get_occupants(x, y)
+
+      for ent in occs
+        unless ignore_objects.include? ent
+          occ = true
+          break
+        end
+      end
+
       water_check = ((@map.at(x,y) == 266) and (z == 1))
       return (occ or water_check)
     rescue Exception => ex

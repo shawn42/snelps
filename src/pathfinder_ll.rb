@@ -40,20 +40,20 @@ class Pathfinder
   end
 
   # test if the node is valid (contains no obstacles, and is in the map)
-  def is_valid?(n)
+  def is_valid?(n,ignore_objects)
     x = n.x
     y = n.y
     return false if(x<0 or y<0 or x>=@width or y>=@height)
-    return false if @entity_manager.has_obstacle?(x,y,@entity_z)
+    return false if @entity_manager.has_obstacle?(x,y,@entity_z,ignore_objects)
     return true
   end
 
   # return the best path from start to target
   # A* based
-  def find(start,target,max=0)
+  def find(start,target,max=0,ignore_objects=[])
 #    p "#{start.inspect} => #{target.inspect}"
     target_node = Node.new target[0], target[1], nil,nil,nil,nil
-    unless is_valid?(target_node)
+    unless is_valid?(target_node,ignore_objects)
       # TODO wanderers hit this a lot!?!?
 #      p "ERROR, target not valid #{start.inspect} => #{target_node}"
       return nil
@@ -88,7 +88,7 @@ class Pathfinder
         closed << nh_node
         neighbors = adjacent_nodes nh_node
         for neighbor in neighbors
-          if is_valid? neighbor
+          if is_valid? neighbor, ignore_objects
 
             # ignore the closed list, this could lead to a not shortest
             # path (meh...)

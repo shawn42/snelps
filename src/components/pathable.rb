@@ -99,12 +99,12 @@ module Pathable
     end
   end
 
-  def path_to(dest_tile_x, dest_tile_y)
+  def path_to(dest_tile_x, dest_tile_y,ignore_objects=[])
     from = [tile_x,tile_y]
     to = [dest_tile_x,dest_tile_y]
-    unless @entity_manager.has_obstacle?(dest_tile_x, dest_tile_y, z)
+    unless @entity_manager.has_obstacle?(dest_tile_x, dest_tile_y, z,ignore_objects)
       max = 80
-      new_path = Pathfinder.new(z, @entity_manager, @map.w, @map.h).find(from,to,max)
+      new_path = Pathfinder.new(z, @entity_manager, @map.w, @map.h).find(from,to,max,ignore_objects)
       if new_path.nil?
         stop_animating
       else
