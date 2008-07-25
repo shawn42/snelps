@@ -1,7 +1,6 @@
 MILESTONE #1 - "move units here" campaign
- - allow stuff to register for events from entities (moved,health_changed,death,etc..)
- - allow stuff to register for changes to tiles (per tile) on an occupancy_grid
-
+ - create attack/move buttons
+ - change map_script triggers to register for occupancy_grid changes
 
  - create ability panel in gui to display currently available abilities
  - create Element class to parent Button,Checkbox,StoryStack
