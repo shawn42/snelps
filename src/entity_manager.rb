@@ -28,7 +28,6 @@ class EntityManager
     @id_entities[server_id]
   end
 
-  # TODO actual target "locking"
   def handle_attack(cmd)
     fire :sound_play, :ent_attack
     attack_cmd,entity_id,tile_x,tile_y = cmd.split ':'
@@ -268,6 +267,15 @@ class EntityManager
       @id_entities[ent_id] = new_entity
 
       new_entity.animate if new_entity.is? :animated
+      if new_entity.is? :livable
+        new_entity.when :death do |ent|
+          p "entity[#{ent.server_id}] died"
+          @z_entities[ent.z].delete ent
+          @id_entities.delete ent.server_id
+          ent.unsubscribe :death, self
+          # TODO tell ent to leave its occupiedness
+        end
+      end
     rescue Exception => ex
       p ex
       caller.each do |c|

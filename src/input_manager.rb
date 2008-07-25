@@ -15,7 +15,8 @@ class InputManager
       ResizeEvent
     ]
     @clock = Clock.new
-    @clock.target_framerate = 1000
+    # framerate for game logic
+    @clock.target_framerate = 60
   end
 
   def main_loop(game)

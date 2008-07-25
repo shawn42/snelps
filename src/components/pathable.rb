@@ -14,8 +14,9 @@ module Pathable
 
   def update_pathable(time)
     # not sure about movement vs path stuff
-    update_movement(time)
+    update_movement time
   end
+
 
   def path=(path)
     @path = path
@@ -54,7 +55,6 @@ module Pathable
       # TODO XXX this is kind of a hack
       # should I draw line from previous point to now and see if target
       # is on the line?
-      @direction = Ftor.new(@dest.x - x, @dest.y - y).unit
       if (x - @dest.x).abs < 5 and (y - @dest.y).abs < 5
         if @path.nil? or @path.empty?
           stop_moving!
@@ -88,6 +88,7 @@ module Pathable
         end
       else
         # move toward dest
+        @direction = Ftor.new(@dest.x - x, @dest.y - y).unit
         base = @base_speed * time
         move = @direction * base
         @rect.centerx = x + move.x

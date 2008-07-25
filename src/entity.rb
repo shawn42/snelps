@@ -1,5 +1,7 @@
+require 'publisher'
 
 class Entity
+  extend Publisher
   attr_accessor :server_id, :entity_type, :player_id
 
   def initialize(server_id, *args)

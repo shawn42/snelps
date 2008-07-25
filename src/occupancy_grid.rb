@@ -1,11 +1,17 @@
+require 'publisher'
 require 'narray'
 class OccupancyGrid
+  extend Publisher
+
+  can_fire :occupancy_change
+
   def initialize(width,height)
     @grid = NArray.object(width, height)
   end
 
   def occupy(x, y, entity)
       if free? x, y
+        fire :occupancy_change, :occupy, entity
         @grid[x,y] = entity
       else
         raise "Occupancy Overlap"
@@ -13,11 +19,12 @@ class OccupancyGrid
   end
 
   def leave(x, y)
-      @grid[x,y] = nil
+    fire :occupancy_change, :leave, @grid[x,y]
+    @grid[x,y] = nil
   end
 
   def free?(x,y)
-      @grid[x,y].nil?
+    @grid[x,y].nil?
   end
 
   def occupied?(x,y)

@@ -2,6 +2,9 @@ require 'publisher'
 class ModeController
   extend Publisher
 
+  # used for drawing time vs logic time
+  FRAMERATE_DELAY = 80
+
   can_fire :start_game
 
   attr_accessor :state
@@ -10,7 +13,8 @@ class ModeController
     :campaign_mode, :main_menu_mode
 
   def setup()
-    # TODO put this somewhere else?
+    @draw_time = 0
+
     @modes = {}
     @modes[:main_menu] = @main_menu_mode
     @modes[:campaign_play] = @campaign_mode
@@ -55,12 +59,17 @@ class ModeController
 
   def update(time)
     @modes[@mode].update time
-    draw
-    @snelps_screen.flip
+    draw time
   end
 
-  def draw()
-    @modes[@mode].handle_draw @snelps_screen.screen
+  def draw(time)
+    # this is to separate game logic from screen refresh rate
+    @draw_time += time
+    if @draw_time > FRAMERATE_DELAY
+      @modes[@mode].handle_draw @snelps_screen.screen
+      @snelps_screen.flip
+      @draw_time = 0
+    end
   end
 
 end

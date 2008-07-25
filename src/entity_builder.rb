@@ -19,7 +19,6 @@ class EntityBuilder
     for entity_type, unit_def in @gameplay_config
       components = unit_def[:components].collect{|c|require c.to_s;Object.const_get(Inflector.camelize(c))}
       properties = unit_def.keys.dup
-#      properties.delete :components
       
       klass = Class.new(Entity){
         components.each do |c|

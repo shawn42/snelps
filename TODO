@@ -1,18 +1,25 @@
-
 MILESTONE #1 - "move units here" campaign
+ - allow stuff to register for events from entities (moved,health_changed,death,etc..)
+ - allow stuff to register for changes to tiles (per tile) on an occupancy_grid
+
+
  - create ability panel in gui to display currently available abilities
  - create Element class to parent Button,Checkbox,StoryStack
  - Maps need to know if X,Y has an obsticle
    - tile number ranges? (http://www.gamedev.net/reference/articles/article728.asp)
  - add structure placement "grid-locking"
  - add abilities to units (maybe not needed for this milestone)
- - add simple intro UI (map selection)
+    - rework able component?
  - clean up and add docs EVERYWHERE
  - add images to story stacks
 
+MULTIPLAYER MILESTONE #3
+ - add simple intro UI (map selection)
+
 PROBLEMS
  - how will things handle images larger than the size of a tile?
- - new selection code doesn't allow the player to send a unit to the portal
 
 BACKLOG
  - add logger to app
+
+

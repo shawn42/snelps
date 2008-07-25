@@ -4,10 +4,13 @@ module Movable
 
   def self.included(target)
     target.add_setup_listener :setup_movable 
+    target.can_fire :move
   end
 
   def setup_movable(args)
+    require_components :able
     @base_speed = self.speed / 1000.0
+    @abilities << :move
   end
 
   def stop_moving!()
@@ -16,6 +19,7 @@ module Movable
     @direction = nil
     unless @last_tile_x.nil? or (@last_tile_x == @tile_x and @last_tile_y == @tile_y)
       @grid.leave @last_tile_x, @last_tile_y
+      fire :move, self
       @last_tile_x = nil
       @last_tile_y = nil
     end
@@ -37,6 +41,7 @@ module Movable
       @grid.leave @last_tile_x, @last_tile_y
     end
     @grid.occupy(new_tile_x, new_tile_y, self)
+    fire :move, self
 
     @last_tile_x = @tile_x
     @last_tile_y = @tile_y
