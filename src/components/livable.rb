@@ -13,8 +13,7 @@ module Livable
 
   def die()
     # the grid stuff doesn't really belong here
-    @grid.leave @last_tile_x, @last_tile_y unless @last_tile_x.nil?
-    @grid.leave @tile_x, @tile_y
+    teleport_to nil
     fire :death, self 
   end
 

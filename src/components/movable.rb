@@ -58,6 +58,22 @@ module Movable
     animate
   end
 
+  # this will teleport the entity to x, y
+  # nil will remove them from the world (aka death)
+  def teleport_to(new_tile_x, new_tile_y=nil)
+    stop_moving!
+    if new_tile_x.nil?
+      @grid.leave @tile_x, @tile_y
+    else
+      @tile_x = new_tile_x
+      @tile_y = new_tile_y
+      new_x,new_y = @map.tiles_to_coords(new_tile_x,new_tile_y)
+      @rect.centerx = new_x
+      @rect.centery = new_y
+      @grid.occupy(new_tile_x, new_tile_y, self)
+    end
+  end
+
   def idle?()
     @direction.nil?
   end
