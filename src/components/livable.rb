@@ -12,7 +12,6 @@ module Livable
   end
 
   def die()
-    # the grid stuff doesn't really belong here
     teleport_to nil
     fire :death, self 
   end
