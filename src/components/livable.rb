@@ -8,12 +8,15 @@ module Livable
   def damage(amount)
     self.health -= amount
     die if self.health < 1
-    p "ent[#{@server_id}] health[#{self.health}]"
   end
 
   def die()
     teleport_to nil
     fire :death, self 
+  end
+
+  def alive?
+    self.health > 0
   end
 
 

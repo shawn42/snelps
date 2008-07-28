@@ -59,7 +59,9 @@ module MeleeAttacker
 
     unless target.nil?
       target.when :move do |tar|
-        path_to tar.tile_x, tar.tile_y, [tar] 
+        if target.alive?
+          path_to tar.tile_x, tar.tile_y, [tar] 
+        end
       end
       target.when :death do |tar|
         set_target nil
@@ -71,14 +73,16 @@ module MeleeAttacker
   # attack and pursue the targeted entity
   def attack_entity(args)
     target = args[:target]
-    set_target target
+    if target.is? :livable
+      set_target target
 
-    if within_range? 
-      melee_damage
-    else
-      # move closer
-      path_to target.tile_x, target.tile_y, [target]
+      if within_range? 
+        melee_damage
+      else
+        # move closer
+        path_to target.tile_x, target.tile_y, [target]
 
+      end
     end
   end
 
