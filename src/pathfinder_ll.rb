@@ -12,11 +12,6 @@ class Pathfinder
     @entity_z = entity_z
   end
 
-  # NOT USED
-  def self.manhatan_heuristic(c,t)
-    return ((c.x-t.x).abs + (c.y-t.y).abs) * TRAVEL_COST_STRAIGHT
-  end
-
   def self.diagonal_heuristic(c,t)
     h_diagonal = [(c.x-t.x).abs, (c.y-t.y).abs].min
     h_straight = ((c.x-t.x).abs + (c.y-t.y).abs)
@@ -48,31 +43,28 @@ class Pathfinder
     return true
   end
 
-  # return the best path from start to target
-  # A* based
-  def find(start,target,max=0,ignore_objects=[])
-#    p "#{start.inspect} => #{target.inspect}"
+  # return the best path from start to target (A* based).
+  def find(start,target,max=30,ignore_objects=[])
     target_node = Node.new target[0], target[1], nil,nil,nil,nil
     unless is_valid?(target_node,ignore_objects)
-      # TODO wanderers hit this a lot!?!?
-#      p "ERROR, target not valid #{start.inspect} => #{target_node}"
+      # return nil if target unavailable
       return nil
     end
 
     start_node = Node.new start[0], start[1], nil,nil,nil,nil
-    # keep these in order, lowest h to highest
-#    open = PriorityQueue.new([[start[0],start[1], :n, 0], diagonal_heuristic(start,target), nil])
     open = PriorityQueue.new(Node.new(start_node.x,start_node.y, :n, 0, Pathfinder.diagonal_heuristic(start_node,target_node), nil))
     @open = open
 
     #    create the closed list of nodes, initially empty
-    closed = [] #LinkedList.new
+    closed = [] 
     @closed = closed
+    step = 1
 
-    until open.empty? # or max iterations hit
+    until open.empty? or step > max
+      step += 1
       nh_node = open.best
 
-      if nh_node.h == 0 #nh_node.x == target_node.x and nh_node.y == target_node.y
+      if nh_node.h == 0 
         # walk back up the parents of nh
         path = [] 
         path.unshift [nh_node.x,nh_node.y,nh_node.dir,nh_node.cost]
@@ -146,14 +138,9 @@ class PriorityQueue
   end
 
   def find(n)
-#    puts "finding #{n.inspect}"
     found_node = nil
     @list.each_element do |elem|
       node = elem.obj
-#      p "looking at item:#{node.inspect}"
-#      p "======"
-#      p "looking at #{node.x},#{node.y},#{node.h}"
-#      p "compaired to #{n.x},#{n.y},#{n.h}"
       return nil if node.h > n.h # we know, since it is ordered
       if node.x == n.x and node.y == n.y
         found_node = node
@@ -161,8 +148,6 @@ class PriorityQueue
       end
     end
     found_node
-    # only delete if we're going to re-add it to our sorted array
-#    @array.delete found_node
   end
 
   def empty?()
@@ -174,7 +159,6 @@ class PriorityQueue
   end
 
   def insert(nh)
-#    puts "inserting #{nh[0].inspect} h:#{h}"
     elem = nil
     @list.each_element do |el|
       existing_nh = el.obj
@@ -204,7 +188,6 @@ if $0 == __FILE__ #or true
   require 'linked_list'
   class Map
     def has_obstacle?(x, y, entity_z);
-      p "has_obs"  
       return false
       if x == 26 and y < 114
         return true
@@ -217,14 +200,10 @@ if $0 == __FILE__ #or true
     end
   end
   mappy = Map.new
-#  size = 600
   size = 20
   pf = Pathfinder.new(:foo, mappy, size, size)
-#  path = pf.find([0,0],[59,59], 50)
   start = Time.now
-#  path = pf.find([4,3],[431,585], 50)
   path = pf.find([4,4],[3,3], 50)
-#  pf.to_ascii
   p(Time.now - start)
   puts "path size:[#{path.size}]" unless path.nil?
   p path

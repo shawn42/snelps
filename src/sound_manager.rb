@@ -25,62 +25,39 @@ class SoundManager
       (@enabled = (Rubygame::VERSIONS[:sdl_mixer] != nil))
     if @enabled
       STDOUT.puts "loading background music..."
-      # TODO change this to be a hash of sounds for easier coding later
-#      @background_music = @resource_manager.load_music("snelps_jungle.wav")
-#      @background_music = @resource_manager.load_music("Loop 1.ogg")
-      @background_music = @resource_manager.load_music("Ethan1.ogg")
-#      @background_music.fade_in 3
-      @background_music.fade_out 3
+      @music = {}
+      @music[:background_music] = @resource_manager.load_music("Ethan1.ogg")
+      @music[:background_music].fade_out 3
+      @music[:menu_music] = @resource_manager.load_music("loop.ogg")
+      @music[:menu_music].fade_out 3
 
-      @ent_move = @resource_manager.load_sound("whiff.ogg")
-      @ent_attack = @resource_manager.load_sound("attack.ogg")
+      @sounds = {}
+      @sounds[:ent_move] = @resource_manager.load_sound("whiff.ogg")
+      @sounds[:ent_attack] = @resource_manager.load_sound("attack.ogg")
 
-      @menu_music = @resource_manager.load_music("loop.ogg")
-#      @menu_music.fade_in 3
-      @menu_music.fade_out 3
       STDOUT.write "done.\n"
     end
   end 
 
   def play_sound(what)
     if @enabled
-      case what
-      when :ent_move
-        @sound_thread = Thread.new do
-          @ent_move.play
-        end
-      when :ent_attack
-        @sound_thread = Thread.new do
-          @ent_attack.play
-        end
+      @sound_thread = Thread.new do
+        @sounds[what].play if @sounds[what]
       end
     end
   end
 
   def play(what)
     if @enabled
-      case what
-      when :ingame_background
-        @sound_thread = Thread.new do
-          @background_music.play :repeats => -1
-        end
-      when :menu_music
-        @sound_thread = Thread.new do
-          @menu_music.play :repeats => -1
-        end
+      @sound_thread = Thread.new do
+        @music[what].play :repeats => -1 if @music[what]
       end
     end
   end
 
   def stop(what)
     if @enabled
-      case what
-      when :ingame_background
-        # TODO change to use new Mixer::Music class
-        @background_music.stop
-      when :menu_music
-        @menu_music.stop
-      end
+      @music[what].stop if @music[what]
     end
   end
 
