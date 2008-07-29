@@ -34,7 +34,7 @@ module Movable
       p "ERROR?"
       return nil
     end
-    @animation_image_set = dir
+    self.animation_image_set = dir
     x,y = @rect.center
 
     unless @last_tile_x.nil? or (@last_tile_x == @tile_x and @last_tile_y == @tile_y)

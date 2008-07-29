@@ -170,9 +170,7 @@ class EntityManager
               end
             else
               if entity.is? :selectable
-                unless entity.selected?
-                  newly_current_selection[entity.server_id] = entity
-                end
+                newly_current_selection[entity.server_id] = entity
               end
             end
           end

@@ -16,7 +16,7 @@ class InputManager
     ]
     @clock = Clock.new
     # framerate for game logic
-    @clock.target_framerate = 60
+    @clock.target_framerate = 30
   end
 
   def main_loop(game)

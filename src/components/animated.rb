@@ -90,13 +90,12 @@ module Animated
       @selected_image = get_selection_image(@entity_type).
         zoom([0.25,0.25], true)
     end
+    update_animation_length
   end
 
   def next_frame()
-    # use the class version to keep our instance from loading a copy of animations
-    # TODO cache this size, only update when animation_image_set changes?
-    size = animation_length
-    @frame_num = (@frame_num + 1) % size
+    # TODO use the class version to keep our instance from loading a copy of animations
+    @frame_num = (@frame_num + 1) % @animation_length
     @image = self.class.instance_variable_get("@images")[animation_image_set][@frame_num]
   end
 
@@ -113,9 +112,10 @@ module Animated
   end
 
   def animation_length()
-    return @animation_length unless @animation_length.nil?
+    @animation_length
+  end
 
-    # TODO hack, ugly
+  def update_animation_length()
     set = nil
     moving_set = self.class.default_animations[:moving]
     if !moving_set.nil? and moving_set.include? animation_image_set
@@ -129,8 +129,8 @@ module Animated
 
   def animation_image_set=(set)
     unless set == @animation_image_set
-      @animation_length = nil
       @animation_image_set = set
+      update_animation_length
     end
   end
 
