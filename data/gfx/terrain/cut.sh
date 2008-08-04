@@ -11,7 +11,7 @@ for i in {1..3}; do
 
     m=`echo $i*4+1+$j | bc`
 
-    convert grass.png -crop 32x32+$k+$l grass-$m.png
+    convert $1.png -crop 32x32+$k+$l $1-$m.png
 
   done
 
