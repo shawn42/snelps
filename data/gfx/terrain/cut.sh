@@ -1,9 +1,9 @@
 i=0
 j=0
 
-for i in {1..3}; do
+for i in {1..4}; do
 
-  for j in {1..3}; do
+  for j in {1..4}; do
 
     k=`echo $i*32-32 | bc`
 
