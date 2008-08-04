@@ -5,9 +5,9 @@ for i in {1..3}; do
 
   for j in {1..3}; do
 
-    k=`echo $i*32 | bc`
+    k=`echo $i*32-32 | bc`
 
-    l=`echo $j*32 | bc`
+    l=`echo $j*32-32 | bc`
 
     m=`echo $i*4-4+$j | bc`
 
