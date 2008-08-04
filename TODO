@@ -1,16 +1,21 @@
 MILESTONE #1 - "move units here" campaign
  - create attack/move buttons
  - change map_script triggers to register for occupancy_grid changes
-
+ - change campaign execution to goto next map in the campaign
  - create ability panel in gui to display currently available abilities
  - create Element class to parent Button,Checkbox,StoryStack
  - Maps need to know if X,Y has an obsticle
    - tile number ranges? (http://www.gamedev.net/reference/articles/article728.asp)
- - add structure placement "grid-locking"
  - add abilities to units (maybe not needed for this milestone)
     - rework able component?
  - clean up and add docs EVERYWHERE
  - add images to story stacks
+
+MILESTONE #2 - "gameplay"
+ - add structures (basic unit creation) (larger than one tile)
+ - add structure placement "grid-locking"
+ - add resources
+ - add resource gathering abilities
 
 MULTIPLAYER MILESTONE #3
  - add simple intro UI (map selection)

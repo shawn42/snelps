@@ -37,18 +37,17 @@ class EntityManager
     targetable_ents = ents.select{|e|e.player_id != 1}
     if targetable_ents.empty?
       # TODO set aggressive mode?
-#      move_entity cmd
       ent.melee_attack :target => [tile_x,tile_y]
     else
-      # TODO lock onto this unit
-      p "ATTACK!!! #{ent.server_id} => #{targetable_ents.first.server_id}"
       ent.melee_attack :target => targetable_ents.first
-      # attack
     end
   end
 
   def handle_move(cmd)
     fire :sound_play, :ent_move
+    
+    # seems like a bad place for this
+    cancel_all_attacks
     move_entity cmd
   end
 
@@ -284,6 +283,7 @@ class EntityManager
   end
 
   def update(time)
+    # TODO PERF only call update on updatable ents?
     for entity in @id_entities.values
       entity.update(time)
     end
@@ -309,12 +309,14 @@ class EntityManager
 
     @available_z_levels.each do |az|
 
+      # TODO PERF ONLY CALC ON VIEWPORT SCROLL
       view_x = @viewport.x_offset
       view_y = @viewport.y_offset
       view_w = @viewport.width
       view_h = @viewport.height
       tl_tile = @map.coords_to_tiles view_x, view_y
       br_tile = @map.coords_to_tiles view_x+view_w, view_y+view_h
+
       x = tl_tile[0]-1
       y = tl_tile[1]-1
       w = br_tile[0]-x+1
@@ -328,7 +330,11 @@ class EntityManager
   def get_occupants_at(x,y,w=1,h=1,player=nil)
     occs = []
     for z,grid in @occupancy_grids
-      occs << grid.get_occupants(x, y, w, h, player)
+      if player
+        occs << grid.get_occupants_by_player(x, y, w, h, player)
+      else
+        occs << grid.get_occupants(x, y, w, h)
+      end
       occs.flatten!
     end
     occs

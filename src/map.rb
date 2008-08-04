@@ -28,7 +28,8 @@ class Map
     @width.times do |i|
       @height.times do |j|
         @tile_images[i,j] = 
-          @resource_manager.load_image "terrain#{@tiles[i,j]}.png"
+          # TODO clean this up TERRAIN_DIR?
+          @resource_manager.load_image File.join("terrain","grass-#{@tiles[i,j]}.png")
       end
     end
   end

@@ -53,7 +53,6 @@ module Animated
           end 
         end
       end
-
     end
   end
 

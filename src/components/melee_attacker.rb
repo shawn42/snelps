@@ -29,6 +29,9 @@ module MeleeAttacker
 
   def melee_attack(args)
     target = args[:target]
+
+    # TODO BUG FIX: register as a listener of myself to see if I have been
+    # issued other orders? (ie move)
     if target.is_a? Array
       attack_location args
     else
@@ -94,6 +97,11 @@ module MeleeAttacker
       range = @range || DEFAULT_MELEE_RANGE
 
       dist <= range
+  end
+
+  def cancel_all_attacks()
+    # TODO go non-aggressive
+    set_target nil
   end
 
 end
