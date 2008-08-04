@@ -46,8 +46,6 @@ class EntityManager
   def handle_move(cmd)
     fire :sound_play, :ent_move
     
-    # seems like a bad place for this
-    cancel_all_attacks
     move_entity cmd
   end
 
@@ -59,6 +57,8 @@ class EntityManager
     dest_tile_y = dest_tile_y.to_i
     
     entity = @id_entities[entity_id]
+    # seems like a bad place for this
+    entity.cancel_all_attacks if entity.is? :melee_attacker
 
     entity.path_to dest_tile_x, dest_tile_y if entity.is? :pathable
   end
@@ -74,8 +74,9 @@ class EntityManager
           break
         end
       end
-
-      water_check = ((@map.at(x,y) == 266) and (z == 1))
+      # TODO PERF cache this range somewhere
+      water = @map.tile_config[:water]
+      water_check = ((water[:first]..water[:last]).include?(@map.at(x,y)) and (z == 1))
       return (occ or water_check)
     rescue Exception => ex
       p ex

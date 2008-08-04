@@ -9,7 +9,7 @@ for i in {1..4}; do
 
     l=`echo $j*32-32 | bc`
 
-    m=`echo $i*4-4+$j | bc`
+    m=`echo $i*4-4+$j+$2-1 | bc`
 
     convert $1.png -crop 32x32+$k+$l $1-$m.png
 

@@ -14,7 +14,7 @@ class Map
 
   attr_accessor :tile_size, :height, :width, :tile_images, :tiles,
     :converted_tiles, :viewport, :resource_manager, :half_tile_size,
-    :background_image, :script, :entity_manager
+    :background_image, :script, :entity_manager, :tile_config
 
   alias :w :width
   alias :h :height
@@ -24,12 +24,25 @@ class Map
   end
 
   def load_images()
+    @tile_config ||= @resource_manager.load_gameplay_config 'terrain_defs'
     @tile_images = NArray.object @width, @height
     @width.times do |i|
       @height.times do |j|
+        tile_id = @tiles[i,j]
+        tile_type = nil
+        tile_conf = nil
+        for type, config in @tile_config
+          range = (config[:first]..config[:last])
+          if range.include? tile_id
+            tile_type = type
+            tile_conf = config
+            break
+          end
+        end
+        raise "unknown tile id: #{tile_id} in map" if tile_type.nil?
         @tile_images[i,j] = 
           # TODO clean this up TERRAIN_DIR?
-          @resource_manager.load_image File.join("terrain","grass-#{@tiles[i,j]}.png")
+          @resource_manager.load_image File.join("terrain","#{tile_conf[:prefix]}#{tile_id}#{tile_conf[:suffix]}")
       end
     end
   end
@@ -71,9 +84,6 @@ class Map
   # returns the tile x,y that the coord point falls in
   def coords_to_tiles(x, y)
     tiles = [(x / @tile_size).floor, (y / @tile_size).floor]
-#    if tiles[1] > @height - 1 or tiles[0] > @width - 1
-#      p "WTF: #{x},#{y}  => #{tiles[0]},#{tiles[1]}"
-#    end
     tiles[0] = 0 if tiles[0] < 0
     tiles[0] = @width - 1 if tiles[0] > @width - 1
     tiles[1] = 0 if tiles[1] < 0

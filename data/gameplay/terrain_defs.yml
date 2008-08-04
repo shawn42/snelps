@@ -1,0 +1,11 @@
+--- 
+:grass: 
+  :prefix: grass-
+  :suffix: .png
+  :first: 1
+  :last: 16
+:water: 
+  :prefix: water-
+  :suffix: .png
+  :first: 17
+  :last: 32
