@@ -31,7 +31,7 @@ module Movable
     # current location
     if @grid.occupied?(new_tile_x, new_tile_y)
 #      stop_moving!
-      p "ERROR?"
+#      p "ERROR?"
       return nil
     end
     self.animation_image_set = dir

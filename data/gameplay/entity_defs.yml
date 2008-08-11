@@ -13,6 +13,7 @@
   - :audible
   - :animated
   - :drawable
+  - :gatherer
   - :melee_attacker
   :sounds:
   - :selected: worker_select.wav

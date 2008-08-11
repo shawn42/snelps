@@ -1,4 +1,6 @@
 MILESTONE #1 - "move units here" campaign
+ - create buttons w/ images
+ - create map editor
  - create attack/move buttons
  - change map_script triggers to register for occupancy_grid changes
  - change campaign execution to goto next map in the campaign

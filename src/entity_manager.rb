@@ -86,6 +86,18 @@ class EntityManager
 
   def handle_key_up(event)
     case event.key
+    when K_D
+      @profiling = !@profiling
+      if @profiling
+        require "ruby-prof"
+        RubyProf.start 
+      else
+        result = RubyProf.stop
+        printer = RubyProf::FlatPrinter.new(result)
+        file = File.open "profiling-#{Time.now}.txt", 'w+'
+        printer.print(file, 0)
+        file.close
+      end
     when K_T
       @trace = !@trace
       for entity in @id_entities.values
@@ -93,8 +105,22 @@ class EntityManager
       end
     when K_R
       # report (mostly for debugging)
-      for entity in @id_entities.values
-        puts entity
+      puts @id_entities.size
+#      for entity in @id_entities.values
+#        puts entity
+#      end
+    when K_N
+      # TODO create random wandering ent
+      begin
+        10.times do
+          w = rand(@map.width)
+          h = rand(@map.height)
+          @map.script.create_entity :animal, nil, w, h
+        end
+        puts @id_entities.size
+      rescue Exception => ex
+        puts "K_N [#{ex}]"
+        puts ex.backtrace
       end
     when K_M
       @current_action = ENTITY_MOVE

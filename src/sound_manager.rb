@@ -51,6 +51,7 @@ class SoundManager
   def play(what)
     if @enabled
       @sound_thread = Thread.new do
+        puts "playing #{what}"
         @music[what].play :repeats => -1 if @music[what]
       end
     end
@@ -58,6 +59,7 @@ class SoundManager
 
   def stop(what)
     if @enabled
+        puts "stopping #{what}"
       @music[what].stop if @music[what]
     end
   end

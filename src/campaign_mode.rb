@@ -42,6 +42,14 @@ class CampaignMode < BaseMode
 
   def on_key_up(event)
     case event.key
+    when K_LEFT
+      @viewport.jump :left
+    when K_RIGHT
+      @viewport.jump :right
+    when K_UP
+      @viewport.jump :up
+    when K_DOWN
+      @viewport.jump :down
     when K_Q
       fire :mode_change, :main_menu
     when K_ESCAPE
@@ -87,7 +95,7 @@ class CampaignMode < BaseMode
 
   def start(*args)
     @map = nil
-    fire :music_play, :ingame_background
+    fire :music_play, :background_music
     @campaign = @resource_manager.load_campaign(args.shift)
     @current_stage = @campaign[:stages].shift
 
@@ -98,7 +106,7 @@ class CampaignMode < BaseMode
   end
 
   def stop(*args)
-    fire :music_stop, :ingame_background
+    fire :music_stop, :background_music
   end
 
   def start_play()

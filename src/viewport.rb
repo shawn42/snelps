@@ -6,6 +6,7 @@ class Viewport
   SCROLL_DELAY = 40
   ACTIVE_EDGE_WIDTH = 35
   SCROLL_SPEED = 3#0.7
+  JUMP_DISTANCE = 32*6#0.7
   attr_accessor :x_offset, :y_offset, :world_width, :world_height,
     :screen_x_offset, :screen_y_offset, :width, :height
 
@@ -96,6 +97,45 @@ class Viewport
 
   def max_bottom?
     return @y_offset >= (@world_height - @height)
+  end
+
+  def jump(dir)
+    amount = JUMP_DISTANCE
+    case dir
+    when :up
+      @vy = -amount
+    when :down
+      @vy = amount
+    when :left
+      @vx = -amount
+    when :right
+      @vx = amount
+    end
+    
+    orig_x_offset = @x_offset
+    orig_y_offset = @y_offset
+    @x_offset += @vx
+    if max_right?
+      @vx = 0
+      @x_offset = @world_width - @width
+    elsif max_left?
+      @vx = 0
+      @x_offset = 0
+    end
+
+    @y_offset += @vy
+    if max_up?
+      @vy = 0
+      @y_offset = 0
+    elsif max_bottom?
+      @vy = 0
+      @y_offset = @world_height - @height
+    end
+
+    @vy = 0
+    @vx = 0
+
+    fire :screen_scroll, [orig_x_offset-@x_offset,orig_y_offset-@y_offset]
   end
 
   def scroll(event)
