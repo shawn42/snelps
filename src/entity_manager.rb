@@ -7,7 +7,7 @@ class EntityManager
   extend Publisher
   include Commands
 
-  attr_accessor :map, :occupancy_grids, :current_selection, :current_action, :selections, :current_abilities
+  attr_accessor :map, :occupancy_grids, :current_selection, :current_action, :selections, :current_abilities, :base_entities
   can_fire :sound_play, :network_msg_to
 
   constructor :viewport, :resource_manager, :sound_manager, :network_manager, :mouse_manager, :input_manager, :ability_manager
@@ -21,6 +21,7 @@ class EntityManager
     @available_z_levels = []
     @z_entities = {}
     @id_entities = {}
+    @base_entities = {}
     @occupancy_grids = {}
   end
 
@@ -307,12 +308,16 @@ class EntityManager
       @z_entities[z] << new_entity
       @id_entities[ent_id] = new_entity
 
+      # TODO, un hardcode the player id
+      @base_entities[ent_id] = new_entity if entity_type == :base and new_entity.player_id == 1
+
       new_entity.animate if new_entity.is? :animated
       if new_entity.is? :livable
         new_entity.when :death do |ent|
           p "entity[#{ent.server_id}] died"
           @z_entities[ent.z].delete ent
           @id_entities.delete ent.server_id
+          @base_entities.delete ent.server_id
           ent.unsubscribe :death, self
           # TODO tell ent to leave its occupiedness
         end

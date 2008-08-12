@@ -278,6 +278,7 @@
   - :animated
   - :drawable
   - :selectable
+  - :collector
   :animations:
     :idle:
       :prefix: area
