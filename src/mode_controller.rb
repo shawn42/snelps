@@ -38,6 +38,7 @@ class ModeController
     @input_manager.when :key_up do |e| dispatch_mode_event :handle_key_up, e end
     @mouse_manager.when :mouse_motion do |e| dispatch_mode_event :handle_mouse_motion, e end
     @mouse_manager.when :mouse_drag do |x,y,e| dispatch_mode_event :handle_mouse_drag, x, y, e end
+    @mouse_manager.when :mouse_dragging do |x,y,e| dispatch_mode_event :handle_mouse_dragging, x, y, e end
     @mouse_manager.when :mouse_click do |e| dispatch_mode_event :handle_click, e end
     @network_manager[:from_server].when :msg_received do |e| dispatch_mode_event :handle_network, e end
   

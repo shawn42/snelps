@@ -2,13 +2,14 @@ class BaseMode
 
   attr_accessor :modal_dialogs, :x, :y
   
+  
   def base_setup()
     @x = 0 unless @x
     @y = 0 unless @y
+    @modal_dialogs ||= []
   end
 
   def modal_dialog(klass, *args, &block)
-    @modal_dialogs ||= []
     md = klass.new(self, *args)
     md.on_close = block if block_given?
     md.when :destroy_modal_dialog do |d|
@@ -20,50 +21,34 @@ class BaseMode
     @modal_dialogs << md
   end
   
+  def fire_or_dispatch_to_modal(event_name, *args)
+    target = @modal_dialogs.empty? ? self : @modal_dialogs.first
+    target.send "on_#{event_name}", *args
+  end
+  
   # called by controller
   def handle_key_up(event)
-    @modal_dialogs ||= []
-    if @modal_dialogs.empty?
-      on_key_up event
-    else
-      @modal_dialogs.first.on_key_up event
-    end
+    fire_or_dispatch_to_modal :key_up, event
   end
 
   def handle_click(event)
-    @modal_dialogs ||= []
-    if @modal_dialogs.empty?
-      on_click event
-    else
-      @modal_dialogs.first.on_click event
-    end
+    fire_or_dispatch_to_modal :click, event
   end
 
   def handle_mouse_motion(event)
-    @modal_dialogs ||= []
-    if @modal_dialogs.empty?
-      on_mouse_motion event
-    else
-      @modal_dialogs.first.on_mouse_motion event
-    end
+    fire_or_dispatch_to_modal :mouse_motion, event
   end
 
-  def handle_mouse_drag(start_x, start_y, event)
-    @modal_dialogs ||= []
-    if @modal_dialogs.empty?
-      on_mouse_drag start_x, start_y, event
-    else
-      @modal_dialogs.first.on_mouse_drag start_x, start_y, event
-    end
+  def handle_mouse_dragging(*args)
+    fire_or_dispatch_to_modal :mouse_dragging, *args
+  end
+    
+  def handle_mouse_drag(*args)
+    fire_or_dispatch_to_modal :mouse_drag, *args
   end
 
   def handle_network(event)
-    @modal_dialogs ||= []
-    if @modal_dialogs.empty?
-      on_network event
-    else
-      @modal_dialogs.first.on_network event
-    end
+    fire_or_dispatch_to_modal :network, event
   end
      
   def handle_draw(dest)

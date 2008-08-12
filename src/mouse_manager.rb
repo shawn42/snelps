@@ -1,7 +1,7 @@
 # handles all the mouse events and mouse-state tracking, such as drags
 class MouseManager
   extend Publisher
-  can_fire :mouse_click, :mouse_drag, :mouse_motion
+  can_fire :mouse_click, :mouse_drag, :mouse_motion, :mouse_dragging
 
   LEFT_BUTTON = 1
   MIDDLE_BUTTON = 2
@@ -24,6 +24,9 @@ class MouseManager
   def mouse_motion(event)
     @x = event.pos.first
     @y = event.pos.last
+    if @dragging
+      fire :mouse_dragging, @x, @y, event
+    end
     fire :mouse_motion, event
   end
   

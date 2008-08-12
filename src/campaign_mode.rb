@@ -67,6 +67,12 @@ class CampaignMode < BaseMode
     end
   end
 
+  def on_mouse_dragging(x, y, event)
+    if @mini_map.hit_by? event.pos[0], event.pos[1]
+      @mini_map.handle_mouse_dragging event
+    end
+  end
+
   def on_mouse_motion(event)
     @viewport.scroll event
   end

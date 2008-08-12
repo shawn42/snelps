@@ -30,18 +30,15 @@ class MiniMap
     @rect.collide_point? x, y
   end
 
+
   def handle_mouse_click(event)
-    pos = event.pos
-    x_click = pos[0]
-    y_click = pos[1]
-
-    scaled_x = x_click - MINI_MAP_X
-    scaled_y = y_click - MINI_MAP_Y
-    
-    x = scaled_x / SCALE + @viewport.screen_x_offset
-    y = scaled_y / SCALE + @viewport.screen_y_offset
+    x, y = translate_event_coords event
     fire :center_viewport, x, y
+  end
 
+  def handle_mouse_dragging(event)
+    x, y = translate_event_coords event
+    fire :center_viewport, x, y
   end
 
   def update(time)
@@ -72,6 +69,20 @@ class MiniMap
 
   def draw(destination)
     @image.blit destination, [MINI_MAP_X,MINI_MAP_Y]
+  end
+  
+  protected
+  def translate_event_coords(event)
+    pos = event.pos
+    x_click = pos[0]
+    y_click = pos[1]
+
+    scaled_x = x_click - MINI_MAP_X
+    scaled_y = y_click - MINI_MAP_Y
+    
+    x = scaled_x / SCALE + @viewport.screen_x_offset
+    y = scaled_y / SCALE + @viewport.screen_y_offset
+    return x, y
   end
 end
 
