@@ -17,6 +17,7 @@
   - :audible
   - :animated
   - :drawable
+  - :rangable
   - :gatherer
   - :melee_attacker
   :sounds:
@@ -88,6 +89,7 @@
   - :audible
   - :animated
   - :drawable
+  - :rangable
   - :melee_attacker
   :animations:
     :selected:

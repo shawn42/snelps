@@ -9,7 +9,7 @@ module Gatherer
   end
 
   def setup_gatherer(args)
-    require_components :pathable
+    require_components :pathable, :rangable
 
     @gathering_range = self.gathering_range if self.respond_to? :gathering_range
     @gathering_range ||= DEFAULT_GATHERER_RANGE
@@ -17,7 +17,7 @@ module Gatherer
 
   def update_gatherer(time)
     unless @current_gatherer_target.nil? or @full
-      if within_gathering_range?
+      if within_range? @current_gatherer_target, @range
         if @current_gatherer_target.empty?
           set_gathering_target nil
         else
