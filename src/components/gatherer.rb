@@ -1,6 +1,6 @@
 # can gather a resource of some kind
 module Gatherer
-  DEFAULT_GATHERER_RANGE = 40
+  DEFAULT_GATHERER_RANGE = 16
 
   def self.included(target)
     target.add_setup_listener :setup_gatherer
@@ -16,13 +16,27 @@ module Gatherer
   end
 
   def update_gatherer(time)
-    unless @current_gatherer_target.nil? or @full
-      if within_range? @current_gatherer_target, @range
-        if @current_gatherer_target.empty?
-          set_gathering_target nil
+    if @full
+      if @base
+        if within_range? @base, @gathering_range
+          do_dump
+          puts "EMPTY NOW!"
+        end
+        # return to base
+        path_to @base.tile_x, @base.tile_y, [@base] if @path.nil?
+        # TODO finish
+      end
+    else
+      unless @current_gatherer_target.nil?
+        if within_range? @current_gatherer_target, @gathering_range
+          if @current_gatherer_target.empty?
+            set_gathering_target nil
+          else
+            do_gather
+            puts "FULL NOW!"
+          end
         else
-          do_gather
-          puts "FULL NOW!"
+          path_to @current_gatherer_target.tile_x, @current_gatherer_target.tile_y, [@current_gatherer_target]
         end
       end
     end
@@ -64,9 +78,16 @@ module Gatherer
   def do_gather()
     @current_gatherer_target.take self.carrying_capacity
     @full = true
+    drop_off
+  end
+
+  def drop_off()
+    # TODO find closest using Pathfinder.diagonal_heuristic
+    @base = @entity_manager.base_entities.values.first
   end
 
   def do_dump()
+    @base.deposit self.carrying_capacity
     @full = false
     # TODO add resource to player's total
   end
