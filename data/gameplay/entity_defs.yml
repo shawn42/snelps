@@ -3,6 +3,10 @@
   :player_id: 0
   :z: 1
   :health: 100
+  :armor: 5
+  :attack_power: 10
+  :speed: 60
+  :carrying_capacity: 10
   :components: 
   - :livable
   - :able
@@ -70,10 +74,6 @@
         :suffix: r.png
         :first: 120
         :last: 127
-  :armor: 5
-  :range: 5
-  :attack_power: 10
-  :speed: 60
 :bird: 
   :player_id: 0
   :z: 2
@@ -261,6 +261,27 @@
       :suffix: .png
       :first: 0
       :last: 7
+    :selected:
+      :prefix: magiceffect
+      :suffix: r.png
+      :first: 0
+      :last: 0
+:base: 
+  :z: 1
+  :health: 10000
+  :components: 
+  - :able
+  - :positionable
+  - :audible
+  - :animated
+  - :drawable
+  - :selectable
+  :animations:
+    :idle:
+      :prefix: area
+      :suffix: .png
+      :first: 16
+      :last: 23
     :selected:
       :prefix: magiceffect
       :suffix: r.png

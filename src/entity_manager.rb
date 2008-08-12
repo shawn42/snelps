@@ -43,6 +43,21 @@ class EntityManager
     end
   end
 
+  def handle_gather(cmd)
+    fire :sound_play, :ent_gather
+    attack_cmd,entity_id,tile_x,tile_y = cmd.split ':'
+    ent = @id_entities[entity_id.to_i]
+    
+    # if targetable ent is at x, y
+    ents = get_occupants_at(tile_x.to_i, tile_y.to_i).select{|e|e.is? :providable}
+    if ents.empty?
+      # TODO set looking mode
+      ent.gather :target => [tile_x,tile_y]
+    else
+      ent.gather :target => ents.first
+    end
+  end
+
   def handle_move(cmd)
     fire :sound_play, :ent_move
     
@@ -126,6 +141,8 @@ class EntityManager
       @current_action = ENTITY_MOVE
     when K_A
       @current_action = ENTITY_ATTACK
+    when K_G
+      @current_action = ENTITY_GATHER
     when K_1
       change_group_selection event, 1
     when K_2

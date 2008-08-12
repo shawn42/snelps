@@ -77,6 +77,7 @@ class CampaignMode < BaseMode
 
   def on_network(event)
     # TODO, shouldn't do this, these should come from the turn manager
+    # TODO can we break these down into target:method?
     pieces = event.split(':')
     case pieces[0]
     when ENTITY_CREATE
@@ -85,6 +86,8 @@ class CampaignMode < BaseMode
       @entity_manager.handle_move event
     when ENTITY_ATTACK
       @entity_manager.handle_attack event
+    when ENTITY_GATHER
+      @entity_manager.handle_gather event
     when PLAYER_JOIN
       # parse player from event
       id = pieces[2].to_i

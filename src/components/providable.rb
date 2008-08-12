@@ -20,12 +20,15 @@ module Providable
 
   # retrieves amount of resource, returns the amount taken
   def take(amount)
+    p "taking #{amount}"
     if amount <= @resource_amount
       @resource_amount -= amount
+      p "#{@resource_amount} left"
       return amount 
     else
       available = @resource_amount
       @resource_amount = 0
+      p "#{@resource_amount} left"
       return available
     end
   end

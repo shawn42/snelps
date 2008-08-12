@@ -31,6 +31,7 @@ module Wanderer
         wander_x = @orig_x + @range_options[rand(@range_size)]
         wander_y = @orig_y + @range_options[rand(@range_size)]
       end
+      
       # TODO this needs to fire out to sync w/ network
       cmd = "#{ENTITY_MOVE}:#{@server_id}:#{wander_x}:#{wander_y}"
 #      fire :network_msg_to,cmd

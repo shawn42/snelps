@@ -12,6 +12,8 @@ module MeleeAttacker
     require_components :pathable, :able
     @abilities << :melee_attack
     @attack_timer = 0
+    @range = self.range if self.respond_to? :range
+    @range ||= DEFAULT_MELEE_RANGE
   end
 
   def update_melee_attacker(time)
@@ -89,14 +91,14 @@ module MeleeAttacker
     end
   end
 
-  def within_range?()
+  def within_range?(target = @current_target)
       from = Node.new tile_x, tile_y
-      to = Node.new @current_target.tile_x, @current_target.tile_y
+      to = Node.new target.tile_x, target.tile_y
       dist = Pathfinder.diagonal_heuristic from, to
 
-      range = @range || DEFAULT_MELEE_RANGE
+      puts @range
 
-      dist <= range
+      dist <= @range
   end
 
   def cancel_all_attacks()
