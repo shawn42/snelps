@@ -20,11 +20,10 @@ module Gatherer
       if @base
         if within_range? @base, @gathering_range
           do_dump
-          puts "EMPTY NOW!"
         end
         # return to base
+        # TODO, I think this will create a new path every cycle
         path_to @base.tile_x, @base.tile_y, [@base] if @path.nil?
-        # TODO finish
       end
     else
       unless @current_gatherer_target.nil?
@@ -33,7 +32,6 @@ module Gatherer
             set_gathering_target nil
           else
             do_gather
-            puts "FULL NOW!"
           end
         else
           path_to @current_gatherer_target.tile_x, @current_gatherer_target.tile_y, [@current_gatherer_target]
@@ -48,9 +46,7 @@ module Gatherer
     if target.is_a? Array
       gather_location args
     else
-      if is? :pathable
-        gather_entity args
-      end
+      gather_entity args
     end
   end
 
@@ -63,15 +59,7 @@ module Gatherer
   def gather_entity(args)
     target = args[:target]
     if target.is? :providable
-
-      # TODO where should this come from? both attacker
-      # and gather use this
-      if within_gathering_range? target
-        set_gathering_target target
-      else
-        # move closer
-        path_to target.tile_x, target.tile_y, [target]
-      end
+      set_gathering_target target
     end
   end
 

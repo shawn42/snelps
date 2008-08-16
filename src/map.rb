@@ -6,8 +6,6 @@ require 'publisher'
 class Map
   extend Publisher
 
-  can_fire :victory, :failure
-  
   def to_yaml_properties()
     ['@width', '@height', '@tile_size', '@converted_tiles', '@half_tile_size']
   end

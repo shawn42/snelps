@@ -52,7 +52,10 @@ class NetworkManager
           when HEARTBEAT
             puts msg
           when PLAYER_JOIN
-            msg += ":1"
+            @player_id ||= 0
+            @player_id += 1
+            # L means that this is your local player
+            msg += ":#{@player_id}:L"
             @channels[:from_server].push msg
           when ENTITY_CREATE
             @ent_id ||= 0

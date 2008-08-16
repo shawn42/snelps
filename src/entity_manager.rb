@@ -7,10 +7,14 @@ class EntityManager
   extend Publisher
   include Commands
 
-  attr_accessor :map, :occupancy_grids, :current_selection, :current_action, :selections, :current_abilities, :base_entities
+  attr_accessor :map, :occupancy_grids, :current_selection, :current_action,
+    :selections, :current_abilities, :base_entities, :players
+
   can_fire :sound_play, :network_msg_to
 
-  constructor :viewport, :resource_manager, :sound_manager, :network_manager, :mouse_manager, :input_manager, :ability_manager
+  constructor :viewport, :resource_manager, :sound_manager, :network_manager,
+    :mouse_manager, :input_manager, :ability_manager 
+  
   def setup()
     @trace = false
     
@@ -52,7 +56,7 @@ class EntityManager
     # if targetable ent is at x, y
     ents = get_occupants_at(tile_x.to_i, tile_y.to_i).select{|e|e.is? :providable}
     if ents.empty?
-      # TODO set looking mode
+      # TODO set looking mode?
       ent.gather :target => [tile_x,tile_y]
     else
       ent.gather :target => ents.first
@@ -309,7 +313,7 @@ class EntityManager
       @id_entities[ent_id] = new_entity
 
       # TODO, un hardcode the player id
-      @base_entities[ent_id] = new_entity if entity_type == :base and new_entity.player_id == 1
+      @base_entities[ent_id] = new_entity if new_entity.is?(:collector) and new_entity.player_id == 1
 
       new_entity.animate if new_entity.is? :animated
       if new_entity.is? :livable
@@ -319,7 +323,6 @@ class EntityManager
           @id_entities.delete ent.server_id
           @base_entities.delete ent.server_id
           ent.unsubscribe :death, self
-          # TODO tell ent to leave its occupiedness
         end
       end
     rescue Exception => ex

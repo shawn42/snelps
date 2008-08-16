@@ -7,11 +7,14 @@ class MouseManager
   MIDDLE_BUTTON = 2
   RIGHT_BUTTON = 3
   
-  constructor :viewport
+  constructor :viewport, :resource_manager
   def setup
     @viewport.when :screen_scroll do |delta|
       screen_scrolled delta[0], delta[1]
     end
+
+    # TODO allow for dynamic changing of the mouse cursor
+    @cursor = @resource_manager.load_image 'brush3.png'
   end
 
   def draw(screen)
@@ -19,6 +22,7 @@ class MouseManager
       screen.draw_box([@start_x, @start_y], [@x, @y], LIGHT_GREEN)
       screen.draw_box_s([@start_x, @start_y], [@x, @y], GREEN_HALF_ALPHA)
     end
+    @cursor.blit screen, [@x-16, @y-16]
   end
 
   def mouse_motion(event)

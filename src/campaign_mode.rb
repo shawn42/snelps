@@ -21,6 +21,8 @@ class CampaignMode < BaseMode
 
   def setup()
     base_setup
+    @players ||= []
+    @entity_manager.players = @players
 
     @entity_manager.when :sound_play do |snd|
       fire :sound_play, snd
@@ -33,7 +35,10 @@ class CampaignMode < BaseMode
     @background = Surface.new(@snelps_screen.size)
 
     @title_text = @font_manager.render(:excalibur, 30, "Snelps",true, LIGHT_GRAY)
-    @resources_text = @font_manager.render(:excalibur, 10, "5/20       Vim: 20      Daub: 44",true, LIGHT_GRAY)
+
+    @unit_info_text = @font_manager.render(:excalibur, 10, "5/20",true, LIGHT_GRAY)
+    @vim_text = @font_manager.render(:excalibur, 10, "Vim: 20",true, LIGHT_GRAY)
+    @daub_text = @font_manager.render(:excalibur, 10, "Daub: 44",true, LIGHT_GRAY)
 
     @unscaled_warrior_image = 
       @resource_manager.load_image 'warrior_concept.png'
@@ -98,35 +103,51 @@ class CampaignMode < BaseMode
       # parse player from event
       id = pieces[2].to_i
       snelp = Player::SNELPS[pieces[1].to_i]
-      @player = Player.new :snelp => snelp, :server_id => id
+      local = true if pieces[3] == "L"
+
+      player = Player.new :snelp => snelp, :server_id => id, :local => local
+      player.setup
+      @players << player
+
+      @local_player = player if local
     end
   end
 
   def start(*args)
     @map = nil
-    fire :music_play, :background_music
+
     @campaign = @resource_manager.load_campaign(args.shift)
+    fire :music_play, :background_music
+
     @current_stage = @campaign[:stages].shift
+    campaign_step @current_stage
+  end
 
-    modal_dialog StoryDialog, @current_stage[:before_story] do |d|
-      start_play
+  def campaign_step(stage)
+    @playing = false
+
+    modal_dialog StoryDialog, stage[:before_story] do |d|
+      start_next_map stage
     end
-
   end
 
   def stop(*args)
     fire :music_stop, :background_music
+    @playing = false
+    @snelps_screen.show_cursor = true
   end
 
-  def start_play()
+  def start_next_map(stage)
+
+    @snelps_screen.show_cursor = false
+
     #TODO get this from main_menu_mode
     # lets make the player a fire snelp
     snelp_index = Player::SNELPS.index :fire
     player_cmd = "#{PLAYER_JOIN}:#{snelp_index}"
-
     fire :network_msg_to, player_cmd
     
-    map_name = @current_stage[:map]
+    map_name = stage[:map]
     @map = Map.load_from_file @resource_manager, map_name
     
     @viewport.setup
@@ -148,7 +169,19 @@ class CampaignMode < BaseMode
     @map.script.when :victory do
       # TODO add summary report page?
       p "VICTORY"
-      fire :mode_change, :main_menu
+
+      @current_stage = @campaign[:stages].shift
+      if @current_stage.nil?
+        fire :mode_change, :main_menu
+      else
+        campaign_step @current_stage
+      end
+    end
+
+    @map.script.when :defeat do
+      # TODO add summary report page?
+      p "DEFEAT"
+#      fire :mode_change, :main_menu
     end
 
     @map.script.when :create_entity do |ent_type,player,tile_x,tile_y|
@@ -175,6 +208,16 @@ class CampaignMode < BaseMode
     @map.update time unless @map.nil?
     @viewport.update time unless @viewport.nil?
     @entity_manager.update time unless @entity_manager.nil?
+
+    # TODO, cache these trigger the re-render based on events
+    vim = 0
+    daub = 0
+    vim = @local_player.vim if @local_player
+    daub = @local_player.daub if @local_player
+    @vim_text = @font_manager.render(:excalibur, 10, "Vim: #{vim}",true, LIGHT_GRAY)
+    @daub_text = @font_manager.render(:excalibur, 10, "Daub: #{daub}",true, LIGHT_GRAY)
+
+    @unit_info_text = @font_manager.render(:excalibur, 10, "5/20",true, LIGHT_GRAY)
   end
   
   def draw(destination)
@@ -200,7 +243,9 @@ class CampaignMode < BaseMode
     destination.draw_box([1, 1], [1023, 34], PURPLE)
     @warrior_image.blit(destination,[800,10])
     @title_text.blit(destination,[60,1])
-    @resources_text.blit(destination,[630,20])
+    @unit_info_text.blit(destination,[630,20])
+    @vim_text.blit(destination,[680,20])
+    @daub_text.blit(destination,[730,20])
   end
 
   def key_up(event)

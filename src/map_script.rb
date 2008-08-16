@@ -3,7 +3,7 @@
 require 'publisher'
 class MapScript
   extend Publisher
-  can_fire :create_entity, :victory
+  can_fire :create_entity, :victory, :defeat
 
   #check all triggers this often (ms)
   TRIGGER_UPDATE_TIME = 2000

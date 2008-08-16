@@ -9,7 +9,7 @@ describe EntityBuilder do
     before :each do
 
       @res_man = mock "res_man"
-      @res_man.should_receive(:load_entity_config).with('entity_defs').and_return({:foo=>{:components=>[:fake_tester],:health=>73}})
+      @res_man.should_receive(:load_gameplay_config).with('entity_defs').and_return({:foo=>{:components=>[:fake_tester],:health=>73}})
       @entity_builder = EntityBuilder.new :resource_manager => @res_man
     end
 

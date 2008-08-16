@@ -8,9 +8,9 @@
     - image2.png
   - - Try to find the special location on the map...
     - image2.png
-  - - M (move mode) A (attack mode) ESC (exit)
+  - - M (move) A (attack) G (gather) ESC (exit)
     - image2.png
-- :map: random
+- :map: obs
   :before_story: 
   - - blah blah blah
     - image.png
