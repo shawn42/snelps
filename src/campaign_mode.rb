@@ -230,8 +230,6 @@ class CampaignMode < BaseMode
 
     @view_screen.blit destination, [10,36]
 
-    @mouse_manager.draw destination
-
     destination.draw_box_s([0, 35], [10, 800], LIGHT_PURPLE)
     destination.draw_box_s([10, 794], [1024, 800], LIGHT_PURPLE)
     destination.draw_box_s([824, 35], [1024, 794], LIGHT_PURPLE)
@@ -246,6 +244,9 @@ class CampaignMode < BaseMode
     @unit_info_text.blit(destination,[630,20])
     @vim_text.blit(destination,[680,20])
     @daub_text.blit(destination,[730,20])
+
+    @mouse_manager.draw destination
+
   end
 
   def key_up(event)
