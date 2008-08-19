@@ -145,7 +145,7 @@ class EntityManager
     when K_M
       @current_action = ENTITY_MOVE
     when K_A
-      @current_action = ENTITY_ATTACK
+      @current_action = ENTITY_MELEE_ATTACK
     when K_G
       @current_action = ENTITY_GATHER
     when K_1
@@ -245,17 +245,23 @@ class EntityManager
   def do_action(x,y)
     if @current_selection
       for id, entity in @current_selection.entities
-        # doesn't have to be pathable.. (stationary ranged attack?)
-        if entity.is? :pathable
-          # we clicked to send them an order
-          world_x, world_y = @viewport.view_to_world(x, y)
 
-          tile_x,tile_y = 
-            @map.coords_to_tiles(world_x,world_y)
+        world_x, world_y = @viewport.view_to_world(x, y)
 
-          cmd = "#{@current_action}:#{entity.server_id}:#{tile_x}:#{tile_y}"
-          fire :network_msg_to, cmd
+        tile_x,tile_y = 
+          @map.coords_to_tiles(world_x,world_y)
+
+        target = [tile_x,tile_y]
+
+        targets = get_occupants_at(tile_x, tile_y)
+        if targets.size > 0
+          target = targets.first
         end
+
+        act = entity.actions(:target=>target).first
+
+        cmd = "ENT_#{act.to_s.upcase}:#{entity.server_id}:#{tile_x}:#{tile_y}"
+        fire :network_msg_to, cmd
       end
     end
   end
@@ -275,7 +281,7 @@ class EntityManager
     pos = event.pos
 		x_array = [x, pos.first].sort
 		y_array = [y, pos.last].sort
-    # TODO change to use select_in
+
     select_in x_array.first,y_array.first, x_array.last -
                      x_array.first ,y_array.last - y_array.first
   end

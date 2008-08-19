@@ -10,10 +10,15 @@ module MeleeAttacker
 
   def setup_melee_attacker(args)
     require_components :pathable, :able, :rangable
-    @abilities << :melee_attack
+    add_ability :melee_attack
     @attack_timer = 0
     @range = self.range if self.respond_to? :range
     @range ||= DEFAULT_MELEE_RANGE
+  end
+
+  def melee_attack_targets?(args)
+    target = args[:target]
+    target.respond_to? :is? and target.is? :livable
   end
 
   def update_melee_attacker(time)

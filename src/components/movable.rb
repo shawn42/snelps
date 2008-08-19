@@ -10,7 +10,12 @@ module Movable
   def setup_movable(args)
     require_components :able
     @base_speed = self.speed / 1000.0
-    @abilities << :move
+    add_ability :move
+  end
+
+  def move_targets?(args)
+    target = args[:target]
+    !target.respond_to? :is?
   end
 
   def stop_moving!()

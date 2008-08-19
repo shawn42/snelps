@@ -20,4 +20,21 @@ module Able
     @abilities.include? ability
   end
 
+  # Return an ordered list of available actions based on the
+  # target.  Used by ent_manager for mouse-cursor changes when
+  # hovering over a target.
+  def actions(args)
+    abs = []
+    for ability in @abilities
+      abs << ability if respond_to?("#{ability}_targets?") and send("#{ability}_targets?", args)
+    end
+    abs
+  end
+
+  # Will be called on each selected entity with the given target
+  # info.
+  def act_upon(args)
+    call(actions(target_ent).first(args))
+  end
+
 end

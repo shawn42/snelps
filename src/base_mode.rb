@@ -1,8 +1,8 @@
 class BaseMode
 
   attr_accessor :modal_dialogs, :x, :y
-  
-  
+
+
   def base_setup()
     @x = 0 unless @x
     @y = 0 unless @y
@@ -19,13 +19,13 @@ class BaseMode
       end
     end
     @modal_dialogs << md
-  end
-  
+    end
+
   def fire_or_dispatch_to_modal(event_name, *args)
     target = @modal_dialogs.empty? ? self : @modal_dialogs.first
     target.send "on_#{event_name}", *args
   end
-  
+
   # called by controller
   def handle_key_up(event)
     fire_or_dispatch_to_modal :key_up, event
@@ -42,7 +42,7 @@ class BaseMode
   def handle_mouse_dragging(*args)
     fire_or_dispatch_to_modal :mouse_dragging, *args
   end
-    
+
   def handle_mouse_drag(*args)
     fire_or_dispatch_to_modal :mouse_drag, *args
   end
@@ -50,7 +50,7 @@ class BaseMode
   def handle_network(event)
     fire_or_dispatch_to_modal :network, event
   end
-     
+
   def handle_draw(dest)
     @modal_dialogs ||= []
     draw(dest)
@@ -66,6 +66,7 @@ class BaseMode
   def on_click(event); end
   def on_mouse_motion(event); end
   def on_mouse_drag(start_x,start_y,event); end
+  def on_mouse_dragging(start_x,start_y,event); end
   def on_network(event); end
   def start(*args); end
   def stop(*args); end

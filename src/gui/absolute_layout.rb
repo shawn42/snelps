@@ -96,6 +96,15 @@ class AbsoluteLayout < Rect
     end
   end
 
+  def mouse_dragging(start_x, start_y, event)
+    for el in @elements.reverse
+      if el.hit_by? start_x, start_y
+        el.dragging start_x, start_y, event if el.respond_to? :dragging
+        break
+      end
+    end
+  end
+
   def mouse_drag(start_x, start_y, event)
     for el in @elements.reverse
       if el.hit_by? start_x, start_y

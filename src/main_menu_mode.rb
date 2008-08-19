@@ -51,6 +51,10 @@ class MainMenuMode < BaseMode
     @layout.click(event)
   end
 
+  def on_mouse_dragging(x,y,event)
+    @layout.mouse_dragging(x,y,event)
+  end
+
   def on_mouse_motion(event)
     @layout.mouse_motion(event)
   end

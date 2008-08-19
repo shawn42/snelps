@@ -9,10 +9,16 @@ module Gatherer
   end
 
   def setup_gatherer(args)
-    require_components :pathable, :rangable
+    require_components :able, :pathable, :rangable
+    add_ability :gather
 
     @gathering_range = self.gathering_range if self.respond_to? :gathering_range
     @gathering_range ||= DEFAULT_GATHERER_RANGE
+  end
+
+  def gather_targets?(args)
+    target = args[:target]
+    target.respond_to? :is? and target.is? :providable
   end
 
   def update_gatherer(time)

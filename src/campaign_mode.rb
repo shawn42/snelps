@@ -95,7 +95,7 @@ class CampaignMode < BaseMode
       @entity_manager.handle_create event
     when ENTITY_MOVE
       @entity_manager.handle_move event
-    when ENTITY_ATTACK
+    when ENTITY_MELEE_ATTACK
       @entity_manager.handle_attack event
     when ENTITY_GATHER
       @entity_manager.handle_gather event
