@@ -227,10 +227,10 @@
   - :drawable
   :animations:
     :idle:
-      :prefix: ressource
+      :prefix: trees-
       :suffix: .png
-      :first: 2
-      :last: 2
+      :first: 1
+      :last: 1
 :portal: 
   :z: 0
   :components: 
