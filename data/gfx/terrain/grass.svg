@@ -14,7 +14,7 @@
    width="128"
    height="128"
    version="1.0"
-   sodipodi:docname="grass_terrain.svg"
+   sodipodi:docname="grass.svg"
    inkscape:export-filename="/home/qubodup/src/snelps/data/gfx/grass.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90"
@@ -41,8 +41,8 @@
        id="perspective9" />
   </defs>
   <sodipodi:namedview
-     inkscape:window-height="653"
-     inkscape:window-width="665"
+     inkscape:window-height="951"
+     inkscape:window-width="1280"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
      guidetolerance="10.0"
@@ -52,12 +52,12 @@
      bordercolor="#666666"
      pagecolor="#ffffff"
      id="base"
-     showgrid="false"
-     inkscape:zoom="2"
-     inkscape:cx="15.439865"
-     inkscape:cy="1.4501964"
-     inkscape:window-x="607"
-     inkscape:window-y="320"
+     showgrid="true"
+     inkscape:zoom="4"
+     inkscape:cx="60.903595"
+     inkscape:cy="57.818629"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
      inkscape:current-layer="svg2">
     <inkscape:grid
        type="xygrid"
@@ -71,7 +71,7 @@
        spacingy="1px" />
   </sodipodi:namedview>
   <rect
-     style="opacity:1;fill:#06b900;fill-opacity:1;stroke:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+     style="opacity:1;fill:#168b12;fill-opacity:1;stroke:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
      id="grass-1"
      width="128"
      height="128"
