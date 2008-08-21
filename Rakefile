@@ -35,6 +35,15 @@ task :run do |t|
   end
 end
 
+desc "Run Snelps Editor"
+task :edit do |t|
+  if Platform.mac?
+    sh "rsdl src/editor/ed_app.rb"
+  else
+    sh "ruby src/editor/ed_app.rb"
+  end
+end
+
 desc "profile Snelps"
 task :profile do |t|
   if Platform.mac?

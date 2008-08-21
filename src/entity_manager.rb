@@ -7,7 +7,7 @@ class EntityManager
   extend Publisher
   include Commands
 
-  attr_accessor :map, :occupancy_grids, :current_selection, :current_action,
+  attr_accessor :map, :occupancy_grids, :current_selection, 
     :selections, :current_abilities, :base_entities, :players
 
   can_fire :sound_play, :network_msg_to
@@ -20,7 +20,6 @@ class EntityManager
     
     # stores the selections for later retrieval
     @selections = {}
-    @current_action = ENTITY_MOVE
 
     @available_z_levels = []
     @z_entities = {}
@@ -142,12 +141,6 @@ class EntityManager
         puts "K_N [#{ex}]"
         puts ex.backtrace
       end
-    when K_M
-      @current_action = ENTITY_MOVE
-    when K_A
-      @current_action = ENTITY_MELEE_ATTACK
-    when K_G
-      @current_action = ENTITY_GATHER
     when K_1
       change_group_selection event, 1
     when K_2

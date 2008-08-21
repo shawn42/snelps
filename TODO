@@ -1,10 +1,6 @@
 MILESTONE #1 - "move units here" campaign
  - change gatherer/collector to keep track of which resource is held/deposited
  - change mouse hover to show if something is targetable/attackable
- - change components to register handlers (in order) for abilities so entity_manager doesn't know about them.
-   - EM will just say "this ent was told to do something to this target"; keeping EM dumb
-   - add abilities to units (maybe not needed for this milestone)
-     - rework able component?
 
  - change map_script triggers to register for occupancy_grid changes
  - change campaign execution to goto next map in the campaign

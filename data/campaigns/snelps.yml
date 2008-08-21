@@ -8,8 +8,6 @@
     - image2.png
   - - Try to find the special location on the map...
     - image2.png
-  - - M (move) A (attack) G (gather) ESC (exit)
-    - image2.png
 - :map: obs
   :before_story: 
   - - blah blah blah

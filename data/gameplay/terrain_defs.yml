@@ -9,3 +9,8 @@
   :suffix: .png
   :first: 17
   :last: 32
+:dirt: 
+  :prefix: dirt-
+  :suffix: .png
+  :first: 33
+  :last: 48
