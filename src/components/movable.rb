@@ -15,7 +15,11 @@ module Movable
 
   def move_targets?(args)
     target = args[:target]
-    !target.respond_to? :is?
+    if target.respond_to? :is?
+      target.is? :positionable and target.z < self.z
+    else
+      true
+    end
   end
 
   def stop_moving!()
