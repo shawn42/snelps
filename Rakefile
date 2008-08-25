@@ -97,3 +97,55 @@ task :stats do
   require 'code_statistics'
   CodeStatistics.new(*STATS_DIRECTORIES).to_s
 end
+
+namespace :dist do
+  desc "package Snelps for os x"
+  task :mac do |t|
+    if Platform.mac?
+      # create directory structure for .app
+      mac_dist_dir = File.join(APP_ROOT,"dist","mac")
+      FileUtils.remove_dir mac_dist_dir, true
+
+      dotapp_dir = File.join(APP_ROOT,"dist","mac","Snelps.app","Contents")
+
+      FileUtils.mkdir_p(File.join(dotapp_dir,"Resources"))
+      FileUtils.mkdir_p(File.join(dotapp_dir,"MacOS"))
+      FileUtils.mkdir_p(File.join(dotapp_dir,"Frameworks"))
+
+      # copy code into place
+      # can I do this with svn export?
+      code_dir = File.join(dotapp_dir,"Resources")
+      FileUtils.cp_r(File.join(APP_ROOT,"bin"), code_dir)
+      FileUtils.cp_r(File.join(APP_ROOT,"config"), code_dir)
+      FileUtils.cp_r(File.join(APP_ROOT,"data"), code_dir)
+      FileUtils.cp_r(File.join(APP_ROOT,"doc"), code_dir)
+      FileUtils.cp_r(File.join(APP_ROOT,"glob2_data"), code_dir)
+      FileUtils.cp_r(File.join(APP_ROOT,"lib"), code_dir)
+      FileUtils.cp_r(File.join(APP_ROOT,"maps"), code_dir)
+      FileUtils.cp_r(File.join(APP_ROOT,"scripts"), code_dir)
+      FileUtils.cp_r(File.join(APP_ROOT,"src"), code_dir)
+#      FileUtils.cp_r(File.join(APP_ROOT,"bin"), code_dir)
+
+      FileUtils.cp(File.join(APP_ROOT,"LICENSE.txt"), code_dir)
+      FileUtils.cp(File.join(APP_ROOT,"README.txt"), code_dir)
+      FileUtils.cp(File.join(APP_ROOT,"MANUAL.txt"), code_dir)
+
+      FileUtils.cp(File.join(APP_ROOT,"bin","MacOS","Info.plist"), dotapp_dir)
+      FileUtils.cp(File.join(APP_ROOT,"bin","MacOS","snelps"), File.join(dotapp_dir,"MacOS"))
+
+      FileUtils.cp(File.join(APP_ROOT,"bin","MacOS","script"), code_dir)
+      FileUtils.cp(File.join(APP_ROOT,"bin","MacOS",".script"), code_dir)
+      FileUtils.cp(File.join(APP_ROOT,"bin","MacOS","rsdl"), code_dir)
+      FileUtils.cp(File.join(APP_ROOT,"bin","MacOS","AppSettings.plist"), code_dir)
+      FileUtils.cp_r(File.join(APP_ROOT,"bin","MacOS","en.lproj"), code_dir)
+
+      # copy frameworks into place
+      # TODO how should I manage these?
+      FRAMEWORKS_DIR = File.join(APP_ROOT,"bin","MacOS","Frameworks")
+      FileUtils.cp_r(FRAMEWORKS_DIR, dotapp_dir)
+
+    else
+      puts "You are not on a mac"
+    end
+  end
+end

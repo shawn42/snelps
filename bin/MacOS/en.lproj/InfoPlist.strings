@@ -1,0 +1,4 @@
+CFBundleName = "snelps";
+CFBundleShortVersionString = "0.1";
+CFBundleGetInfoString = "Snelps version 1.0 Copyright 2008 Shawn Anderson";
+NSHumanReadableCopyright = "Copyright 2008 Shawn Anderson.";
