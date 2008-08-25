@@ -144,6 +144,9 @@ namespace :dist do
       FRAMEWORKS_DIR = File.join(APP_ROOT,"bin","MacOS","Frameworks")
       FileUtils.cp_r(FRAMEWORKS_DIR, dotapp_dir)
 
+      # TODO make this use svn export
+      sh "rm -rf `find #{dotapp_dir} -type d -name '.svn'`"
+
     else
       puts "You are not on a mac"
     end

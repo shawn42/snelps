@@ -3,4 +3,4 @@
 export DYLD_LIBRARY_PATH="$1/Contents/Frameworks"
 #export LD_LIBRARY_PATH="$1/Contents/Frameworks"
 cd $1/Contents/Resources;
-./rsdl -I$1/Contents/Frameworks -I$1/Contents/Frameworks/ruby/gems/1.8/gems/rubygame-2.3.0 -I$1/Contents/Frameworks/ruby/gems/1.8/gems/narray-0.5.9.4 -I$1/Contents/Frameworks/ruby/site_ruby/1.8 -I$1/Contents/Frameworks/ruby/site_ruby -I$1/Contents/Frameworks/ruby/1.8 -I$1/Contents/Frameworks/ruby/1.8/i686-darwin8.11.1 src/app.rb obs
+./rsdl -I$1/Contents/Frameworks -I$1/Contents/Frameworks/ruby/gems/1.8/gems/rubygame-2.3.0/ext/rubygame -I$1/Contents/Frameworks/ruby/gems/1.8/gems/rubygame-2.3.0/lib -I$1/Contents/Frameworks/ruby/gems/1.8/gems/narray-0.5.9.4 -I$1/Contents/Frameworks/ruby/site_ruby/1.8 -I$1/Contents/Frameworks/ruby/site_ruby -I$1/Contents/Frameworks/ruby/1.8 -I$1/Contents/Frameworks/ruby/1.8/i686-darwin8.11.1 src/app.rb
