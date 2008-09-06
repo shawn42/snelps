@@ -1,7 +1,7 @@
 class SoundManager
   attr_reader :enabled
 
-  constructor :resource_manager
+  constructor :resource_manager, :config_manager
   def setup()
     # Not in the pygame version - for Rubygame, we need to 
     # explicitly open the audio device.
@@ -23,6 +23,8 @@ class SoundManager
 
     puts 'Warning, sound disabled' unless
       (@enabled = (Rubygame::VERSIONS[:sdl_mixer] != nil))
+    @enabled = (@enabled and (@config_manager.settings[:sound].nil? or @config_manager.settings[:sound] == true))
+
     if @enabled
       STDOUT.puts "loading background music..."
       @music = {}

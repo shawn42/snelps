@@ -45,7 +45,9 @@ create_entity :bird, 1, 23, 24
 
 create_entity :vim, nil, 1, 1
 
-create_entity :base, 1, 1, 6
+create_entity :base, 1, 7, 6
+
+create_entity :big_base, 1, 5, 7
 
 create_entity :portal, nil, 59, 59
 

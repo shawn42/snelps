@@ -11,6 +11,7 @@ module Drawable
   def setup_drawable(args)
     @trace = args[:trace]
     @viewport = args[:viewport]
+    @map = args[:map]
   end
 
   # requires the ent to be a sprite
@@ -61,9 +62,15 @@ module Drawable
       @selected_image.blit(destination, [sx,sy,w,h])
     end
 
-#    puts "#{@rect.centerx}#{@rect.centery}:#{x}#{y}:#{vx}#{vy}"
-    @image.blit(destination, 
-                [vx-@image.w/2,vy-@image.w/2])
+    draw_coords = nil
+    if respond_to? :size and self.size
+      @w_offset ||= (@image.size[0] - (self.size[0] * @map.tile_size))/2 + @map.half_tile_size
+      @h_offset ||= (@image.size[1] - (self.size[1] * @map.tile_size))/2 + @map.half_tile_size
+      draw_coords = [vx-@w_offset,vy-@h_offset]
+    else
+      draw_coords = [vx-@image.w/2,vy-@image.w/2]
+    end
+    @image.blit(destination, draw_coords)
 
     if is? :selectable and selected?
       hb_x = vx - 10

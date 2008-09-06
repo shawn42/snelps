@@ -20,6 +20,7 @@ resource_manager:
 sound_manager:
   compose:
     - resource_manager
+    - config_manager
 input_manager:
   compose:
     - mouse_manager

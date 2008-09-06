@@ -1,5 +1,8 @@
+require 'ostruct'
+
 # can gather a resource of some kind
 module Gatherer
+  # TODO does this need to be based off of map tile size?
   DEFAULT_GATHERER_RANGE = 16
 
   def self.included(target)
@@ -77,7 +80,8 @@ module Gatherer
 
   def drop_off()
     # TODO find closest using Pathfinder.diagonal_heuristic
-    @base = @entity_manager.base_entities.values.first
+    # TODO how should I change the Pathfinder to take non-nodes?
+    @base = @entity_manager.base_entities.values.sort_by{|b| Pathfinder.diagonal_heuristic( OpenStruct.new(:x=>@tile_x,:y=>@tile_y), OpenStruct.new(:x=>b.tile_x,:y=>b.tile_y))}.first
   end
 
   def do_dump()

@@ -290,3 +290,28 @@
       :suffix: r.png
       :first: 0
       :last: 0
+:big_base: 
+  :z: 1
+  :health: 10000
+  :size:
+  - 2
+  - 2
+  :components: 
+  - :able
+  - :positionable
+  - :audible
+  - :animated
+  - :drawable
+  - :selectable
+  - :collector
+  :animations:
+    :idle:
+      :prefix: base
+      :suffix: .png
+      :first: 0
+      :last: 0
+    :selected:
+      :prefix: magiceffect
+      :suffix: r.png
+      :first: 0
+      :last: 0

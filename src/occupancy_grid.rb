@@ -31,37 +31,36 @@ class OccupancyGrid
     not free? x, y
   end
 
-  # TODO PERF break out into two methods
   def get_occupants_by_player(x,y,w,h,player_id)
-    occupants = {}
+    occupants = []
 
     # TODO PERF only update these on viewport scroll
     rows = (x..x+w-1)
     cols = (y..y+h-1)
-    for r in rows
-      for c in cols
+    for c in cols
+      for r in rows
         ent = @grid[r,c]
         if ent and ent.player_id == player_id
-          occupants[ent.server_id] = ent 
+          occupants << ent 
         end
       end
     end
-    occupants.values
+    occupants.uniq
   end
 
   def get_occupants(x,y,w=1,h=1)
-    occupants = {}
+    occupants = []
 
     # TODO PERF only update these on viewport scroll
     rows = (x..x+w-1)
     cols = (y..y+h-1)
-    for r in rows
-      for c in cols
+    for c in cols
+      for r in rows
         ent = @grid[r,c]
-        occupants[ent.server_id] = ent if ent
+        occupants << ent if ent
       end
     end
-    occupants.values
+    occupants.uniq
   end
 
 end

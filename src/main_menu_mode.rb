@@ -18,10 +18,6 @@ class MainMenuMode < BaseMode
     base_setup
     @background = Surface.new(@snelps_screen.size)
 
-    # TODO take this out
-    @settings = {}
-    @settings[:button_count] = 0
-
     @title_text = 
       @font_manager.render :excalibur, 70, "Snelps",true, LIGHT_GRAY
 
@@ -33,18 +29,23 @@ class MainMenuMode < BaseMode
     button = Button.new @layout, "Campaign" do |b|
       fire :mode_change, :campaign_play, "snelps"
     end
+    @layout.add button, 150, 550
 
-    @layout.add button, 250, 550
+    button = Button.new @layout, "Quit" do |b|
+      throw :rubygame_quit
+    end
 
-    # TODO how do I get the config_manager into the dialog?
+    @layout.add button, 750, 550
+
     button = Button.new @layout, "Settings" do |b|
       settings = @config_manager.settings.dup
       modal_dialog SettingsDialog, settings do |d|
         @config_manager[:fullscreen] = d.settings[:fullscreen]
+        @config_manager[:sound] = d.settings[:sound]
         @config_manager.save
       end
     end
-    @layout.add button, 550, 550
+    @layout.add button, 450, 550
   end
 
   def on_click(event)

@@ -16,20 +16,25 @@ class SettingsDialog < Dialog
         :w=>824,
         :h=>600
       }
-    check = CheckBox.new @layout, "Fullscreen", :checked => @settings[:fullscreen] do |c|
+    fs_check = CheckBox.new @layout, "Sound enabled", :checked => @settings[:sound] do |c|
+      @settings[:sound] = c.checked?
+    end
+    @layout.add fs_check, 100, 60
+
+    sound_check = CheckBox.new @layout, "Fullscreen", :checked => @settings[:fullscreen] do |c|
       @settings[:fullscreen] = c.checked?
     end
-    @layout.add check, 450, 120
+    @layout.add sound_check, 150, 220
 
     button = Button.new @layout, "Cancel" do |b|
       close
     end
-    @layout.add button, 150, 350
+    @layout.add button, 150, 450
     button = Button.new @layout, "OK" do |b|
       apply
       close
     end
-    @layout.add button, 450, 350
+    @layout.add button, 450, 450
   end
 
   def on_key_up(event)

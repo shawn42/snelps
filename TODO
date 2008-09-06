@@ -26,6 +26,9 @@ MULTIPLAYER MILESTONE #3
 
 PROBLEMS
  - how will things handle images larger than the size of a tile?
+   - need to change drawing code to be bottom right based
+   - change all movement code (anything that touches occupancy_grid to use the new size stuff)
+   - change occupancy checks to check all squares the entity would occupy
 
 BACKLOG
  - add logger to app
