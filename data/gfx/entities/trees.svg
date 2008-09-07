@@ -54,8 +54,8 @@
      id="base"
      showgrid="false"
      inkscape:zoom="1"
-     inkscape:cx="16.417152"
-     inkscape:cy="10.762393"
+     inkscape:cx="24.809319"
+     inkscape:cy="1.0244934"
      inkscape:window-x="0"
      inkscape:window-y="25"
      inkscape:current-layer="svg2">
@@ -150,7 +150,7 @@
      sodipodi:type="arc" />
   <path
      style="opacity:1;fill:#5e2c13;fill-opacity:1;stroke:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:162;stroke-opacity:1"
-     d="M 27,36.000001 L 28,30.000001 L 32,30.000001 L 33,36.000001 C 31,37.000001 29,37.000001 27,36.000001 z"
+     d="M 13,36.000001 L 14,30.000001 L 18,30.000001 L 19,36.000001 C 17,37.000001 15,37.000001 13,36.000001 z"
      id="path3194"
      sodipodi:nodetypes="ccccc" />
   <path
@@ -162,7 +162,7 @@
      sodipodi:rx="6"
      sodipodi:ry="9.7082043"
      d="M 34,22 A 6,9.7082043 0 1 1 22,22 A 6,9.7082043 0 1 1 34,22 z"
-     transform="translate(2,2.0000009)" />
+     transform="translate(-12,2.0000009)" />
   <path
      d="M 34,22 A 6,9.7082043 0 1 1 22,22 A 6,9.7082043 0 1 1 34,22 z"
      sodipodi:ry="9.7082043"
@@ -172,7 +172,7 @@
      id="path3208"
      style="opacity:1;fill:#1f9927;fill-opacity:1;stroke:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:162;stroke-opacity:1"
      sodipodi:type="arc"
-     transform="matrix(0.7210396,0,0,0.7210396,9.8108904,8.1371291)" />
+     transform="matrix(0.7210396,0,0,0.7210396,-4.18911,8.1371291)" />
   <path
      sodipodi:nodetypes="ccccc"
      id="path3226"
@@ -235,7 +235,7 @@
      transform="matrix(0.3333333,0,0,0.5,14,15)" />
   <path
      style="opacity:1;fill:#744521;fill-opacity:1;stroke:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:162;stroke-opacity:1"
-     d="M 12.000001,38 C 12.000001,37 12.000001,34 13.000001,33 L 15,33 C 16,34 16,37 16,38 C 15,39 13.000001,39 12.000001,38 z"
+     d="M 28.000001,38 C 28.000001,37 28.000001,34 29.000001,33 L 31,33 C 32,34 32,37 32,38 C 31,39 29.000001,39 28.000001,38 z"
      id="path2386"
      sodipodi:nodetypes="ccccc" />
   <path
@@ -247,9 +247,9 @@
      sodipodi:rx="9"
      sodipodi:ry="9"
      d="M 18,21 A 9,9 0 1 1 0,21 A 9,9 0 1 1 18,21 z"
-     transform="matrix(0.6666667,0,0,1.2222222,8.0000001,-1.666666)" />
+     transform="matrix(0.6666667,0,0,1.2222222,24,-1.666666)" />
   <path
-     transform="matrix(0.3333333,0,0,0.8888889,11.000001,5.333335)"
+     transform="matrix(0.3333333,0,0,0.8888889,27.000001,5.333335)"
      d="M 18,21 A 9,9 0 1 1 0,21 A 9,9 0 1 1 18,21 z"
      sodipodi:ry="9"
      sodipodi:rx="9"
