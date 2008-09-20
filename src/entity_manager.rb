@@ -21,6 +21,15 @@ class EntityManager
     # stores the selections for later retrieval
     @selections = {}
 
+    # used to see if we need to check the occupancy_grids on draw
+    @viewable_entities_dirty = true
+
+    # :z => [visible ents]
+    @viewable_entities = {}
+
+    # map of :player_id => {:z => [ents]}
+    @players_entities = {}
+
     @available_z_levels = []
     @z_entities = {}
     @id_entities = {}
@@ -95,7 +104,8 @@ class EntityManager
       end
       # TODO PERF cache this range somewhere
       water = @map.tile_config[:water]
-      water_check = ((water[:first]..water[:last]).include?(@map.at(x,y)) and (z == 1))
+      @water_range ||= (water[:first]..water[:last])
+      water_check = (@water_range.include?(@map.at(x,y)) and (z == 1))
       return (occ or water_check)
     rescue Exception => ex
       p ex
@@ -109,13 +119,25 @@ class EntityManager
       @profiling = !@profiling
       if @profiling
         require "ruby-prof"
+#        RubyProf.measure_mode = RubyProf::CPU_TIME
+        RubyProf.measure_mode = RubyProf::PROCESS_TIME
+#        RubyProf.measure_mode = RubyProf::WALL_TIME
+
         RubyProf.start 
       else
         result = RubyProf.stop
-        printer = RubyProf::FlatPrinter.new(result)
-        file = File.open "profiling-#{Time.now}.txt", 'w+'
-        printer.print(file, 0)
-        file.close
+        html = true
+        if(html)
+          printer = RubyProf::GraphHtmlPrinter.new(result)
+          file = File.open "prof/profiling-#{Time.now}.html", 'w+'
+          printer.print(file, 0)
+          file.close
+        else
+#          printer = RubyProf::FlatPrinter.new(result)
+          file = File.open "prof/profiling-#{Time.now}.txt", 'w+'
+          printer.print(file, 0)
+          file.close
+        end
       end
     when K_T
       @trace = !@trace
@@ -123,11 +145,7 @@ class EntityManager
         entity.trace = @trace
       end
     when K_R
-      # report (mostly for debugging)
-      puts @id_entities.size
-#      for entity in @id_entities.values
-#        puts entity
-#      end
+      require 'MemoryProfiler'
     when K_N
       # TODO create random wandering ent
       begin
@@ -286,7 +304,16 @@ class EntityManager
       unless @available_z_levels.include? z
         @available_z_levels << z
         @available_z_levels.sort!
-        @occupancy_grids[z] = OccupancyGrid.new @map.width, @map.height
+        grid = OccupancyGrid.new @map.width, @map.height
+        @occupancy_grids[z] = grid
+
+        grid.when :occupancy_change do |change_type,entity|
+          @viewable_entities_dirty = 
+            (@viewable_rows.include? entity.tile_x and 
+            @viewable_cols.include? entity.tile_y)
+        end
+
+        @viewable_entities[z] = []
       end
       @z_entities[z] ||= []
 
@@ -308,6 +335,9 @@ class EntityManager
       # TODO should I pull this up into args params?
       new_entity.player_id = p_id
 
+      @players_entities[p_id] ||= {}
+      @players_entities[p_id][z] ||= []
+      @players_entities[p_id][z] << new_entity
       @z_entities[z] << new_entity
       @id_entities[ent_id] = new_entity
 
@@ -318,6 +348,10 @@ class EntityManager
       if new_entity.is? :livable
         new_entity.when :death do |ent|
           p "entity[#{ent.server_id}] died"
+
+          @viewable_entities[ent.z].delete ent
+          @players_entities[ent.player_id][ent.z].delete ent
+
           @z_entities[ent.z].delete ent
           @id_entities.delete ent.server_id
           @base_entities.delete ent.server_id
@@ -358,24 +392,52 @@ class EntityManager
       end
     end
 
+
     @available_z_levels.each do |az|
-
-      # TODO PERF ONLY CALC ON VIEWPORT SCROLL
-      view_x = @viewport.x_offset
-      view_y = @viewport.y_offset
-      view_w = @viewport.width
-      view_h = @viewport.height
-      tl_tile = @map.coords_to_tiles view_x, view_y
-      br_tile = @map.coords_to_tiles view_x+view_w, view_y+view_h
-
-      x = tl_tile[0]-1
-      y = tl_tile[1]-1
-      w = br_tile[0]-x+1
-      h = br_tile[1]-y+1
-      @occupancy_grids[az].get_occupants(x,y,w,h).each do |ze|
+      if @viewable_entities_dirty
+        @viewable_entities[az] = []
+        @occupancy_grids[az].get_occupants_by_range(@viewable_rows,@viewable_cols).each do |ze|
+          @viewable_entities[az] << ze
+        end
+      end
+      for ze in @viewable_entities[az]
         ze.draw destination
       end
     end
+    # TODO any race conditions here??
+    @viewable_entities_dirty = false 
+  end
+
+  def update_viewable_tile_range()
+    view_x = @viewport.x_offset
+    view_y = @viewport.y_offset
+    view_w = @viewport.width
+    view_h = @viewport.height
+    tl_tile = @map.coords_to_tiles view_x, view_y
+    br_tile = @map.coords_to_tiles view_x+view_w, view_y+view_h
+
+    x = tl_tile[0]-1
+    y = tl_tile[1]-1
+    w = br_tile[0]-x+1
+    h = br_tile[1]-y+1
+    @viewable_rows = (x..x+w-1)
+    @viewable_cols = (y..y+h-1)
+  end
+
+  def map=(map)
+    @map = map
+    update_viewable_tile_range
+    @viewport.when :screen_scroll do
+      update_viewable_tile_range
+      @viewable_entities_dirty = true
+    end
+  end
+
+  def get_player_ents(p_id)
+    p_ents = []
+    pz_ents = @players_entities[p_id]
+    pz_ents ||= {}
+    pz_ents.values.flatten.uniq
   end
 
   def get_occupants_at(x,y,w=1,h=1,player=nil)

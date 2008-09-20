@@ -2,14 +2,14 @@
 
 class Platform
 	def self.mac?
-	  return PLATFORM =~ /darwin/
+	  return true#PLATFORM =~ /darwin/
 	end
 	
 	def self.windows?
-	  return PLATFORM =~ /mswin/
+	  return false#PLATFORM =~ /mswin/
 	end
 	
 	def self.linux?
-		PLATFORM =~ /linux/
+		return false#PLATFORM =~ /linux/
 	end
 end

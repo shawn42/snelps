@@ -248,7 +248,7 @@
 :vim: 
   :z: 1
   :resource: :vim
-  :resource_amount: 3000
+  :resource_amount: 300
   :components: 
   - :able
   - :positionable
@@ -263,28 +263,6 @@
       :suffix: .png
       :first: 0
       :last: 7
-    :selected:
-      :prefix: magiceffect
-      :suffix: r.png
-      :first: 0
-      :last: 0
-:base: 
-  :z: 1
-  :health: 10000
-  :components: 
-  - :able
-  - :positionable
-  - :audible
-  - :animated
-  - :drawable
-  - :selectable
-  - :collector
-  :animations:
-    :idle:
-      :prefix: area
-      :suffix: .png
-      :first: 16
-      :last: 23
     :selected:
       :prefix: magiceffect
       :suffix: r.png

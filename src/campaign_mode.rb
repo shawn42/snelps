@@ -225,6 +225,16 @@ class CampaignMode < BaseMode
 
     @background.blit destination, [0,0]
 
+    # TODO move all this to a layout of somekind?
+    # maybe finally bite the bullet and switch to rubygoo?
+#    @layout = AbsoluteLayout.new self, @font_manager
+#    button = Button.new @layout, "Campaign" do |b|
+#      fire :mode_change, :campaign_play, "snelps"
+#    end
+#    @layout.add button, 150, 550
+#
+#    info_bar = Container.new
+
     @map.draw @view_screen unless @map.nil?
     @entity_manager.draw @view_screen unless @entity_manager.nil?
 

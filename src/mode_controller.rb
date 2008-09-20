@@ -2,7 +2,7 @@ require 'publisher'
 class ModeController
   extend Publisher
 
-  STEP_SIZE = 30.0
+  STEP_SIZE = 25.0
 
   can_fire :start_game
 

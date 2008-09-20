@@ -36,7 +36,7 @@ create_entity :animal, nil, 24, 25
 create_entity :animal, nil, 14, 25
 create_entity :animal, nil, 28, 5
 
-create_entity :bird, 1, 2, 2
+create_entity :bird, 1, 4, 4
 create_entity :bird, 1, 22, 22
 create_entity :bird, 1, 22, 23
 create_entity :bird, 1, 23, 22
@@ -45,13 +45,14 @@ create_entity :bird, 1, 23, 24
 
 create_entity :vim, nil, 1, 1
 
-create_entity :base, 1, 7, 6
-
-create_entity :big_base, 1, 5, 7
+create_entity :big_base, 1, 5, 11
 
 create_entity :portal, nil, 59, 59
 
 create_entity :worker, 1, 1, 2
+create_entity :worker, 1, 1, 3
+create_entity :worker, 1, 2, 3
+create_entity :worker, 1, 2, 2
 
 add_trigger do
   occs = get_occupants_at 59, 59, 1, 1, 1

@@ -22,7 +22,7 @@ class Pathfinder
   def adjacent_nodes(n)
     x = n.x
     y = n.y
-    [ 
+    nodes = [ 
       Node.new(x-1, y-1, :nw, TRAVEL_COST_DIAG,nil,nil),
       Node.new(x-1, y+1, :sw, TRAVEL_COST_DIAG,nil,nil),
       Node.new(x+1, y-1, :ne, TRAVEL_COST_DIAG,nil,nil),
@@ -32,6 +32,8 @@ class Pathfinder
       Node.new(x, y-1, :n, TRAVEL_COST_STRAIGHT,nil,nil),
       Node.new(x, y+1, :s, TRAVEL_COST_STRAIGHT,nil,nil)
     ]
+
+    nodes
   end
 
   # test if the node is valid (contains no obstacles, and is in the map)
@@ -45,6 +47,8 @@ class Pathfinder
 
   # return the best path from start to target (A* based).
   def find(start,target,max=30,ignore_objects=[])
+    # needs to reinit
+
     target_node = Node.new target[0], target[1], nil,nil,nil,nil
     unless is_valid?(target_node,ignore_objects)
       # return nil if target unavailable
@@ -56,8 +60,7 @@ class Pathfinder
     @open = open
 
     #    create the closed list of nodes, initially empty
-    closed = [] 
-    @closed = closed
+    closed_x = {}
     step = 1
 
     until open.empty? or step > max
@@ -77,14 +80,25 @@ class Pathfinder
         path.shift
         return path
       else
-        closed << nh_node
+        closed_x[nh_node.x] ||= []
+        closed_x[nh_node.x] << nh_node
         neighbors = adjacent_nodes nh_node
         for neighbor in neighbors
           if is_valid? neighbor, ignore_objects
 
             # ignore the closed list, this could lead to a not shortest
             # path (meh...)
-            next if closed.find{|node| node.x == neighbor.x and node.y == neighbor.y}
+            closed_found = false
+            closed_x_nodes = closed_x[neighbor.x]
+            if closed_x_nodes
+              for node in closed_x_nodes
+                if node.y == neighbor.y 
+                  closed_found = true
+                end
+              end
+            end
+            
+            next if closed_found
 
             neighbor.h = Pathfinder.diagonal_heuristic(neighbor, target_node)
 
@@ -99,55 +113,43 @@ class Pathfinder
         end
       end
     end 
-    nil
-  end
 
-  def to_ascii()
-    @width.times do
-      STDOUT.print '|-'
-    end
-    STDOUT.print '|'
-    STDOUT.puts ""
-    for i in 0..@height-1
-      STDOUT.print '|'
-      for j in 0..@width-1
-        if @closed.find{|node| node.x == j and node.y == i}
-          STDOUT.print 'C'
-        elsif @open.find Node.new(j,i,nil,nil,999999,nil)
-          STDOUT.print 'O'
-        else
-          STDOUT.print ' '
-        end
-        STDOUT.print '|'
-      end
-      STDOUT.puts ''
-    end
-    @width.times do
-      STDOUT.print '|-'
-    end
-    STDOUT.puts '|'
+    nil
   end
 end
 
 # keeps a list of nodes sorted by its heuristic
 class PriorityQueue
-  attr_accessor :list
+  attr_accessor :list, :x_list
 
   def initialize(initial_item = nil)
     @list = LinkedList.new initial_item
+    @x_list = {}
+    @x_list[initial_item.x] ||= []
+    @x_list[initial_item.x] << initial_item
   end
 
   def find(n)
-    found_node = nil
-    @list.each_element do |elem|
-      node = elem.obj
-      return nil if node.h > n.h # we know, since it is ordered
-      if node.x == n.x and node.y == n.y
-        found_node = node
-        break
+    nodes = @x_list[n.x]
+    if nodes
+      for node in nodes
+        if node.x == n.x and node.y == n.y
+          return node
+        end
       end
     end
-    found_node
+    return nil
+
+#    found_node = nil
+#    @list.each_element do |elem|
+#      node = elem.obj
+#      return nil if node.h > n.h # we know, since it is ordered
+#      if node.x == n.x and node.y == n.y
+#        found_node = node
+#        break
+#      end
+#    end
+#    found_node
   end
 
   def empty?()
@@ -159,6 +161,9 @@ class PriorityQueue
   end
 
   def insert(nh)
+    @x_list[nh.x] ||= []
+    @x_list[nh.x] << nh
+
     elem = nil
     @list.each_element do |el|
       existing_nh = el.obj
@@ -179,7 +184,11 @@ class PriorityQueue
   end
 
   def best
-    @list.shift
+    obj = @list.shift
+    @x_list[obj.x].delete(obj) 
+#    puts "BEST [#{obj.x},#{obj.y},#{obj.dir},#{obj.h}]"
+
+    obj
   end
 end
 
@@ -187,12 +196,8 @@ if $0 == __FILE__ #or true
   $: << '../lib'
   require 'linked_list'
   class Map
-    def has_obstacle?(x, y, entity_z);
-      return false
-      if x == 26 and y < 114
-        return true
-      end
-      if (x <= 30 and x >= 20) and (y <= 30 and y >= 20)
+    def has_obstacle?(x, y, entity_z,ignore_me)
+      if((x <= 15 and x >= 14) and (y >= 6))
         true
       else
         false
@@ -200,12 +205,13 @@ if $0 == __FILE__ #or true
     end
   end
   mappy = Map.new
-  size = 20
+  size = 80
   pf = Pathfinder.new(:foo, mappy, size, size)
   start = Time.now
-  path = pf.find([4,4],[3,3], 50)
+  path = pf.find([16,15],[9,3], 99999)
   p(Time.now - start)
   puts "path size:[#{path.size}]" unless path.nil?
   p path
+  p $timer
 end
 

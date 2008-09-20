@@ -51,9 +51,14 @@ class OccupancyGrid
   def get_occupants(x,y,w=1,h=1)
     occupants = []
 
-    # TODO PERF only update these on viewport scroll
     rows = (x..x+w-1)
     cols = (y..y+h-1)
+    get_occupants_by_range rows, cols
+  end
+
+  def get_occupants_by_range(rows,cols)
+    occupants = []
+
     for c in cols
       for r in rows
         ent = @grid[r,c]

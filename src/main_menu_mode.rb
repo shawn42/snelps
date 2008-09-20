@@ -35,7 +35,7 @@ class MainMenuMode < BaseMode
       throw :rubygame_quit
     end
 
-    @layout.add button, 750, 550
+    @layout.add button, 712, 550
 
     button = Button.new @layout, "Settings" do |b|
       settings = @config_manager.settings.dup

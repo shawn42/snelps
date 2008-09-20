@@ -29,6 +29,8 @@ PROBLEMS
    - need to change drawing code to be bottom right based
    - change all movement code (anything that touches occupancy_grid to use the new size stuff)
    - change occupancy checks to check all squares the entity would occupy
+ - every movable entity should have its own Pathfinder (where should it get it?)
+   - or the same Pathfinder that we can pass in something to lookup map/unit occupancy
 
 BACKLOG
  - add logger to app

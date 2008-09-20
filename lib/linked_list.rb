@@ -17,7 +17,7 @@ class LinkedList
     tmp = @head.next
     @head.next = tmp.next
     tmp.next.prev = @head
-#    puts "SHIFTING [#{tmp.obj}]"
+    #puts "SHIFTING [#{tmp.obj.x},#{tmp.obj.y}]"
 #    puts to_s
     return tmp.obj
   end
