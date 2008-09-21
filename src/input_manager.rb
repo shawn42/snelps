@@ -1,18 +1,3 @@
-
-class Clock
-  def tick()
-    passed = Clock.runtime() - @last_tick  # how long since the last tick?
-    if @target_frametime
-      return Clock.delay(@target_frametime - passed, 5) + passed
-    end
-    return passed
-  ensure
-    @last_tick = Clock.runtime()
-    @ticks += 1
-  end
-
-end # class Clock
-
 class InputManager
   extend Publisher
   can_fire :key_up
@@ -31,7 +16,7 @@ class InputManager
     ]
     
     @clock = Clock.new do |c|
-      c.target_framerate = 25
+      c.target_framerate = 250
     end
   end
 

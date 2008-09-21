@@ -11,7 +11,7 @@ class OccupancyGrid
 
   def occupy(x, y, entity)
       if free? x, y
-        fire :occupancy_change, :occupy, entity
+        fire :occupancy_change, :occupy, entity, x, y
         @grid[x,y] = entity
       else
         raise "Occupancy Overlap"
@@ -19,7 +19,7 @@ class OccupancyGrid
   end
 
   def leave(x, y)
-    fire :occupancy_change, :leave, @grid[x,y]
+    fire :occupancy_change, :leave, @grid[x,y], x, y
     @grid[x,y] = nil
   end
 

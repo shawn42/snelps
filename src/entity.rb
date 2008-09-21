@@ -7,6 +7,7 @@ class Entity
   def initialize(server_id, *args)
     @server_id = server_id
 
+    @player_id = args.first[:player_id]
     @entity_type = args.first[:entity_type]
     setup(*args)
   end

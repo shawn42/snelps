@@ -3,6 +3,7 @@ require 'publisher'
 require 'base_mode'
 require 'player'
 require 'map'
+require 'fog'
 require 'mini_map'
 require 'occupancy_grid'
 require 'story_dialog'
@@ -143,8 +144,7 @@ class CampaignMode < BaseMode
 
     #TODO get this from main_menu_mode
     # lets make the player a fire snelp
-    snelp_index = Player::SNELPS.index :fire
-    player_cmd = "#{PLAYER_JOIN}:#{snelp_index}"
+    player_cmd = Player.create_player_cmd :fire
     fire :network_msg_to, player_cmd
     
     map_name = stage[:map]
@@ -154,12 +154,11 @@ class CampaignMode < BaseMode
     @viewport.set_map_size(@map.pixel_width, @map.pixel_height)
     @map.viewport = @viewport
 
-    @entity_manager.setup
-
     @entity_manager.map = @map
 
     @map.entity_manager = @entity_manager
     @entity_manager.setup
+    @fog = Fog.new @map, @entity_manager, @viewport, @resource_manager
 
     @mini_map = MiniMap.new @map, @viewport, @entity_manager
     @mini_map.when :center_viewport do |x,y|
@@ -196,6 +195,11 @@ class CampaignMode < BaseMode
         cmd = @entity_manager.create_entity_cmd(player,ent_type,x,y)
         @network_manager[:to_server] << cmd
       end
+    end
+
+    @map.script.when :create_player do |snelp,player_type|
+      cmd = Player.create_player_cmd snelp, player_type
+      @network_manager[:to_server] << cmd
     end
 
     @map.start_script
@@ -239,6 +243,8 @@ class CampaignMode < BaseMode
     @entity_manager.draw @view_screen unless @entity_manager.nil?
 
     @view_screen.blit destination, [10,36]
+
+    @fog.draw destination
 
     destination.draw_box_s([0, 35], [10, 800], LIGHT_PURPLE)
     destination.draw_box_s([10, 794], [1024, 800], LIGHT_PURPLE)

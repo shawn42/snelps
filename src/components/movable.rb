@@ -85,9 +85,8 @@ module Movable
   def idle?()
     @direction.nil?
   end
+
+  # WTF? these are opposites, what was I thinking
   alias moving? idle?
 
-  def to_s()
-    "UNIT:[#{@server_id}] at [#{x},#{y}] => DEST:#{@dest.inspect} DIR[#{@direction.inspect}]"
-  end
 end

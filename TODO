@@ -3,7 +3,7 @@ MILESTONE #1 - "move units here" campaign
  - change mouse hover to show if something is targetable/attackable
 
  - change map_script triggers to register for occupancy_grid changes
- - change campaign execution to goto next map in the campaign
+ - change map_script calls to NOT goto server?
  - create map editor
 
  - rubygoo integration

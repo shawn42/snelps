@@ -3,9 +3,10 @@
 require 'publisher'
 class MapScript
   extend Publisher
-  can_fire :create_entity, :victory, :defeat
+  can_fire :create_entity, :victory, :defeat, :create_player
 
   #check all triggers this often (ms)
+  # TODO change to use events, not polling
   TRIGGER_UPDATE_TIME = 2000
 
   attr_accessor :map
@@ -38,6 +39,11 @@ class MapScript
     for trig in @triggers
       trig.call
     end
+  end
+
+  # create a player
+  def create_player(snelp,type=nil)
+    fire :create_player, snelp, type 
   end
 
   # creates an entity of type, owned by player, at tile_x,tile_y

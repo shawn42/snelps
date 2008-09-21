@@ -8,9 +8,10 @@ class EntityManager
   include Commands
 
   attr_accessor :map, :occupancy_grids, :current_selection, 
-    :selections, :current_abilities, :base_entities, :players
+    :selections, :current_abilities, :base_entities, :players,
+    :viewable_rows, :viewable_cols
 
-  can_fire :sound_play, :network_msg_to
+  can_fire :sound_play, :network_msg_to, :occupancy_grid_created
 
   constructor :viewport, :resource_manager, :sound_manager, :network_manager,
     :mouse_manager, :input_manager, :ability_manager 
@@ -144,8 +145,6 @@ class EntityManager
       for entity in @id_entities.values
         entity.trace = @trace
       end
-    when K_R
-      require 'MemoryProfiler'
     when K_N
       # TODO create random wandering ent
       begin
@@ -305,9 +304,10 @@ class EntityManager
         @available_z_levels << z
         @available_z_levels.sort!
         grid = OccupancyGrid.new @map.width, @map.height
+        fire :occupancy_grid_created, grid, z
         @occupancy_grids[z] = grid
 
-        grid.when :occupancy_change do |change_type,entity|
+        grid.when :occupancy_change do |change_type,entity,x,y|
           @viewable_entities_dirty = 
             (@viewable_rows.include? entity.tile_x and 
             @viewable_cols.include? entity.tile_y)
@@ -324,6 +324,7 @@ class EntityManager
         :viewport => @viewport,
         :entity_type => entity_type,
         :server_id => ent_id,
+        :player_id => p_id,
         :occupancy_grid => @occupancy_grids[z],
         :map => @map,
         :entity_manager => self,
@@ -332,8 +333,6 @@ class EntityManager
         :trace => @trace
        }
       )
-      # TODO should I pull this up into args params?
-      new_entity.player_id = p_id
 
       @players_entities[p_id] ||= {}
       @players_entities[p_id][z] ||= []
@@ -416,8 +415,8 @@ class EntityManager
     tl_tile = @map.coords_to_tiles view_x, view_y
     br_tile = @map.coords_to_tiles view_x+view_w, view_y+view_h
 
-    x = tl_tile[0]-1
-    y = tl_tile[1]-1
+    x = [tl_tile[0]-1,0].max
+    y = [tl_tile[1]-1,0].max
     w = br_tile[0]-x+1
     h = br_tile[1]-y+1
     @viewable_rows = (x..x+w-1)
