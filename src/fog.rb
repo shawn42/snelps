@@ -1,5 +1,6 @@
 require 'narray'
 require 'colors'
+require 'mini_map'
 include Colors
 
 # blocks the players view from things they haven't discovered
@@ -16,6 +17,9 @@ class Fog
     @mask_image = Surface.new([@map.pixel_width,@map.pixel_height])
     @mask_image.fill BLACK
     @mask_image.set_colorkey WHITE
+    scale = MiniMap::SCALE
+    @mini_map_mask = @mask_image.zoom [scale,scale], true
+    @mini_map_mask.set_colorkey WHITE
 
     @entity_manager.when :occupancy_grid_created do |grid, z|
       grid.when :occupancy_change do |operation, occupant, tx, ty|
@@ -33,7 +37,8 @@ class Fog
                 
                 # since the colorkey is set to white, this is the same as erasing
                 @fog_stamp.blit @mask_image, [vx-3,vy-3]
-#                @mask_image.draw_box_s [vx,vy],[vx+@map.tile_size,vy+@map.tile_size],WHITE
+                @mini_map_mask = @mask_image.zoom [scale,scale], true
+                @mini_map_mask.set_colorkey WHITE
               end
             end
 #          end
@@ -48,5 +53,9 @@ class Fog
 
     wx,wy = *@viewport.world_to_view(0,0)
     @mask_image.blit screen, [wx+x_soff,wy+y_soff]
+  end
+
+  def draw_minimap_fog(screen)
+    @mini_map_mask.blit screen, [MiniMap::MINI_MAP_X,MiniMap::MINI_MAP_Y]
   end
 end

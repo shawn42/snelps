@@ -253,6 +253,8 @@ class CampaignMode < BaseMode
 
     @mini_map.draw destination unless @mini_map.nil?
     
+    @fog.draw_minimap_fog destination
+
     #outline
     destination.draw_box([1, 1], [1023, 34], PURPLE)
     @warrior_image.blit(destination,[800,10])
