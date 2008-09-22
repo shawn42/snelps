@@ -9,11 +9,13 @@ class Fog
     @entity_manager = entity_manager
     @viewport = viewport
     @resource_manager = resource_manager
-    @image = @resource_manager.load_image 'fog.png'
     @map = map
     @tile_size = @map.tile_size
+    @fog_stamp = @resource_manager.load_image 'fog_stamp.png'
 
-    @grid = NArray.object(@map.width, @map.height)
+    @mask_image = Surface.new([@map.pixel_width,@map.pixel_height])
+    @mask_image.fill BLACK
+    @mask_image.set_colorkey WHITE
 
     @entity_manager.when :occupancy_grid_created do |grid, z|
       grid.when :occupancy_change do |operation, occupant, tx, ty|
@@ -24,7 +26,14 @@ class Fog
             # TODO fix this for the visibility range
             for x in ([tx-1,0].max..[tx+1,@map.width-1].min)
               for y in ([ty-1,0].max..[ty+1,@map.height-1].min)
-                @grid[x,y] = :visible
+                vx = x*@map.tile_size
+                vy = y*@map.tile_size
+
+                # TODO maybe still keep a 2d array around for caching unneccissary blits
+                
+                # since the colorkey is set to white, this is the same as erasing
+                @fog_stamp.blit @mask_image, [vx-3,vy-3]
+#                @mask_image.draw_box_s [vx,vy],[vx+@map.tile_size,vy+@map.tile_size],WHITE
               end
             end
 #          end
@@ -34,22 +43,10 @@ class Fog
   end
 
   def draw(screen)
-    rows = @entity_manager.viewable_rows
-    cols = @entity_manager.viewable_cols
     x_soff = @viewport.screen_x_offset
     y_soff = @viewport.screen_y_offset
-    x_off = @viewport.x_offset
-    y_off = @viewport.y_offset
 
-    for c in cols
-      for r in rows
-        unless @grid[r,c] == :visible
-          x = (r)*@tile_size + x_soff - x_off
-          y = (c)*@tile_size + y_soff - y_off
-          @image.blit screen, [x,y]
-#          screen.draw_box_s [x,y],[x+@tile_size,y+@tile_size], BLACK
-        end
-      end
-    end
+    wx,wy = *@viewport.world_to_view(0,0)
+    @mask_image.blit screen, [wx+x_soff,wy+y_soff]
   end
 end

@@ -9,4 +9,5 @@ module Colors
   GREEN = [25,255,35,255]
   LIGHT_GRAY = [250,250,250]
   BLACK = [0,0,0]
+  WHITE = [255,255,255]
 end
