@@ -1,11 +1,11 @@
 --- 
-:worker: 
+:earth_worker: 
   :player_id: 0
   :z: 1
   :health: 100
   :armor: 5
   :attack_power: 10
-  :speed: 60
+  :speed: 30
   :carrying_capacity: 10
   :components: 
   - :livable
@@ -30,55 +30,134 @@
       :first: 0
       :last: 0
     :idle:
-      :prefix: unit
-      :suffix: r.png
-      :first: 96
-      :last: 96
+      :prefix: earth_worker/walk_s000
+      :suffix: .png
+      :first: 1
+      :last: 1
     :moving:
       :nw:
-        :prefix: unit
-        :suffix: r.png
-        :first: 64
-        :last: 71
+        :prefix: earth_worker/walk_nw000
+        :suffix: .png
+        :first: 1
+        :last: 8
       :n:
-        :prefix: unit
-        :suffix: r.png
-        :first: 72
-        :last: 79
+        :prefix: earth_worker/walk_n000
+        :suffix: .png
+        :first: 1
+        :last: 8
       :ne:
-        :prefix: unit
-        :suffix: r.png
-        :first: 80
-        :last: 87
+        :prefix: earth_worker/walk_ne000
+        :suffix: .png
+        :first: 1
+        :last: 8
       :e:
-        :prefix: unit
-        :suffix: r.png
-        :first: 88
-        :last: 95
+        :prefix: earth_worker/walk_e000
+        :suffix: .png
+        :first: 1
+        :last: 8
       :se:
-        :prefix: unit
-        :suffix: r.png
-        :first: 96
-        :last: 103
+        :prefix: earth_worker/walk_se000
+        :suffix: .png
+        :first: 1
+        :last: 8
       :s:
-        :prefix: unit
-        :suffix: r.png
-        :first: 104
-        :last: 111
+        :prefix: earth_worker/walk_s000
+        :suffix: .png
+        :first: 1
+        :last: 8
       :sw:
-        :prefix: unit
-        :suffix: r.png
-        :first: 112
-        :last: 119
+        :prefix: earth_worker/walk_sw000
+        :suffix: .png
+        :first: 1
+        :last: 8
       :w:
-        :prefix: unit
-        :suffix: r.png
-        :first: 120
-        :last: 127
-:bird: 
+        :prefix: earth_worker/walk_w000
+        :suffix: .png
+        :first: 1
+        :last: 8
+:fire_worker: 
+  :player_id: 0
+  :z: 1
+  :health: 100
+  :armor: 5
+  :attack_power: 10
+  :speed: 30
+  :carrying_capacity: 10
+  :components: 
+  - :livable
+  - :able
+  - :selectable
+  - :positionable
+  - :movable
+  - :pathable
+  - :audible
+  - :animated
+  - :drawable
+  - :rangable
+  - :gatherer
+  - :melee_attacker
+  :sounds:
+  - :selected: worker_select.wav
+  - :acknowledge: worker_ack.wav
+  :animations:
+    :selected:
+      :prefix: magiceffect
+      :suffix: r.png
+      :first: 0
+      :last: 0
+    :idle:
+      :prefix: fire_worker/walk_s000
+      :suffix: .png
+      :first: 1
+      :last: 1
+    :moving:
+      :nw:
+        :prefix: fire_worker/walk_nw000
+        :suffix: .png
+        :first: 1
+        :last: 8
+      :n:
+        :prefix: fire_worker/walk_n000
+        :suffix: .png
+        :first: 1
+        :last: 8
+      :ne:
+        :prefix: fire_worker/walk_ne000
+        :suffix: .png
+        :first: 1
+        :last: 8
+      :e:
+        :prefix: fire_worker/walk_e000
+        :suffix: .png
+        :first: 1
+        :last: 8
+      :se:
+        :prefix: fire_worker/walk_se000
+        :suffix: .png
+        :first: 1
+        :last: 8
+      :s:
+        :prefix: fire_worker/walk_s000
+        :suffix: .png
+        :first: 1
+        :last: 8
+      :sw:
+        :prefix: fire_worker/walk_sw000
+        :suffix: .png
+        :first: 1
+        :last: 8
+      :w:
+        :prefix: fire_worker/walk_w000
+        :suffix: .png
+        :first: 1
+        :last: 8
+:fire_explorer: 
   :player_id: 0
   :z: 2
   :health: 100
+  :armor: 5
+  :attack_power: 10
+  :speed: 50
   :components: 
   - :livable
   - :able
@@ -91,6 +170,9 @@
   - :drawable
   - :rangable
   - :melee_attacker
+  :sounds:
+  - :selected: worker_select.wav
+  - :acknowledge: worker_ack.wav
   :animations:
     :selected:
       :prefix: magiceffect
@@ -98,55 +180,51 @@
       :first: 0
       :last: 0
     :idle:
-      :prefix: unit
-      :suffix: r.png
-      :first: 0
-      :last: 0
+      :prefix: fire_explorer/fly_s000
+      :suffix: .png
+      :first: 1
+      :last: 1
     :moving:
       :nw:
-        :prefix: unit
-        :suffix: r.png
-        :first: 0
-        :last: 7
+        :prefix: fire_explorer/fly_nw000
+        :suffix: .png
+        :first: 1
+        :last: 8
       :n:
-        :prefix: unit
-        :suffix: r.png
-        :first: 8
-        :last: 15
+        :prefix: fire_explorer/fly_n000
+        :suffix: .png
+        :first: 1
+        :last: 8
       :ne:
-        :prefix: unit
-        :suffix: r.png
-        :first: 16
-        :last: 23
+        :prefix: fire_explorer/fly_ne000
+        :suffix: .png
+        :first: 1
+        :last: 8
       :e:
-        :prefix: unit
-        :suffix: r.png
-        :first: 24
-        :last: 31
+        :prefix: fire_explorer/fly_e000
+        :suffix: .png
+        :first: 1
+        :last: 8
       :se:
-        :prefix: unit
-        :suffix: r.png
-        :first: 32
-        :last: 39
+        :prefix: fire_explorer/fly_se000
+        :suffix: .png
+        :first: 1
+        :last: 8
       :s:
-        :prefix: unit
-        :suffix: r.png
-        :first: 40
-        :last: 47
+        :prefix: fire_explorer/fly_s000
+        :suffix: .png
+        :first: 1
+        :last: 8
       :sw:
-        :prefix: unit
-        :suffix: r.png
-        :first: 48
-        :last: 55
+        :prefix: fire_explorer/fly_sw000
+        :suffix: .png
+        :first: 1
+        :last: 8
       :w:
-        :prefix: unit
-        :suffix: r.png
-        :first: 56
-        :last: 63
-  :armor: 0
-  :range: 15
-  :attack_power: 10
-  :speed: 80
+        :prefix: fire_explorer/fly_w000
+        :suffix: .png
+        :first: 1
+        :last: 8
 :animal: 
   :z: 2
   :health: 10
@@ -288,6 +366,31 @@
       :suffix: .png
       :first: 0
       :last: 0
+    :selected:
+      :prefix: magiceffect
+      :suffix: r.png
+      :first: 0
+      :last: 0
+:well_spring: 
+  :z: 1
+  :health: 10000
+  :size:
+  - 4
+  - 4
+  :components: 
+  - :able
+  - :positionable
+  - :audible
+  - :animated
+  - :drawable
+  - :selectable
+  - :collector
+  :animations:
+    :idle:
+      :prefix: base
+      :suffix: .png
+      :first: 1
+      :last: 1
     :selected:
       :prefix: magiceffect
       :suffix: r.png

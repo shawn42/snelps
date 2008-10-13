@@ -141,9 +141,8 @@ class Viewport
   end
 
   def scroll(event)
-    pos = event.pos
-    mouse_x = pos[0]
-    mouse_y = pos[1]
+    mouse_x = event.data[:x]
+    mouse_y = event.data[:y]
 
     if @ll_view_line < mouse_x and mouse_x < @lr_view_line
       unless max_left?

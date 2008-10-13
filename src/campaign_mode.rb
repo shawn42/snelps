@@ -47,7 +47,7 @@ class CampaignMode < BaseMode
   end
 
   def on_key_up(event)
-    case event.key
+    case event.data[:key]
     when K_LEFT
       @viewport.jump :left
     when K_RIGHT
@@ -66,7 +66,7 @@ class CampaignMode < BaseMode
   end
 
   def on_click(event)
-    if @mini_map.hit_by? event.pos[0], event.pos[1]
+    if @mini_map and @mini_map.hit_by? event.data[:x], event.data[:y]
       @mini_map.handle_mouse_click event
     else
       @entity_manager.handle_mouse_click event
@@ -74,7 +74,7 @@ class CampaignMode < BaseMode
   end
 
   def on_mouse_dragging(x, y, event)
-    if @mini_map.hit_by? event.pos[0], event.pos[1]
+    if @mini_map and @mini_map.hit_by? event.data[:x], event.data[:y]
       @mini_map.handle_mouse_dragging event
     end
   end
@@ -135,12 +135,12 @@ class CampaignMode < BaseMode
   def stop(*args)
     fire :music_stop, :background_music
     @playing = false
-    @snelps_screen.show_cursor = true
+#    @snelps_screen.show_cursor = true
   end
 
   def start_next_map(stage)
 
-    @snelps_screen.show_cursor = false
+#    @snelps_screen.show_cursor = false
 
     #TODO get this from main_menu_mode
     # lets make the player a fire snelp

@@ -3,19 +3,20 @@ font_manager:
     - resource_manager
 game_client:
   compose:
-    - mode_controller
-mode_controller:
+    - mode_container
+    - snelps_screen
+    - input_manager
+mode_container:
   compose:
     - resource_manager
     - font_manager
     - sound_manager
-    - input_manager
     - network_manager
     - turn_manager
     - main_menu_mode
     - campaign_mode
-    - mouse_manager
     - snelps_screen
+    - mouse_manager
 resource_manager:
 sound_manager:
   compose:
@@ -39,7 +40,6 @@ entity_manager:
     - viewport
     - sound_manager
     - network_manager
-    - mouse_manager
     - input_manager
     - ability_manager
 main_menu_mode:

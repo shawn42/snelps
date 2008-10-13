@@ -1,15 +1,53 @@
+require 'rubygoo'
 require 'publisher'
-class ModeController
+require 'campaign_mouse_view'
+class ModeContainer < Rubygoo::Container
   extend Publisher
-
-  STEP_SIZE = 25.0
 
   can_fire :start_game
 
-  attr_accessor :state
-  constructor :resource_manager, :font_manager, :sound_manager, :input_manager,
-    :network_manager, :turn_manager, :mouse_manager, :snelps_screen,
-    :campaign_mode, :main_menu_mode
+#  constructor :resource_manager, :font_manager, :sound_manager, :input_manager,
+#    :network_manager, :turn_manager, :mouse_manager, :snelps_screen,
+#    :campaign_mode, :main_menu_mode
+
+  # TODO do I need these?
+  def initialize(opts)
+    @resource_manager = opts[:resource_manager]
+    @font_manager = opts[:font_manager]
+    @sound_manager = opts[:sound_manager]
+    @network_manager = opts[:network_manager]
+    @turn_manager = opts[:turn_manager]
+    @snelps_screen = opts[:snelps_screen]
+    @campaign_mode = opts[:campaign_mode]
+    @main_menu_mode = opts[:main_menu_mode]
+    @mouse_manager = opts[:mouse_manager]
+
+    @mouse_view = CampaignMouseView.new :mouse => @mouse_manager,
+      :resource_manager => @resource_manager
+      
+
+    super :w => @snelps_screen.size[0], 
+      :h => @snelps_screen.size[1]
+    setup
+    add @mouse_view
+  end
+
+  def key_pressed(evt)
+    dispatch_mode_event :handle_key_up, evt
+  end
+
+  def mouse_down(evt)
+    @mouse_manager.mouse_down evt
+    dispatch_mode_event :handle_click, evt
+  end
+
+  def mouse_up(evt)
+    @mouse_manager.mouse_up evt
+  end
+
+  def mouse_motion(evt)
+    @mouse_manager.mouse_motion evt
+  end
 
   def setup()
     @modes = {}
@@ -35,7 +73,6 @@ class ModeController
     end
 
     # TODO standardize these names
-    @input_manager.when :key_up do |e| dispatch_mode_event :handle_key_up, e end
     @mouse_manager.when :mouse_motion do |e| dispatch_mode_event :handle_mouse_motion, e end
     @mouse_manager.when :mouse_drag do |x,y,e| dispatch_mode_event :handle_mouse_drag, x, y, e end
     @mouse_manager.when :mouse_dragging do |x,y,e| dispatch_mode_event :handle_mouse_dragging, x, y, e end
@@ -56,16 +93,14 @@ class ModeController
   end
 
   def update(time)
-    steps = (time / STEP_SIZE).ceil
-    steps.times do 
-      @modes[@mode].update STEP_SIZE #time
-    end
-    draw time
+    @modes[@mode].update time
   end
 
-  def draw(time)
+  def draw(renderer)
     @modes[@mode].handle_draw @snelps_screen.screen
     @snelps_screen.flip
+
+    super renderer
   end
 
 end

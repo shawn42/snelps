@@ -1,0 +1,23 @@
+--- 
+Rubygoo::App: 
+  :bg_color: :Black
+Rubygoo::Widget: 
+  :font: Vera.ttf
+  :font_size: 20
+  :color: :Black
+  :focus_color: :FireBrick
+  :bg_color: :Gray
+  :border_color: :FireBrick
+Rubygoo::Button: 
+  :bg_color: :DimGray
+Rubygoo::CheckBox:
+  :checked_color: :FireBrick
+Rubygoo::TextField:
+  :fg_color: :FireBrick
+  :bg_color: :Gray
+  :bg_select_color: :FireBrick
+  :fg_select_color: :Snow
+  :border_color: :Black
+Rubygoo::MouseCursor:
+  :color: :Snow
+  :mouse_cursor: cursor.png

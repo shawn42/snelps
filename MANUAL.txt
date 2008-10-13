@@ -8,12 +8,10 @@
 ===================================
 
 To play:
-type rake
+type rake run
 
 Controls:
 T - turn on pathfinding tracing
-A - change into attack mode
-M - change into move mode
 
 CTRL-# - saves the current unit selection into that number
 # - retrieve the saved selection of units

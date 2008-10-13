@@ -11,9 +11,10 @@ _Requirements_
    - SDL_gfx 
     
   NArray (gem install narray)
+  rubygoo
 
 _To Run_
-  rake
+  rake run
 
 _To Run Specs_
   rake spec

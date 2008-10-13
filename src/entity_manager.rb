@@ -14,7 +14,7 @@ class EntityManager
   can_fire :sound_play, :network_msg_to, :occupancy_grid_created
 
   constructor :viewport, :resource_manager, :sound_manager, :network_manager,
-    :mouse_manager, :input_manager, :ability_manager 
+    :input_manager, :ability_manager 
   
   def setup()
     @trace = false
@@ -115,7 +115,7 @@ class EntityManager
   end
 
   def handle_key_up(event)
-    case event.key
+    case event.data[:key]
     when K_D
       @profiling = !@profiling
       if @profiling
@@ -277,9 +277,8 @@ class EntityManager
   end
 
   def handle_mouse_click(event)
-    pos = event.pos
-    x = pos.first
-    y = pos.last
+    x = event.data[:x]
+    y = event.data[:y]
 
     # if we are not selecting ents, do action
     unless select_in x, y
@@ -288,9 +287,10 @@ class EntityManager
   end
 
   def handle_mouse_drag(x, y, event)
-    pos = event.pos
-		x_array = [x, pos.first].sort
-		y_array = [y, pos.last].sort
+    new_x = event.data[:x]
+    new_y = event.data[:y]
+		x_array = [x, new_x].sort
+		y_array = [y, new_y].sort
 
     select_in x_array.first,y_array.first, x_array.last -
                      x_array.first ,y_array.last - y_array.first

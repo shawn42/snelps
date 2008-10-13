@@ -65,9 +65,8 @@ class AbsoluteLayout < Rect
   end
 
   def click(event)
-    pos = event.pos
-    x = pos.first
-    y = pos.last
+    x = event.data[:x]
+    y = event.data[:y]
 
     for el in @elements.reverse
       if el.hit_by? x, y
@@ -79,11 +78,8 @@ class AbsoluteLayout < Rect
   end
 
   def mouse_motion(event)
-#    p event.buttons
-    pos = event.pos
-    x = pos.first
-    y = pos.last
-
+    x = event.data[:x]
+    y = event.data[:y]
     for el in @elements.reverse
       el.hover = false
     end

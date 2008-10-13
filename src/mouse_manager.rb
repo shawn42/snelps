@@ -1,33 +1,29 @@
+require 'rubygoo'
 # handles all the mouse events and mouse-state tracking, such as drags
-class MouseManager
+class MouseManager < Rubygoo::Widget
   extend Publisher
   can_fire :mouse_click, :mouse_drag, :mouse_motion, :mouse_dragging
 
   LEFT_BUTTON = 1
   MIDDLE_BUTTON = 2
   RIGHT_BUTTON = 3
+
+  attr_accessor :start_x, :start_y, :x, :y
   
   constructor :viewport, :resource_manager
   def setup
     @viewport.when :screen_scroll do |delta|
       screen_scrolled delta[0], delta[1]
     end
-
-    # TODO allow for dynamic changing of the mouse cursor
-    @cursor = @resource_manager.load_image 'brush3.png'
   end
 
-  def draw(screen)
-    if @dragging
-      screen.draw_box([@start_x, @start_y], [@x, @y], LIGHT_GREEN)
-      screen.draw_box_s([@start_x, @start_y], [@x, @y], GREEN_HALF_ALPHA)
-    end
-    @cursor.blit screen, [@x-16, @y-16]
+  def dragging?()
+    @dragging
   end
 
   def mouse_motion(event)
-    @x = event.pos.first
-    @y = event.pos.last
+    @x = event.data[:x]
+    @y = event.data[:y]
     if @dragging
       fire :mouse_dragging, @x, @y, event
     end
@@ -35,20 +31,18 @@ class MouseManager
   end
   
   def mouse_down(event)
-    if event.button = LEFT_BUTTON
-      pos = event.pos
-      @start_x = pos.first
-      @start_y = pos.last
+    if event.data[:button] == LEFT_BUTTON
+      @start_x = event.data[:x]
+      @start_y = event.data[:y]
       @dragging = true
     end
   end
 
   def mouse_up(event)
-    if event.button = LEFT_BUTTON
+    if event.data[:button] == LEFT_BUTTON
       @dragging = false
-      pos = event.pos
 
-      if @start_x == pos.first and @start_y == pos.last
+      if @start_x == event.data[:x] and @start_y == event.data[:y]
         #clicked
 #        puts "clicked"
         fire :mouse_click, event
