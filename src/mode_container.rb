@@ -98,9 +98,9 @@ class ModeContainer < Rubygoo::Container
 
   def draw(renderer)
     @modes[@mode].handle_draw @snelps_screen.screen
-    @snelps_screen.flip
 
     super renderer
+#    @snelps_screen.flip
   end
 
 end
