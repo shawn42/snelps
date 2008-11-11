@@ -184,7 +184,7 @@ class EntityManager
   # update the current group selection based on whether the CRTL keys are press
   # with the number.
   def change_group_selection(event, num)
-    if event.mods.include? K_LCTRL or event.mods.include? K_RCTRL
+    if event.data[:mods].include? K_LCTRL or event.data[:mods].include? K_RCTRL
       @selections[num] = @current_selection 
     else
       clear_entity_selection
@@ -277,6 +277,7 @@ class EntityManager
   end
 
   def handle_mouse_click(event)
+    p "EM: CLICK"
     x = event.data[:x]
     y = event.data[:y]
 
@@ -287,6 +288,7 @@ class EntityManager
   end
 
   def handle_mouse_drag(x, y, event)
+    p "EM: DRAG"
     new_x = event.data[:x]
     new_y = event.data[:y]
 		x_array = [x, new_x].sort

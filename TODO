@@ -25,6 +25,8 @@ MULTIPLAYER MILESTONE #3
  - how to fire off external server for multiplayer? (separate ruby call?  ruby server.rb? )
 
 PROBLEMS
+ - dragging settings window crashes
+ - dragging on minimap doesn't work anymore
  - how will things handle images larger than the size of a tile?
    - need to change drawing code to be bottom right based
    - change all movement code (anything that touches occupancy_grid to use the new size stuff)

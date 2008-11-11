@@ -73,9 +73,9 @@ class MiniMap
   
   protected
   def translate_event_coords(event)
-    pos = event.pos
-    x_click = pos[0]
-    y_click = pos[1]
+    pos = 
+    x_click = event.data[:x]
+    y_click = event.data[:y]
 
     scaled_x = x_click - MINI_MAP_X
     scaled_y = y_click - MINI_MAP_Y

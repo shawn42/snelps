@@ -38,15 +38,28 @@ class ModeContainer < Rubygoo::Container
 
   def mouse_down(evt)
     @mouse_manager.mouse_down evt
-    dispatch_mode_event :handle_click, evt
   end
 
   def mouse_up(evt)
     @mouse_manager.mouse_up evt
+    dispatch_mode_event :handle_click, evt
+  end
+
+  def mouse_drag(evt)
+    @mouse_manager.mouse_up evt
+#    @mouse_manager.mouse_down evt
+    dispatch_mode_event :handle_mouse_drag, @mouse_manager.start_x,@mouse_manager.start_y, evt
   end
 
   def mouse_motion(evt)
     @mouse_manager.mouse_motion evt
+    dispatch_mode_event :handle_mouse_motion, evt
+  end
+
+  def mouse_dragging(evt)
+    @mouse_manager.mouse_motion evt
+    dispatch_mode_event :handle_mouse_dragging, @mouse_manager.start_x,@mouse_manager.start_y, evt
+#    dispatch_mode_event :handle_mouse_dragging, evt
   end
 
   def setup()
@@ -72,17 +85,13 @@ class ModeContainer < Rubygoo::Container
       end
     end
 
-    # TODO standardize these names
-    @mouse_manager.when :mouse_motion do |e| dispatch_mode_event :handle_mouse_motion, e end
-    @mouse_manager.when :mouse_drag do |x,y,e| dispatch_mode_event :handle_mouse_drag, x, y, e end
-    @mouse_manager.when :mouse_dragging do |x,y,e| dispatch_mode_event :handle_mouse_dragging, x, y, e end
-    @mouse_manager.when :mouse_click do |e| dispatch_mode_event :handle_click, e end
     @network_manager[:from_server].when :msg_received do |e| dispatch_mode_event :handle_network, e end
   
     change_mode_to :main_menu
   end
 
   def dispatch_mode_event(name, *args)
+#    p "dispatching [#{name}]"
     @modes[@mode].send(name, *args)
   end
   
@@ -100,7 +109,6 @@ class ModeContainer < Rubygoo::Container
     @modes[@mode].handle_draw @snelps_screen.screen
 
     super renderer
-#    @snelps_screen.flip
   end
 
 end

@@ -1,4 +1,3 @@
-require 'commands'
 require 'publisher'
 require 'base_mode'
 require 'player'

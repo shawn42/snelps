@@ -24,3 +24,5 @@ CONFIG_PATH = APP_ROOT + "config/"
 GFX_PATH = DATA_PATH + "gfx/"
 CAMPAIGN_PATH = DATA_PATH + "campaigns/"
 
+require 'metaclass'
+require 'attribute'

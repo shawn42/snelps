@@ -18,7 +18,7 @@ class StoryDialog < Dialog
   end
 
   def on_key_up(event)
-    case event.key
+    case event.data[:key]
     when K_ESCAPE
       close
     when K_Q

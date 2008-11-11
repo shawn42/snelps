@@ -61,6 +61,10 @@ class MainMenuMode < Rubygoo::Container #BaseMode
     @layout.click(event)
   end
 
+  def on_mouse_drag(start_x,start_y,event)
+    puts "HERE"
+  end
+
   def on_mouse_dragging(x,y,event)
     @layout.mouse_dragging(x,y,event)
   end

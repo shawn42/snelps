@@ -64,8 +64,17 @@ class SnelpsApp
   end
 end
 
+console = false
+
+if ARGV[0] == 'console'
+  console = true
+end
 
 if $0 == __FILE__
   app = SnelpsApp.new
+  if console
+    require 'drb'
+    DRb.start_service("druby://:7777", app)
+  end
   app.run
 end
