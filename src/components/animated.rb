@@ -60,10 +60,6 @@ module Animated
     self.class.instance_variable_get("@images")[:idle].first
   end
 
-  def get_selection_image(entity_type)
-    self.class.instance_variable_get("@images")[:selected].first
-  end
-
   def update_animated(time)
     if animating?
       if @animated_time > FRAME_UPDATE_TIME
@@ -85,10 +81,6 @@ module Animated
 
     @image = get_default_frame(@entity_type)
 
-    unless self.class.default_animations[:selected].nil?
-      @selected_image = get_selection_image(@entity_type).
-        zoom([0.25,0.25], true)
-    end
     update_animation_length
   end
 

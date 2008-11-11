@@ -53,27 +53,39 @@ module Drawable
       end
     end
 
-    # can I pull this out into a selectable componenet?
-    if is? :selectable and selected?
-      w = @selected_image.w
-      h = @selected_image.h
-      sx = vx - (w/2)
-      sy = vy - (h/2)
-      @selected_image.blit(destination, [sx,sy,w,h])
-    end
-
     draw_coords = nil
+    selection_coords = nil
+    selection_radius = nil
+    ht = @map.half_tile_size
+    ts = @map.tile_size
+
     if respond_to? :size and self.size
-      @w_offset ||= (@image.size[0] - (self.size[0] * @map.tile_size))/2 + @map.half_tile_size
-      @h_offset ||= (@image.size[1] - (self.size[1] * @map.tile_size))/2 + @map.half_tile_size
-      draw_coords = [vx-@w_offset,vy-@h_offset]
+      pixel_width = (self.size[0] * ts)
+      pixel_height = (self.size[1] * ts)
+      @w_offset ||= (@image.size[0] - pixel_width)/2 + ht
+      @h_offset ||= (@image.size[1] - pixel_height)/2 + ht
+      draw_x = vx-@w_offset
+      draw_y = vy-@h_offset
+      draw_coords = [draw_x,draw_y]
+      half_width = pixel_width/2
+      selection_coords = [draw_x+half_width, draw_y+pixel_height/2]
+      selection_radius = half_width
     else
       draw_coords = [vx-@image.w/2,vy-@image.w/2]
+      selection_coords = [draw_coords[0]+ht, draw_coords[1]+ht]
+      selection_radius = ht
     end
+
+    # can I pull this out into a selectable componenet?
+    if is? :selectable and selected?
+      destination.draw_circle_a(selection_coords, selection_radius, GREEN)
+    end
+
+
     @image.blit(destination, draw_coords)
 
     if is? :selectable and selected?
-      hb_x = vx - 10
+      hb_x = selection_coords[0]-HB_WIDTH/2
       hb_y = vy - 20
 
       destination.draw_box_s([hb_x,hb_y],

@@ -3,7 +3,7 @@ require 'commands'
 
 # this class manages the passing of commands to/from the server
 class NetworkManager
-  NETWORK_DEBUG = true
+  NETWORK_DEBUG = false
   include Commands
   attr_accessor :channels
 
