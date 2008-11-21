@@ -34,9 +34,9 @@ class SoundManager
       @music[:menu_music].fade_out 3
 
       @sounds = {}
-      @sounds[:ent_move] = @resource_manager.load_sound("whiff.ogg")
-      @sounds[:ent_attack] = @resource_manager.load_sound("attack.ogg")
-      @sounds[:ent_death] = @resource_manager.load_sound("death.ogg")
+      @sounds[:move] = @resource_manager.load_sound("whiff.ogg")
+      @sounds[:attack] = @resource_manager.load_sound("attack.ogg")
+      @sounds[:death] = @resource_manager.load_sound("death.ogg")
 
       STDOUT.write "done.\n"
     end

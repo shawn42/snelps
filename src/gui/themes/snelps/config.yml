@@ -1,6 +1,8 @@
 --- 
 Rubygoo::App: 
   :bg_color: :Black
+Rubygoo::Container: 
+  :bg_color: :none
 Rubygoo::Widget: 
   :font: Vera.ttf
   :font_size: 20

@@ -4,7 +4,7 @@ require 'campaign_mouse_view'
 class ModeContainer < Rubygoo::Container
   extend Publisher
 
-  can_fire :start_game
+  can_fire :start_game, :resized
 
 #  constructor :resource_manager, :font_manager, :sound_manager, :input_manager,
 #    :network_manager, :turn_manager, :mouse_manager, :snelps_screen,
@@ -91,7 +91,6 @@ class ModeContainer < Rubygoo::Container
   end
 
   def dispatch_mode_event(name, *args)
-#    p "dispatching [#{name}]"
     @modes[@mode].send(name, *args)
   end
   
@@ -109,6 +108,10 @@ class ModeContainer < Rubygoo::Container
     @modes[@mode].handle_draw @snelps_screen.screen
 
     super renderer
+  end
+
+  def focussed?()
+    true
   end
 
 end

@@ -1,4 +1,5 @@
 MILESTONE #1 - "move units here" campaign
+ - entity creation doesn't have to happen on the server!!!
  - change gatherer/collector to keep track of which resource is held/deposited
  - change mouse hover to show if something is targetable/attackable
 

@@ -36,62 +36,94 @@ class EntityManager
     @id_entities = {}
     @base_entities = {}
     @occupancy_grids = {}
+
+    @ability_manager.when :sound_play do |sound|
+      fire :sound_play, sound
+    end
   end
 
   def find_entity_by_id(server_id)
     @id_entities[server_id]
   end
 
-  def handle_attack(cmd)
-    fire :sound_play, :ent_attack
-    attack_cmd,entity_id,tile_x,tile_y = cmd.split ':'
-    ent = @id_entities[entity_id.to_i]
-    # if targetable ent is at x, y
-    ents = get_occupants_at(tile_x.to_i, tile_y.to_i)
-    targetable_ents = ents.select{|e|e.player_id != 1}
-    if targetable_ents.empty?
-      # TODO set aggressive mode?
-      ent.melee_attack :target => [tile_x,tile_y]
+#  def handle_attack(cmd)
+#    fire :sound_play, :ent_attack
+#    attack_cmd,entity_id,tile_x,tile_y = cmd.split ':'
+#    ent = @id_entities[entity_id.to_i]
+#    # if targetable ent is at x, y
+#    ents = get_occupants_at(tile_x.to_i, tile_y.to_i)
+#    targetable_ents = ents.select{|e|e.player_id != 1}
+#    if targetable_ents.empty?
+#      # TODO set aggressive mode?
+#      ent.melee_attack :target => [tile_x,tile_y]
+#    else
+#      ent.melee_attack :target => targetable_ents.first
+#    end
+#  end
+
+#  def handle_gather(cmd)
+#    fire :sound_play, :ent_gather
+#    attack_cmd,entity_id,tile_x,tile_y = cmd.split ':'
+#    ent = @id_entities[entity_id.to_i]
+#    
+#    # if targetable ent is at x, y
+#    ents = get_occupants_at(tile_x.to_i, tile_y.to_i).select{|e|e.is? :providable}
+#    if ents.empty?
+#      # TODO set looking mode?
+#      ent.gather :target => [tile_x,tile_y]
+#    else
+#      ent.gather :target => ents.first
+#    end
+#  end
+#
+  def handle(event)
+    pieces = event.split(':')
+    cmd = pieces[0]
+
+    # special case for creation
+    if cmd == ENTITY_CREATE
+      create_cmd,p_id,ent_type,tile_x,tile_y,ent_id = *pieces
+      p_id = p_id.nil? ? nil : p_id.to_i
+      create_entity p_id, ent_type.to_sym, tile_x.to_i, tile_y.to_i, ent_id.to_i
     else
-      ent.melee_attack :target => targetable_ents.first
+      # all other commands are an action for a selection towards a
+      # target
+      ents = pieces[1].split(',').collect{|e_id|@id_entities[e_id.to_i]}
+      target = nil
+      if pieces.size == 4
+        # we have a location
+        target = [pieces[2],pieces[3]]
+      else
+        # we have an id
+        target = @id_entities[pieces[2].to_i]
+      end
+      
+      action_name = cmd.slice(cmd.index("_")+1..-1)
+      @ability_manager.execute_ability action_name, ents, target
+
     end
   end
 
-  def handle_gather(cmd)
-    fire :sound_play, :ent_gather
-    attack_cmd,entity_id,tile_x,tile_y = cmd.split ':'
-    ent = @id_entities[entity_id.to_i]
-    
-    # if targetable ent is at x, y
-    ents = get_occupants_at(tile_x.to_i, tile_y.to_i).select{|e|e.is? :providable}
-    if ents.empty?
-      # TODO set looking mode?
-      ent.gather :target => [tile_x,tile_y]
-    else
-      ent.gather :target => ents.first
-    end
-  end
+#  def handle_move(cmd)
+#    fire :sound_play, :ent_move
+#    
+#    move_entity cmd
+#  end
 
-  def handle_move(cmd)
-    fire :sound_play, :ent_move
-    
-    move_entity cmd
-  end
-
-  def move_entity(cmd)
-    move_cmd,entity_id,dest_tile_x,dest_tile_y = cmd.split ':'
-
-    entity_id = entity_id.to_i
-    dest_tile_x = dest_tile_x.to_i
-    dest_tile_y = dest_tile_y.to_i
-    
-    entity = @id_entities[entity_id]
-    # seems like a bad place for this
-    entity.cancel_all_attacks if entity.is? :melee_attacker
-
-    entity.path_to dest_tile_x, dest_tile_y if entity.is? :pathable
-  end
-
+#  def move_entity(cmd)
+#    move_cmd,entity_id,dest_tile_x,dest_tile_y = cmd.split ':'
+#
+#    entity_id = entity_id.to_i
+#    dest_tile_x = dest_tile_x.to_i
+#    dest_tile_y = dest_tile_y.to_i
+#    
+#    entity = @id_entities[entity_id]
+#    # seems like a bad place for this
+#    entity.cancel_all_attacks if entity.is? :melee_attacker
+#
+#    entity.path_to dest_tile_x, dest_tile_y if entity.is? :pathable
+#  end
+#
   def has_obstacle?(x, y, z, ignore_objects = [])
     # for now 266 is water, only flying entities can go on them
     begin
@@ -140,6 +172,15 @@ class EntityManager
           file.close
         end
       end
+    when K_G
+      act = :gather
+      @current_action = (@current_action == act ? nil : act)
+    when K_A
+      act = :melee_attack
+      @current_action = (@current_action == act ? nil : act)
+    when K_M
+      act = :move
+      @current_action = (@current_action == act ? nil : act)
     when K_T
       @trace = !@trace
       for entity in @id_entities.values
@@ -254,30 +295,34 @@ class EntityManager
   # send cmd to perform given action on selected units (move, attack, etc)
   def do_action(x,y)
     if @current_selection
-      for id, entity in @current_selection.entities
 
-        world_x, world_y = @viewport.view_to_world(x, y)
+      world_x, world_y = @viewport.view_to_world(x, y)
 
-        tile_x,tile_y = 
-          @map.coords_to_tiles(world_x,world_y)
+      tile_x,tile_y = 
+        @map.coords_to_tiles(world_x,world_y)
 
-        target = [tile_x,tile_y]
+      target = [tile_x,tile_y]
 
-        targets = get_occupants_at(tile_x, tile_y)
-        if targets.size > 0
-          target = targets.first
-        end
+      targets = get_occupants_at(tile_x, tile_y)
+      if targets.size > 0
+        target = targets.first
+      end
 
-        act = entity.actions(:target=>target).first
+#        act = entity.actions(:target=>target).first
+      # XXX hack for testing out sledgehammer stuff
+      act = @current_action
 
-        cmd = "ENT_#{act.to_s.upcase}:#{entity.server_id}:#{tile_x}:#{tile_y}"
-        fire :network_msg_to, cmd
+#      act = @current_abilities.last unless act
+
+      cmds = @ability_manager.command_for @current_selection, act, target
+
+      cmds.each do |c|
+        fire :network_msg_to, c
       end
     end
   end
 
   def handle_mouse_click(event)
-    p "EM: CLICK"
     x = event.data[:x]
     y = event.data[:y]
 
@@ -288,7 +333,6 @@ class EntityManager
   end
 
   def handle_mouse_drag(x, y, event)
-    p "EM: DRAG"
     new_x = event.data[:x]
     new_y = event.data[:y]
 		x_array = [x, new_x].sort

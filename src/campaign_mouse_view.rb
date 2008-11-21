@@ -2,7 +2,6 @@ require 'rubygoo'
 
 # handles displaying the mouse in campaign mode
 class CampaignMouseView < Rubygoo::Widget
-
   def initialize(opts)
     @mouse = opts[:mouse]
     

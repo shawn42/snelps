@@ -90,15 +90,8 @@ class CampaignMode < BaseMode
     # TODO, shouldn't do this, these should come from the turn manager
     # TODO can we break these down into target:method?
     pieces = event.split(':')
-    case pieces[0]
-    when ENTITY_CREATE
-      @entity_manager.handle_create event
-    when ENTITY_MOVE
-      @entity_manager.handle_move event
-    when ENTITY_MELEE_ATTACK
-      @entity_manager.handle_attack event
-    when ENTITY_GATHER
-      @entity_manager.handle_gather event
+    cmd = pieces[0]
+    case cmd
     when PLAYER_JOIN
       # parse player from event
       id = pieces[2].to_i
@@ -110,6 +103,26 @@ class CampaignMode < BaseMode
       @players << player
 
       @local_player = player if local
+    else
+      target_pieces = pieces[0].split('_')
+      prefix = target_pieces[0]
+      case prefix
+      when ENTITY_PREFIX
+#        case cmd
+#        when ENTITY_CREATE
+#          @entity_manager.handle_create event
+#        when ENTITY_MOVE
+#          @entity_manager.handle_move event
+#        when ENTITY_MELEE_ATTACK
+#          @entity_manager.handle_attack event
+#        when ENTITY_GATHER
+#          @entity_manager.handle_gather event
+#        else
+          @entity_manager.handle event
+#        end
+      else
+        p "unknown network event: [#{prefix} - #{cmd} - #{event}]"
+      end
     end
   end
 

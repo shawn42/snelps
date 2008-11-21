@@ -101,8 +101,7 @@ class MainMenuMode < Rubygoo::Container #BaseMode
     @warrior_image.blit(destination,[300,90])
     @title_text.blit(destination,[360,10])
 
-#    @app_adapter.draw destination
-
+    super destination
   end
   
   # copied in from base mode for now:

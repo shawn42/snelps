@@ -5,12 +5,14 @@
       :entity: 4
       :engineer: 2
 :attacks: 
-  :sledghammer: 
+  :sledgehammer: 
     :speed: 4
     :damage: 40
     :entities: 
       :entity: 4
     :button: resource12.png
+    :morph: true
+    :auto_unmorph: true
     :animations:
       :prefix: resource
       :suffix: .png

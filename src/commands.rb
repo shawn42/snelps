@@ -3,9 +3,15 @@ module Commands
   HEARTBEAT = 'KATHUMP'
 
   ENTITY_CREATE = 'ENT_CREATE'
+
+  # can we dynamically define these based on the abilities in the
+  # game?
+  ENTITY_PREFIX = 'ENT'
+
   ENTITY_MOVE = 'ENT_MOVE'
   ENTITY_MELEE_ATTACK = 'ENT_MELEE_ATTACK'
   ENTITY_GATHER = 'ENT_GATHER'
+  ENTITY_SLEDGEHAMMER = 'ENT_SLEDGEHAMMER'
 
   PLAYER_JOIN = 'PLAYER_JOIN'
 

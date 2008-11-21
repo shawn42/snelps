@@ -24,11 +24,15 @@ module Able
   # target.  Used by ent_manager for mouse-cursor changes when
   # hovering over a target.
   def actions(args)
-    abs = []
-    for ability in @abilities
-      abs << ability if respond_to?("#{ability}_targets?") and send("#{ability}_targets?", args)
+    if args
+      abs = []
+      for ability in @abilities
+        abs << ability if respond_to?("#{ability}_targets?") and send("#{ability}_targets?", args)
+      end
+      return abs
+    else
+      return @abilities
     end
-    abs
   end
 
   # Will be called on each selected entity with the given target

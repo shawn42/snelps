@@ -2,15 +2,14 @@ class GameClient
   STEP_SIZE = 25.0
 
   attr_accessor :viewport
-#  constructor :mode_controller
   constructor :mode_container, :snelps_screen, :input_manager
 
   def setup()
-    # TODO simplify this in rubygoo
     factory = Rubygoo::AdapterFactory.new
     @render_adapter = factory.renderer_for :rubygame, @snelps_screen.screen
     @gui = Rubygoo::App.new :renderer => @render_adapter, :theme => 'snelps', 
       :data_dir => "#{File.dirname(__FILE__)}/gui/themes", :mouse_cursor => false
+
     @gui.add @mode_container
     @app_adapter = factory.app_for :rubygame, @gui
 
