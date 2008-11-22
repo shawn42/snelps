@@ -17,7 +17,7 @@ module Able
   end
 
   def can?(ability)
-    @abilities.include? ability
+    ability == :act_upon or @abilities.include? ability
   end
 
   # Return an ordered list of available actions based on the
@@ -38,7 +38,7 @@ module Able
   # Will be called on each selected entity with the given target
   # info.
   def act_upon(args)
-    call(actions(target_ent).first(args))
+    send actions(args).first, args
   end
 
 end

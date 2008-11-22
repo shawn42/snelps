@@ -4,6 +4,8 @@ class Entity
   extend Publisher
   attr_accessor :server_id, :entity_type, :player_id
 
+  can_fire :destroyed,:enabled,:disabled
+
   def initialize(server_id, *args)
     @server_id = server_id
 
@@ -51,4 +53,19 @@ class Entity
       raise "#{behavior} behavior required" unless is? behavior
     end
   end
+
+  def enable()
+    fire :enabled, self
+  end
+
+  def disable()
+    fire :disabled, self
+  end
+
+  # get rid of an entity that isn't "alive"
+  def destroy()
+    fire :destroyed, self
+  end
+
+
 end

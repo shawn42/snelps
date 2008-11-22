@@ -57,11 +57,6 @@ class NetworkManager
             # L means that this is your local player
             msg += ":#{@player_id}:L"
             @channels[:from_server].push msg
-          when ENTITY_CREATE
-            @ent_id ||= 0
-            @ent_id += 1
-            msg += ":#{@ent_id}"
-            @channels[:from_server].push msg
           else
             @channels[:from_server].push msg
         end

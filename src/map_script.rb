@@ -1,19 +1,13 @@
 # MapScript is extended by map definitions and has all the allowed API for map
-# designers to use. It is owned by the map instance that is loaded.
 require 'publisher'
 class MapScript
   extend Publisher
   can_fire :create_entity, :victory, :defeat, :create_player
 
-  #check all triggers this often (ms)
-  # TODO change to use events, not polling
-  TRIGGER_UPDATE_TIME = 2000
-
   attr_accessor :map
   def initialize(script_text)
     @script_text = script_text
     @last_updated = 0
-    @triggers = []
   end
 
   def start()
@@ -26,19 +20,8 @@ class MapScript
     @map.instance_variable_get("@entity_manager").get_occupants_at(x, y, w, h, player)
   end
 
-  def update(time)
-    if @last_updated > TRIGGER_UPDATE_TIME
-      update_triggers time
-      @last_updated = 0
-    else
-      @last_updated += time
-    end
-  end
-
-  def update_triggers(time)
-    for trig in @triggers
-      trig.call
-    end
+  def on(*args, &blk)
+    @map.instance_variable_get("@entity_manager").on(*args,&blk)
   end
 
   # create a player
@@ -47,12 +30,8 @@ class MapScript
   end
 
   # creates an entity of type, owned by player, at tile_x,tile_y
-  def create_entity(ent_type,player,tile_x,tile_y)
-    fire :create_entity,ent_type,player,tile_x,tile_y
-  end
-
-  def add_trigger(&block)
-    @triggers << block
+  def create_entity(player,ent_type,tile_x,tile_y)
+    fire :create_entity,player,ent_type,tile_x,tile_y
   end
 
 end

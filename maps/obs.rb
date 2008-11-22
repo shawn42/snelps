@@ -1,67 +1,63 @@
-create_entity :tree, nil, 4, 3
-create_entity :tree, nil, 5, 3
-create_entity :tree, nil, 6, 3
-create_entity :tree, nil, 7, 3
-create_entity :tree, nil, 8, 3
-create_entity :tree, nil, 9, 3
-create_entity :tree, nil, 10, 3
-create_entity :tree, nil, 11, 3
-create_entity :tree, nil, 12, 3
-create_entity :tree, nil, 13, 3
-create_entity :tree, nil, 14, 3
-create_entity :tree, nil, 4, 4
-create_entity :tree, nil, 5, 4
-create_entity :tree, nil, 6, 4
-create_entity :tree, nil, 7, 4
-create_entity :tree, nil, 8, 4
-create_entity :tree, nil, 9, 4
-create_entity :tree, nil, 10, 4
-create_entity :tree, nil, 11, 4
-create_entity :tree, nil, 12, 4
-create_entity :tree, nil, 13, 4
-create_entity :tree, nil, 14, 4
-create_entity :tree, nil, 4, 5
-create_entity :tree, nil, 5, 5
-create_entity :tree, nil, 6, 5
-create_entity :tree, nil, 7, 5
-create_entity :tree, nil, 8, 5
-create_entity :tree, nil, 9, 5
-create_entity :tree, nil, 10, 5
-create_entity :tree, nil, 11, 5
-create_entity :tree, nil, 12, 5
-create_entity :tree, nil, 13, 5
-create_entity :tree, nil, 14, 5
+create_entity nil, :tree, 4, 3
+create_entity nil, :tree, 5, 3
+create_entity nil, :tree, 6, 3
+create_entity nil, :tree, 7, 3
+create_entity nil, :tree, 8, 3
+create_entity nil, :tree, 9, 3
+create_entity nil, :tree, 10, 3
+create_entity nil, :tree, 11, 3
+create_entity nil, :tree, 12, 3
+create_entity nil, :tree, 13, 3
+create_entity nil, :tree, 14, 3
+create_entity nil, :tree, 4, 4
+create_entity nil, :tree, 5, 4
+create_entity nil, :tree, 6, 4
+create_entity nil, :tree, 7, 4
+create_entity nil, :tree, 8, 4
+create_entity nil, :tree, 9, 4
+create_entity nil, :tree, 10, 4
+create_entity nil, :tree, 11, 4
+create_entity nil, :tree, 12, 4
+create_entity nil, :tree, 13, 4
+create_entity nil, :tree, 14, 4
+create_entity nil, :tree, 4, 5
+create_entity nil, :tree, 5, 5
+create_entity nil, :tree, 6, 5
+create_entity nil, :tree, 7, 5
+create_entity nil, :tree, 8, 5
+create_entity nil, :tree, 9, 5
+create_entity nil, :tree, 10, 5
+create_entity nil, :tree, 11, 5
+create_entity nil, :tree, 12, 5
+create_entity nil, :tree, 13, 5
+create_entity nil, :tree, 14, 5
 
-create_entity :animal, nil, 24, 25
-create_entity :animal, nil, 14, 25
-create_entity :animal, nil, 28, 5
+create_entity nil, :animal, 24, 25
+create_entity nil, :animal, 14, 25
+create_entity nil, :animal, 28, 5
 
-create_entity :fire_explorer, 1, 4, 4
-create_entity :fire_explorer, 1, 22, 22
-create_entity :fire_explorer, 1, 22, 23
-create_entity :fire_explorer, 1, 23, 22
-create_entity :fire_explorer, 1, 23, 23
-create_entity :fire_explorer, 1, 23, 24
+create_entity 1, :fire_explorer, 4, 4
+create_entity 1, :fire_explorer, 22, 22
+create_entity 1, :fire_explorer, 22, 23
+create_entity 1, :fire_explorer, 23, 22
+create_entity 1, :fire_explorer, 23, 23
+create_entity 1, :fire_explorer, 23, 24
 
-create_entity :vim, nil, 1, 1
+create_entity nil, :vim, 1, 1
 
-create_entity :well_spring, 1, 5, 11
-create_entity :big_base, 1, 10, 11
-create_entity :earth_worker, 1, 12, 11
-create_entity :earth_worker, 1, 14, 11
+create_entity 1, :well_spring, 5, 11
+create_entity 1, :big_base, 10, 11
+create_entity 1, :earth_worker, 12, 11
+create_entity 1, :earth_worker, 14, 11
 
-create_entity :portal, nil, 59, 59
+create_entity nil, :portal, 59, 59
 
-create_entity :fire_worker, 1, 1, 2
-create_entity :fire_worker, 1, 1, 3
-create_entity :fire_worker, 1, 2, 3
-create_entity :fire_worker, 1, 2, 2
+create_entity 1, :fire_worker, 1, 2
+create_entity 1, :fire_worker, 1, 3
+create_entity 1, :fire_worker, 2, 3
+create_entity 1, :fire_worker, 2, 2
 
-add_trigger do
-  occs = get_occupants_at 59, 59, 1, 1, 1
-  unless occs.empty?
-    fire :victory
-  end
+on :occupancy_change do |type,ent,x,y|
+  fire :victory if x == 59 and y == 59 and ent.player_id == 1
 end
-
 

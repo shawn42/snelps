@@ -11,7 +11,7 @@ class EntityManager
     :selections, :current_abilities, :base_entities, :players,
     :viewable_rows, :viewable_cols
 
-  can_fire :sound_play, :network_msg_to, :occupancy_grid_created
+  can_fire :sound_play, :network_msg_to, :occupancy_grid_created, :occupancy_change
 
   constructor :viewport, :resource_manager, :sound_manager, :network_manager,
     :input_manager, :ability_manager 
@@ -37,54 +37,35 @@ class EntityManager
     @base_entities = {}
     @occupancy_grids = {}
 
+    @ability_manager.unsubscribe :create_ent, self
+    @ability_manager.unsubscribe :sound_play, self
+
     @ability_manager.when :sound_play do |sound|
       fire :sound_play, sound
     end
+    @ability_manager.when :create_ent do |p_id,ab_sym,x,y,group|
+      ent = create_entity p_id,ab_sym,x,y
+      @ability_manager.execute_group_ability ent, group
+    end
+
+    @ent_id_incrementer = 0
   end
 
   def find_entity_by_id(server_id)
     @id_entities[server_id]
   end
 
-#  def handle_attack(cmd)
-#    fire :sound_play, :ent_attack
-#    attack_cmd,entity_id,tile_x,tile_y = cmd.split ':'
-#    ent = @id_entities[entity_id.to_i]
-#    # if targetable ent is at x, y
-#    ents = get_occupants_at(tile_x.to_i, tile_y.to_i)
-#    targetable_ents = ents.select{|e|e.player_id != 1}
-#    if targetable_ents.empty?
-#      # TODO set aggressive mode?
-#      ent.melee_attack :target => [tile_x,tile_y]
-#    else
-#      ent.melee_attack :target => targetable_ents.first
-#    end
-#  end
-
-#  def handle_gather(cmd)
-#    fire :sound_play, :ent_gather
-#    attack_cmd,entity_id,tile_x,tile_y = cmd.split ':'
-#    ent = @id_entities[entity_id.to_i]
-#    
-#    # if targetable ent is at x, y
-#    ents = get_occupants_at(tile_x.to_i, tile_y.to_i).select{|e|e.is? :providable}
-#    if ents.empty?
-#      # TODO set looking mode?
-#      ent.gather :target => [tile_x,tile_y]
-#    else
-#      ent.gather :target => ents.first
-#    end
-#  end
-#
+  # handle all incoming network events dealing with entities
   def handle(event)
     pieces = event.split(':')
     cmd = pieces[0]
 
     # special case for creation
     if cmd == ENTITY_CREATE
-      create_cmd,p_id,ent_type,tile_x,tile_y,ent_id = *pieces
+      create_cmd,p_id,ent_type,tile_x,tile_y = *pieces
       p_id = p_id.nil? ? nil : p_id.to_i
-      create_entity p_id, ent_type.to_sym, tile_x.to_i, tile_y.to_i, ent_id.to_i
+
+      create_entity p_id, ent_type.to_sym, tile_x.to_i, tile_y.to_i
     else
       # all other commands are an action for a selection towards a
       # target
@@ -104,26 +85,6 @@ class EntityManager
     end
   end
 
-#  def handle_move(cmd)
-#    fire :sound_play, :ent_move
-#    
-#    move_entity cmd
-#  end
-
-#  def move_entity(cmd)
-#    move_cmd,entity_id,dest_tile_x,dest_tile_y = cmd.split ':'
-#
-#    entity_id = entity_id.to_i
-#    dest_tile_x = dest_tile_x.to_i
-#    dest_tile_y = dest_tile_y.to_i
-#    
-#    entity = @id_entities[entity_id]
-#    # seems like a bad place for this
-#    entity.cancel_all_attacks if entity.is? :melee_attacker
-#
-#    entity.path_to dest_tile_x, dest_tile_y if entity.is? :pathable
-#  end
-#
   def has_obstacle?(x, y, z, ignore_objects = [])
     # for now 266 is water, only flying entities can go on them
     begin
@@ -181,6 +142,9 @@ class EntityManager
     when K_M
       act = :move
       @current_action = (@current_action == act ? nil : act)
+    when K_S
+      act = :sledgehammer
+      @current_action = (@current_action == act ? nil : act)
     when K_T
       @trace = !@trace
       for entity in @id_entities.values
@@ -192,7 +156,7 @@ class EntityManager
         10.times do
           w = rand(@map.width)
           h = rand(@map.height)
-          @map.script.create_entity :animal, nil, w, h
+          @map.script.create_entity nil, :animal, w, h
         end
         puts @id_entities.size
       rescue Exception => ex
@@ -342,73 +306,111 @@ class EntityManager
                      x_array.first ,y_array.last - y_array.first
   end
   
-  def create_entity(p_id, entity_type, x, y, ent_id)
-    begin
-      klass = Object.const_get Inflector.camelize(entity_type)
-      z = klass.default_z
-      unless @available_z_levels.include? z
-        @available_z_levels << z
-        @available_z_levels.sort!
-        grid = OccupancyGrid.new @map.width, @map.height
-        fire :occupancy_grid_created, grid, z
-        @occupancy_grids[z] = grid
+  def enable_entity(ent)
+#    p "entity[#{ent.server_id}] enabled"
 
-        grid.when :occupancy_change do |change_type,entity,x,y|
-          @viewable_entities_dirty = 
-            (@viewable_rows.include? entity.tile_x and 
-            @viewable_cols.include? entity.tile_y)
-        end
+    p_id = ent.player_id
+    z = ent.z
+    @players_entities[p_id] ||= {}
+    @players_entities[p_id][z] ||= []
+    @players_entities[p_id][z] << ent
+    @z_entities[z] << ent
+    @id_entities[ent.server_id] = ent
 
-        @viewable_entities[z] = []
-      end
-      @z_entities[z] ||= []
+    # TODO, un hardcode the player id
+    @base_entities[ent.server_id] = ent if ent.is?(:collector) and ent.player_id == 1
 
-      new_entity = klass.new(ent_id,
-       {
-        :resource_manager => @resource_manager,
-        :sound_manager => @sound_manager,
-        :viewport => @viewport,
-        :entity_type => entity_type,
-        :server_id => ent_id,
-        :player_id => p_id,
-        :occupancy_grid => @occupancy_grids[z],
-        :map => @map,
-        :entity_manager => self,
-        :x => x,
-        :y => y,
-        :trace => @trace
-       }
-      )
+    # assumes a knowlege that the ent is :positionable
+    # should register for enabled callback?
+    ent.position_at ent.tile_x, ent.tile_y
+  end
 
-      @players_entities[p_id] ||= {}
-      @players_entities[p_id][z] ||= []
-      @players_entities[p_id][z] << new_entity
-      @z_entities[z] << new_entity
-      @id_entities[ent_id] = new_entity
+  def disable_entity(ent)
+#    p "entity[#{ent.server_id}] disabled"
+    @viewable_entities[ent.z].delete ent
+    @players_entities[ent.player_id][ent.z].delete ent
 
-      # TODO, un hardcode the player id
-      @base_entities[ent_id] = new_entity if new_entity.is?(:collector) and new_entity.player_id == 1
+    @z_entities[ent.z].delete ent
+    @id_entities.delete ent.server_id
+    @base_entities.delete ent.server_id
 
-      new_entity.animate if new_entity.is? :animated
-      if new_entity.is? :livable
-        new_entity.when :death do |ent|
-          p "entity[#{ent.server_id}] died"
+    # assumes a knowlege that the ent is :positionable
+    # should register for disabled callback?
+    ent.remove_from ent.tile_x, ent.tile_y
+  end
 
-          @viewable_entities[ent.z].delete ent
-          @players_entities[ent.player_id][ent.z].delete ent
+  def destroy_entity(ent)
+#    p "entity[#{ent.server_id}] died"
 
-          @z_entities[ent.z].delete ent
-          @id_entities.delete ent.server_id
-          @base_entities.delete ent.server_id
-          ent.unsubscribe :death, self
-        end
-      end
-    rescue Exception => ex
-      p ex
-      caller.each do |c|
-        p c
-      end
+    @viewable_entities[ent.z].delete ent
+    @players_entities[ent.player_id][ent.z].delete ent
+
+    @z_entities[ent.z].delete ent
+    @id_entities.delete ent.server_id
+    @base_entities.delete ent.server_id
+
+    # assumes a knowlege that the ent is :positionable
+    # should register for destroyed callback
+    ent.remove_from ent.tile_x, ent.tile_y
+
+    ent.unsubscribe :destroyed, self
+  end
+
+  def manage_entity(new_entity)
+    enable_entity new_entity
+
+    new_entity.when :destroyed do |ent|
+      destroy_entity new_entity
     end
+    new_entity.when :disabled do |ent|
+      disable_entity new_entity
+    end
+    new_entity.when :enabled do |ent|
+      enable_entity new_entity
+    end
+  end
+
+  def create_entity(p_id, entity_type, tile_x, tile_y)
+    x, y = @map.tiles_to_coords(tile_x.to_i,tile_y.to_i)
+    ent_id = @ent_id_incrementer += 1
+    klass = Object.const_get Inflector.camelize(entity_type)
+    z = klass.default_z
+    unless @available_z_levels.include? z
+      @available_z_levels << z
+      @available_z_levels.sort!
+      grid = OccupancyGrid.new @map.width, @map.height
+      fire :occupancy_grid_created, grid, z
+      @occupancy_grids[z] = grid
+
+      grid.when :occupancy_change do |change_type,entity,x,y|
+        @viewable_entities_dirty = 
+          (@viewable_rows.include? entity.tile_x and 
+          @viewable_cols.include? entity.tile_y)
+        fire :occupancy_change, change_type, entity, x, y
+      end
+
+      @viewable_entities[z] = []
+    end
+    @z_entities[z] ||= []
+
+    new_entity = klass.new(ent_id,
+     {
+      :resource_manager => @resource_manager,
+      :sound_manager => @sound_manager,
+      :viewport => @viewport,
+      :entity_type => entity_type,
+      :server_id => ent_id,
+      :player_id => p_id,
+      :occupancy_grid => @occupancy_grids[z],
+      :map => @map,
+      :entity_manager => self,
+      :x => x,
+      :y => y,
+      :trace => @trace
+     }
+    )
+
+    manage_entity new_entity
     new_entity
   end
 

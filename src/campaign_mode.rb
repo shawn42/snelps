@@ -195,8 +195,7 @@ class CampaignMode < BaseMode
 #      fire :mode_change, :main_menu
     end
 
-    @map.script.when :create_entity do |ent_type,player,tile_x,tile_y|
-      x, y = @map.tiles_to_coords(tile_x,tile_y)
+    @map.script.when :create_entity do |player,ent_type,tile_x,tile_y|
       # TODO, is there a better way of getting the z here?
       klass = Object.const_get Inflector.camelize(ent_type)
       z = klass.default_z
@@ -204,7 +203,7 @@ class CampaignMode < BaseMode
       if @entity_manager.has_obstacle?(tile_x, tile_y, z)
         raise "obstacle: invalid map script #{player} #{ent_type} #{tile_x},#{tile_y},#{z}"
       else
-        cmd = @entity_manager.create_entity_cmd(player,ent_type,x,y)
+        cmd = @entity_manager.create_entity_cmd(player,ent_type,tile_x,tile_y)
         @network_manager[:to_server] << cmd
       end
     end

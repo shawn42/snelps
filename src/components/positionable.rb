@@ -20,7 +20,7 @@ module Positionable
     @rect = Rect.new args[:x]-half_tile_size,args[:y]-half_tile_size,tile_size,tile_size
 
     @tile_x, @tile_y = @map.coords_to_tiles x, y
-    position_at @tile_x, @tile_y
+#    position_at @tile_x, @tile_y
   end
 
   def hit_by?(x, y)

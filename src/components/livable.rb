@@ -22,6 +22,7 @@ module Livable
       teleport_to nil
       death_sound
       fire :death, self 
+      self.destroy
     end
   end
 

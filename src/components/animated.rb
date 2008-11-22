@@ -57,7 +57,11 @@ module Animated
   end
 
   def get_default_frame(entity_type)
-    self.class.instance_variable_get("@images")[:idle].first
+    # TODO fix this
+    images = self.class.instance_variable_get("@images")
+    seq = images[:idle]
+    seq = images[images.keys.sort_by{|k|k.to_s}.first] if seq.nil?
+    seq.first
   end
 
   def update_animated(time)
@@ -82,10 +86,10 @@ module Animated
     @image = get_default_frame(@entity_type)
 
     update_animation_length
+    animate
   end
 
   def next_frame()
-    # TODO use the class version to keep our instance from loading a copy of animations
     @frame_num = (@frame_num + 1) % @animation_length
     @image = self.class.instance_variable_get("@images")[animation_image_set][@frame_num]
   end
@@ -107,15 +111,15 @@ module Animated
   end
 
   def update_animation_length()
-    set = nil
+    @animation_length = 1
     moving_set = self.class.default_animations[:moving]
-    if !moving_set.nil? and moving_set.include? animation_image_set
+    if moving_set and moving_set.include? animation_image_set
       set = moving_set[animation_image_set] 
+      @animation_length = set[:last]-set[:first]+1 if set
     else
-      set = self.class.default_animations[:idle]
+      set = self.class.default_animations[animation_image_set]
+      @animation_length = set[:last]-set[:first]+1 if set
     end
-
-    @animation_length = set.nil? ? 1 : set[:last]-set[:first]+1
   end
 
   def animation_image_set=(set)

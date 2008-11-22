@@ -5,7 +5,7 @@ require 'publisher'
 class AbilityManager
   extend Publisher
 
-  can_fire :sound_play
+  can_fire :sound_play, :create_ent
 
   constructor :resource_manager
   
@@ -62,7 +62,9 @@ class AbilityManager
     ab_sym = nil
     if ability.nil? or ability.empty?
       # TODO add some logic here.. based on target
-      ab_sym = :move
+      # will we give the user some auto-AI here to determine
+      # auto-group actions too?
+      ab_sym = :act_upon
     else
       ab_sym = ability.downcase.to_sym
     end
@@ -78,8 +80,20 @@ class AbilityManager
 
     if group_ability
       # requires more than one ent
-      p "GROUP"
       # create new entity
+      # TODO add p_id to command?
+      p_id = 1
+      # where to create this ent?
+      x,y = nil
+      if target.is_a? Array
+        x = target[0]
+        y = target[1]
+      else
+        x = target.tile_x
+        y = target.tile_y
+      end
+
+      fire :create_ent, p_id, ab_sym, x, y, selected_ents
     else
       fire :sound_play, ab_sym
       selected_ents.each do |ent|
@@ -87,6 +101,10 @@ class AbilityManager
         ent.send ab_sym, :target => target if ent.is? :able and ent.can? ab_sym
       end
     end
+  end
+
+  def execute_group_ability(ability_entity, composing_ents)
+    ability_entity.automorph composing_ents
   end
 
 end

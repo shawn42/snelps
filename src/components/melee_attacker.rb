@@ -9,7 +9,7 @@ module MeleeAttacker
   end
 
   def setup_melee_attacker(args)
-    require_components :pathable, :able, :rangable
+    require_components :able, :rangable
     add_ability :melee_attack
     @attack_timer = 0
     @range = self.range if self.respond_to? :range

@@ -25,8 +25,17 @@ module Movable
   # tell this entity to make its way to target [x,y]
   def move(opts)
     target = opts[:target]
-    dest_tile_x = target[0].to_i
-    dest_tile_y = target[1].to_i
+
+    
+    dest_tile_x = nil
+    dest_tile_y = nil
+    if target.is_a? Array
+      dest_tile_x = target[0].to_i
+      dest_tile_y = target[1].to_i
+    else
+      dest_tile_x = target.tile_x
+      dest_tile_y = target.tile_y
+    end
     
     # seems like a bad place for this
     cancel_all_attacks if self.is? :melee_attacker

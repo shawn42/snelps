@@ -361,3 +361,29 @@
       :suffix: .png
       :first: 1
       :last: 1
+:sledgehammer: 
+  :player_id: 0
+  :z: 3
+  :health: 100
+  :armor: 5
+  :attack_power: 1000
+  :speed: 500
+  :components: 
+  - :livable
+  - :able
+  - :positionable
+  - :movable
+  - :audible
+  - :animated
+  - :drawable
+  - :rangable
+  - :melee_attacker
+  - :automorphable
+  :sounds:
+  - :attacking: worker_ack.wav
+  :animations:
+    :attacking:
+      :prefix: fire_explorer/fly_s000
+      :suffix: .png
+      :first: 1
+      :last: 8
