@@ -56,6 +56,6 @@ class Fog
   end
 
   def draw_minimap_fog(screen)
-    @mini_map_mask.blit screen, [MiniMap::MINI_MAP_X,MiniMap::MINI_MAP_Y]
+    @mini_map_mask.blit screen, [0,0]#, [MiniMap::MINI_MAP_X,MiniMap::MINI_MAP_Y]
   end
 end

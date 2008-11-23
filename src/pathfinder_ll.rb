@@ -1,15 +1,14 @@
-Node = Struct.new :x,:y,:dir,:cost,:h,:parent
+Node = Struct.new :x,:y,:z,:dir,:cost,:h,:parent
 
 class Pathfinder
   # ratio of about 1:square root of 2 (for the sake of whole #'s)
   TRAVEL_COST_STRAIGHT = 10
   TRAVEL_COST_DIAG = 14
 
-  def initialize(entity_z, entity_manager, width, height)
+  def initialize(entity_manager, width, height)
     @width = width
     @height = height
     @entity_manager = entity_manager
-    @entity_z = entity_z
   end
 
   def self.diagonal_heuristic(c,t)
@@ -22,15 +21,16 @@ class Pathfinder
   def adjacent_nodes(n)
     x = n.x
     y = n.y
+    z = n.z
     nodes = [ 
-      Node.new(x-1, y-1, :nw, TRAVEL_COST_DIAG,nil,nil),
-      Node.new(x-1, y+1, :sw, TRAVEL_COST_DIAG,nil,nil),
-      Node.new(x+1, y-1, :ne, TRAVEL_COST_DIAG,nil,nil),
-      Node.new(x+1, y+1, :se, TRAVEL_COST_DIAG ,nil,nil),
-      Node.new(x-1, y, :w, TRAVEL_COST_STRAIGHT,nil,nil),
-      Node.new(x+1, y, :e, TRAVEL_COST_STRAIGHT,nil,nil),
-      Node.new(x, y-1, :n, TRAVEL_COST_STRAIGHT,nil,nil),
-      Node.new(x, y+1, :s, TRAVEL_COST_STRAIGHT,nil,nil)
+      Node.new(x-1, y-1, z, :nw, TRAVEL_COST_DIAG,nil,nil),
+      Node.new(x-1, y+1, z, :sw, TRAVEL_COST_DIAG,nil,nil),
+      Node.new(x+1, y-1, z, :ne, TRAVEL_COST_DIAG,nil,nil),
+      Node.new(x+1, y+1, z, :se, TRAVEL_COST_DIAG ,nil,nil),
+      Node.new(x-1, y, z, :w, TRAVEL_COST_STRAIGHT,nil,nil),
+      Node.new(x+1, y, z, :e, TRAVEL_COST_STRAIGHT,nil,nil),
+      Node.new(x, y-1, z, :n, TRAVEL_COST_STRAIGHT,nil,nil),
+      Node.new(x, y+1, z, :s, TRAVEL_COST_STRAIGHT,nil,nil)
     ]
 
     nodes
@@ -40,8 +40,9 @@ class Pathfinder
   def is_valid?(n,ignore_objects)
     x = n.x
     y = n.y
+    z = n.z
     return false if(x<0 or y<0 or x>=@width or y>=@height)
-    return false if @entity_manager.has_obstacle?(x,y,@entity_z,ignore_objects)
+    return false if @entity_manager.has_obstacle?(x,y,z,ignore_objects)
     return true
   end
 
@@ -49,14 +50,14 @@ class Pathfinder
   def find(start,target,max=30,ignore_objects=[])
     # needs to reinit
 
-    target_node = Node.new target[0], target[1], nil,nil,nil,nil
+    target_node = Node.new target[0], target[1], target[2], nil,nil,nil,nil
     unless is_valid?(target_node,ignore_objects)
       # return nil if target unavailable
       return nil
     end
 
-    start_node = Node.new start[0], start[1], nil,nil,nil,nil
-    open = PriorityQueue.new(Node.new(start_node.x,start_node.y, :n, 0, Pathfinder.diagonal_heuristic(start_node,target_node), nil))
+    start_node = Node.new start[0], start[1], start[2], nil,nil,nil,nil
+    open = PriorityQueue.new(Node.new(start_node.x,start_node.y,start_node.z, :n, 0, Pathfinder.diagonal_heuristic(start_node,target_node), nil))
     @open = open
 
     #    create the closed list of nodes, initially empty
@@ -107,7 +108,7 @@ class Pathfinder
             if open_neighbor
               break if open_neighbor.h == 0
             else
-              open.insert Node.new(neighbor.x,neighbor.y,neighbor.dir,neighbor.cost,neighbor.h,nh_node)#[neighbor, ng, nh]
+              open.insert Node.new(neighbor.x,neighbor.y,neighbor.z,neighbor.dir,neighbor.cost,neighbor.h,nh_node)#[neighbor, ng, nh]
             end
           end
         end

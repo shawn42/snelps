@@ -10,6 +10,8 @@ class MiniMap
   MINI_MAP_Y = 160
   SCALE = 0.08
 
+  attr_accessor :fog
+
   def initialize(map, viewport, entity_manager)
     @last_updated = 0
     @map = map
@@ -54,10 +56,6 @@ class MiniMap
     @image = Surface.new(@map_image.size)
     @map_image.blit @image, [0,0]
 
-    x = SCALE * @viewport.x_offset
-    y = SCALE * @viewport.y_offset
-    @image.draw_box([x, y], [x+@w, y+@h], PURPLE) 
-
     # hard code the player for now (they can only see where their
     # entities are
     for ent in @entity_manager.get_player_ents(1)
@@ -65,6 +63,12 @@ class MiniMap
       enty = ent.y * SCALE
       @image.draw_circle_s [entx.floor,enty.floor], 1, RED
     end
+
+    @fog.draw_minimap_fog @image if @fog
+
+    x = SCALE * @viewport.x_offset
+    y = SCALE * @viewport.y_offset
+    @image.draw_box([x, y], [x+@w, y+@h], WHITE) 
   end
 
   def draw(destination)

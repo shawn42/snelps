@@ -1,10 +1,8 @@
 MILESTONE #1 - "move units here" campaign
- - entity creation doesn't have to happen on the server!!!
  - should attack entities (auto-morph/unmorph) actually live on the occupancy grid? or should they transcend it?
  - change gatherer/collector to keep track of which resource is held/deposited
  - change mouse hover to show if something is targetable/attackable
 
- - change map_script triggers to register for occupancy_grid changes
  - create map editor
 
  - rubygoo integration
@@ -27,11 +25,7 @@ MULTIPLAYER MILESTONE #3
 
 PROBLEMS
  - dragging settings window crashes
- - dragging on minimap doesn't work anymore
- - how will things handle images larger than the size of a tile?
-   - need to change drawing code to be bottom right based
-   - change all movement code (anything that touches occupancy_grid to use the new size stuff)
-   - change occupancy checks to check all squares the entity would occupy
+ - dragging on minimap shouldn't show selection box
  - every movable entity should have its own Pathfinder (where should it get it?)
    - or the same Pathfinder that we can pass in something to lookup map/unit occupancy
 

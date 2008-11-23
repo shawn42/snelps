@@ -23,9 +23,9 @@ module Pathable
   end
 
   def create_new_path(to_x, to_y, max=80)
-    from = [@tile_x, @tile_y]
-    to = [to_x,to_y]
-    Pathfinder.new(z, @entity_manager, @map.w, @map.h).find(from,to,max)
+    from = [@tile_x, @tile_y,z]
+    to = [to_x,to_y,z]
+    Pathfinder.new(@entity_manager, @map.w, @map.h).find(from,to,max)
   end
 
   # TODO clean up this code, there's duplicate code everywhere and its
@@ -101,11 +101,11 @@ module Pathable
   end
 
   def path_to(dest_tile_x, dest_tile_y,ignore_objects=[])
-    from = [tile_x,tile_y]
-    to = [dest_tile_x,dest_tile_y]
+    from = [tile_x,tile_y,z]
+    to = [dest_tile_x,dest_tile_y,z]
     unless @entity_manager.has_obstacle?(dest_tile_x, dest_tile_y, z,ignore_objects)
       max = 80
-      new_path = Pathfinder.new(z, @entity_manager, @map.w, @map.h).find(from,to,max,ignore_objects)
+      new_path = Pathfinder.new(@entity_manager, @map.w, @map.h).find(from,to,max,ignore_objects)
       if new_path.nil?
         stop_animating
       else
