@@ -383,7 +383,7 @@
   - :attacking: worker_ack.wav
   :animations:
     :attacking:
-      :prefix: fire_explorer/fly_s000
+      :prefix: fire_sledgehammer/attack
       :suffix: .png
       :first: 1
-      :last: 8
+      :last: 31
