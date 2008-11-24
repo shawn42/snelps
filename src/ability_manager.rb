@@ -13,6 +13,22 @@ class AbilityManager
     @abilities_config = @resource_manager.load_gameplay_config "abilities_defs"
   end
 
+  def selection_area(entities)
+    min_x = nil
+    min_y = nil
+    max_x = nil
+    max_y = nil
+    for ent in entities
+      x = ent.tile_x
+      y = ent.tile_y
+      min_x = x if min_x.nil? or x < min_x
+      min_y = y if min_y.nil? or y < min_y 
+      max_x = x if max_x.nil? or x > max_x
+      max_y = y if max_y.nil? or y > max_y
+    end
+    (max_x-min_x) * (max_y-min_y)
+  end
+
   def abilities_for(entity_selection)
     return [] if entity_selection.nil? or entity_selection.entities.empty?
 
@@ -34,6 +50,12 @@ class AbilityManager
             sufficient_ents = false
           end
         end
+        if sufficient_ents
+          if selection_area(ents) > ability_def[:morph_range]
+            sufficient_ents = false
+          end
+        end
+
         allowed_abilities << name if sufficient_ents
       end
     end

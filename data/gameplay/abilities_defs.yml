@@ -12,6 +12,7 @@
       :entity: 4
     :button: resource12.png
     :morph: true
+    :morph_range: 16
     :auto_unmorph: true
     :animations:
       :prefix: resource

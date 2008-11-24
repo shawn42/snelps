@@ -248,6 +248,8 @@ class EntityManager
     end
 
     @current_abilities = @ability_manager.abilities_for @current_selection
+
+    p @current_abilities
     selection_change
   end
 
