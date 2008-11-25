@@ -9,7 +9,7 @@ class EntityManager
 
   attr_accessor :map, :occupancy_grids, :current_selection, 
     :selections, :current_abilities, :base_entities, :players,
-    :viewable_rows, :viewable_cols
+    :viewable_rows, :viewable_cols, :current_abilities
 
   can_fire :sound_play, :network_msg_to, :occupancy_grid_created, :occupancy_change
 
@@ -47,6 +47,8 @@ class EntityManager
       ent = create_entity p_id,ab_sym,x,y
       @ability_manager.execute_group_ability ent, group
     end
+
+    @current_abilities = []
 
     @ent_id_incrementer = 0
   end

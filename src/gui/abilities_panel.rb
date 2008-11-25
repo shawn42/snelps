@@ -23,6 +23,8 @@ class AbilitiesPanel
     @h = 2 * @h_pad unless @h
     @parent = parent
     @font_manager = @parent.font_manager
+
+    # TODO register for selection change events from my parent
   end
 
   def set_padding(w_pad,h_pad)
@@ -32,7 +34,7 @@ class AbilitiesPanel
   end
 
   def render()
-    text_image = @font_manager.render :excalibur, @font_size, @abilities, true, LIGHT_GRAY
+    text_image = @font_manager.render :excalibur, @font_size, "HERE", true, LIGHT_GRAY
     @w = text_image.size[0] + 2 * @w_pad unless @options[:w]
     @h = text_image.size[1] + 2 * @h_pad unless @options[:h]
 

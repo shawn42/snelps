@@ -6,6 +6,7 @@ require 'fog'
 require 'mini_map'
 require 'occupancy_grid'
 require 'story_dialog'
+require 'abilities_panel'
 require 'inflector'
 class CampaignMode < BaseMode
   extend Publisher
@@ -170,6 +171,10 @@ class CampaignMode < BaseMode
 
     @map.entity_manager = @entity_manager
     @entity_manager.setup
+
+    @abilities_panel = AbilitiesPanel.new self, :x=>835,:y=>350,:w=>180,:h=>300
+
+
     @fog = Fog.new @map, @entity_manager, @viewport, @resource_manager
 
     @mini_map = MiniMap.new @map, @viewport, @entity_manager
@@ -225,6 +230,7 @@ class CampaignMode < BaseMode
     @map.update time unless @map.nil?
     @viewport.update time unless @viewport.nil?
     @entity_manager.update time unless @entity_manager.nil?
+    @abilities_panel.update time unless @abilities_panel.nil?
 
     # TODO, cache these trigger the re-render based on events
     vim = 0
@@ -273,6 +279,8 @@ class CampaignMode < BaseMode
     @unit_info_text.blit(destination,[630,20])
     @vim_text.blit(destination,[680,20])
     @daub_text.blit(destination,[730,20])
+
+    @abilities_panel.draw destination unless @abilities_panel.nil?
 
     @mouse_manager.draw destination
 
