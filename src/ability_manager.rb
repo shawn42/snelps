@@ -26,7 +26,9 @@ class AbilityManager
       max_x = x if max_x.nil? or x > max_x
       max_y = y if max_y.nil? or y > max_y
     end
-    (max_x-min_x) * (max_y-min_y)
+    #area
+    #(max_x-min_x) * (max_y-min_y)
+    (max_x-min_x) + (max_y-min_y)
   end
 
   def abilities_for(entity_selection)
