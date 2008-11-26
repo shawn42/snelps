@@ -8,23 +8,17 @@ module Automorphable
   end
 
   def setup_automorphable(*args)
-    @done = false
+    @ttl = self.ttl
 
-    # XXX take this out
-    @run_time = 0
-
+    # this will go into the melee_attackable
     self.animation_image_set = :attacking
     self.animate
   end
 
   def update_automorphable(time)
-    unmorph if done?
+    unmorph unless @ttl > 0
 
-    # XXX take this out
-    @run_time += time
-    if @run_time > 2000
-      @done = true
-    end
+    @ttl -= time
   end
 
   def automorph(composing_ents)
@@ -50,10 +44,6 @@ module Automorphable
     puts "automorph finished"
     release_ents
     self.destroy
-  end
-
-  def done?
-    @done
   end
 
 end

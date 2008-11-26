@@ -1,8 +1,8 @@
 MILESTONE #1 - "move units here" campaign
  - morphing abilities
    - should attack entities (auto-morph/unmorph) actually live on the occupancy grid? or should they transcend it?
-   - group ablilities should only be allowed if units are within a certain range of each other
-
+   - unit creation should pass along any target info it has
+   - melee_attack/move/etc should respect :auto_melee_attack: true
 
  - change gatherer/collector to keep track of which resource is held/deposited
  - change mouse hover to show if something is targetable/attackable

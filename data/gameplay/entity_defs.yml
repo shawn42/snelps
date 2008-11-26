@@ -363,6 +363,7 @@
       :last: 1
 :sledgehammer: 
   :player_id: 0
+  :ttl: 2000
   :z: 3
   :health: 100
   :armor: 5
