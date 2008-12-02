@@ -6,11 +6,6 @@ class ModeContainer < Rubygoo::Container
 
   can_fire :start_game, :resized
 
-#  constructor :resource_manager, :font_manager, :sound_manager, :input_manager,
-#    :network_manager, :turn_manager, :mouse_manager, :snelps_screen,
-#    :campaign_mode, :main_menu_mode
-
-  # TODO do I need these?
   def initialize(opts)
     @resource_manager = opts[:resource_manager]
     @font_manager = opts[:font_manager]
@@ -25,14 +20,21 @@ class ModeContainer < Rubygoo::Container
     @mouse_view = CampaignMouseView.new :mouse => @mouse_manager,
       :resource_manager => @resource_manager
       
-
     super :w => @snelps_screen.size[0], 
       :h => @snelps_screen.size[1]
     setup
-    add @mouse_view
+
+    add @main_menu_mode#, @mouse_view
   end
 
-  def key_pressed(evt)
+  # XXX this feels like a hack, where should this really go?
+  # should I subscribe to myself for :added event?
+  def added()
+    super
+    self.app.mouse = @mouse_view
+  end
+
+  def key_released(evt)
     dispatch_mode_event :handle_key_up, evt
   end
 
@@ -47,7 +49,6 @@ class ModeContainer < Rubygoo::Container
 
   def mouse_drag(evt)
     @mouse_manager.mouse_up evt
-#    @mouse_manager.mouse_down evt
     dispatch_mode_event :handle_mouse_drag, @mouse_manager.start_x,@mouse_manager.start_y, evt
   end
 
@@ -59,7 +60,6 @@ class ModeContainer < Rubygoo::Container
   def mouse_dragging(evt)
     @mouse_manager.mouse_motion evt
     dispatch_mode_event :handle_mouse_dragging, @mouse_manager.start_x,@mouse_manager.start_y, evt
-#    dispatch_mode_event :handle_mouse_dragging, evt
   end
 
   def setup()
@@ -91,7 +91,7 @@ class ModeContainer < Rubygoo::Container
   end
 
   def dispatch_mode_event(name, *args)
-    @modes[@mode].send(name, *args)
+    @modes[@mode].send(name, *args) if @mode == :campaign_play
   end
   
   def change_mode_to(mode, *args)
@@ -101,13 +101,13 @@ class ModeContainer < Rubygoo::Container
   end
 
   def update(time)
-    @modes[@mode].update time
+    @modes[@mode].update time if @mode == :campaign_play
   end
 
   def draw(renderer)
-    @modes[@mode].handle_draw @snelps_screen.screen
-
-    super renderer
+    if @mode == :campaign_play
+      @modes[@mode].handle_draw @snelps_screen.screen 
+    end
   end
 
   def focussed?()

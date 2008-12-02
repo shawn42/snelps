@@ -12,6 +12,8 @@ class MouseManager < Rubygoo::Widget
   
   constructor :viewport, :resource_manager
   def setup
+    @x = 0
+    @y = 0
     @viewport.when :screen_scroll do |delta|
       screen_scrolled delta[0], delta[1]
     end

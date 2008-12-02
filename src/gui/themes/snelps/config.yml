@@ -1,15 +1,20 @@
 --- 
 Rubygoo::App: 
-  :bg_color: :Black
+  :bg_color: :Purple
 Rubygoo::Container: 
   :bg_color: :none
 Rubygoo::Widget: 
-  :font: Vera.ttf
-  :font_size: 20
-  :color: :Black
+  :font: excalibur.ttf
+  :font_size: 30
+  :color: :LightGray
   :focus_color: :FireBrick
   :bg_color: :Gray
   :border_color: :FireBrick
+  :hover_color:
+    - 55
+    - 55
+    - 55
+    - 155
 Rubygoo::Button: 
   :bg_color: :DimGray
 Rubygoo::CheckBox:
@@ -23,3 +28,5 @@ Rubygoo::TextField:
 Rubygoo::MouseCursor:
   :color: :Snow
   :mouse_cursor: cursor.png
+Rubygoo::Dialog:
+  :bg_color: :MediumPurple

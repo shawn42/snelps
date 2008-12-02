@@ -56,8 +56,6 @@ class CampaignMode < BaseMode
       @viewport.jump :up
     when K_DOWN
       @viewport.jump :down
-    when K_Q
-      fire :mode_change, :main_menu
     when K_ESCAPE
       fire :mode_change, :main_menu
     else
@@ -282,17 +280,12 @@ class CampaignMode < BaseMode
 
     @abilities_panel.draw destination unless @abilities_panel.nil?
 
-    @mouse_manager.draw destination
+#    @mouse_manager.draw destination
 
   end
 
   def key_up(event)
-    case event.key
-    when K_Q
-      fire :mode_change, :main_menu
-    when K_ESCAPE
-      fire :mode_change, :main_menu
-    end
+    fire :mode_change, :main_menu if event.data[:key] == K_ES
   end
 
 end

@@ -1,50 +1,49 @@
 require 'publisher'
-require 'dialog'
-class SettingsDialog < Dialog
+class SettingsDialog < Rubygoo::Dialog
   extend Publisher
-  can_fire :destroy_modal_dialog
+  can_fire :save
 
   attr_accessor :settings
-  def setup(*args)
-    @settings = args.shift
+  def initialize(opts)
+    super opts
+    @settings = opts[:settings]
 
-    @layout = AbsoluteLayout.new self, @font_manager, 
-      {
-        :title=>"Snelps Settings",
-        :x=>100,
-        :y=>100,
-        :w=>824,
-        :h=>600
-      }
-    fs_check = CheckBox.new @layout, "Sound enabled", :checked => @settings[:sound] do |c|
+    title = Rubygoo::Label.new "Snelps Settings", :x=>30,:y=>5, :relative => true
+    add title
+
+    # TODO add labels to checkboxes
+    sound_check = Rubygoo::CheckBox.new :label=>"Sound enabled", :checked => @settings[:sound], :x=>30, :y=> 80, :w=>20, :h=>20, :relative=>true
+    sound_check.on :checked do |c|
       @settings[:sound] = c.checked?
     end
-    @layout.add fs_check, 100, 60
+    add sound_check
 
-    sound_check = CheckBox.new @layout, "Fullscreen", :checked => @settings[:fullscreen] do |c|
+    fs_check = Rubygoo::CheckBox.new :label=>"Fullscreen", :checked => @settings[:fullscreen], :x=>30, :y=> 130, :w=>20, :h=>20, :relative=>true
+    fs_check.on :checked do |c|
       @settings[:fullscreen] = c.checked?
     end
-    @layout.add sound_check, 150, 220
+    add fs_check
 
-    button = Button.new @layout, "Cancel" do |b|
+    cancel_button = Rubygoo::Button.new "Cancel", :x=>150,:y=>400,:relative=>true
+    cancel_button.when :pressed do |b|
       close
     end
-    @layout.add button, 150, 450
-    button = Button.new @layout, "OK" do |b|
-      apply
+    add cancel_button
+
+    ok_button = Rubygoo::Button.new "OK", :x=>50,:y=>400,:relative=>true
+    ok_button.when :pressed do |b|
+      fire :save, self
       close
     end
-    @layout.add button, 450, 450
+    add ok_button
   end
 
-  def on_key_up(event)
-    case event.key
+  def key_released(event)
+    case event.data[:key]
     when K_ESCAPE
       close
-    when K_Q
-      close
     else
-      @layout.key_up event
+      p event
     end
   end
 end

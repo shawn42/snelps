@@ -10,6 +10,11 @@ class CampaignMouseView < Rubygoo::Widget
     super opts
   end
 
+  def mouse_motion(event)
+    @x = event.data[:x]
+    @y = event.data[:y]
+  end
+
   def draw(dest)
     if @mouse.dragging?
       dest.draw_box(@mouse.start_x, @mouse.start_y, @mouse.x, @mouse.y, Rubygoo::GooColor.css_color(:Green))
@@ -21,6 +26,6 @@ class CampaignMouseView < Rubygoo::Widget
       h = sorted_y[1] - y
       dest.fill(@mouse.start_x, @mouse.start_y, @mouse.x, @mouse.y, Rubygoo::GooColor.css_color(:Green, 100))
     end
-    dest.draw_image(@cursor, @mouse.x-16, @mouse.y-16)
+    dest.draw_image(@cursor, @x-16, @y-16)
   end
 end
