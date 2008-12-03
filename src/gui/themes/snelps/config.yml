@@ -30,3 +30,5 @@ Rubygoo::MouseCursor:
   :mouse_cursor: cursor.png
 Rubygoo::Dialog:
   :bg_color: :MediumPurple
+IntroMode:
+  :bg_color: :Black

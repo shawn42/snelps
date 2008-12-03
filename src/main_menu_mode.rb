@@ -1,24 +1,22 @@
 require 'rubygoo'
 require 'publisher'
-require 'button'
 require 'settings_dialog'
-require 'base_mode'
-require 'absolute_layout'
-class MainMenuMode < Rubygoo::Container #BaseMode
+
+class MainMenuMode < Rubygoo::Container 
   extend Publisher
 
-  attr_accessor :font_manager, :modal_dialogs, :x, :y
   can_fire :mode_change, :music_play, :music_stop, :sound_play,
     :network_msg_to, :config_manager
 
   def initialize(opts)
     @resource_manager = opts[:resource_manager]
-    @font_manager = opts[:font_manager]
     @snelps_screen = opts[:snelps_screen]
     @config_manager = opts[:config_manager]
 
     opts[:w] = @snelps_screen.size[0]
     opts[:h] = @snelps_screen.size[1]
+    opts[:visible] = false
+    opts[:enabled] = false
     super opts
 
     build_gui

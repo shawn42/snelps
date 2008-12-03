@@ -39,11 +39,6 @@ class SettingsDialog < Rubygoo::Dialog
   end
 
   def key_released(event)
-    case event.data[:key]
-    when K_ESCAPE
-      close
-    else
-      p event
-    end
+    close if event.data[:key] == K_ESCAPE
   end
 end

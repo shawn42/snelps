@@ -14,6 +14,7 @@ class ModeContainer < Rubygoo::Container
     @turn_manager = opts[:turn_manager]
     @snelps_screen = opts[:snelps_screen]
     @campaign_mode = opts[:campaign_mode]
+    @intro_mode = opts[:intro_mode]
     @main_menu_mode = opts[:main_menu_mode]
     @mouse_manager = opts[:mouse_manager]
 
@@ -24,7 +25,7 @@ class ModeContainer < Rubygoo::Container
       :h => @snelps_screen.size[1]
     setup
 
-    add @main_menu_mode#, @mouse_view
+    add @main_menu_mode, @intro_mode
   end
 
   # XXX this feels like a hack, where should this really go?
@@ -66,6 +67,7 @@ class ModeContainer < Rubygoo::Container
     @modes = {}
     @modes[:main_menu] = @main_menu_mode
     @modes[:campaign_play] = @campaign_mode
+    @modes[:intro] = @intro_mode
 
     @modes.each do |k,m|
       m.when :mode_change do |new_mode,*args|
@@ -87,7 +89,7 @@ class ModeContainer < Rubygoo::Container
 
     @network_manager[:from_server].when :msg_received do |e| dispatch_mode_event :handle_network, e end
   
-    change_mode_to :main_menu
+    change_mode_to :intro
   end
 
   def dispatch_mode_event(name, *args)

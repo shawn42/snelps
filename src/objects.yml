@@ -14,6 +14,7 @@ mode_container:
     - network_manager
     - turn_manager
     - main_menu_mode
+    - intro_mode
     - campaign_mode
     - snelps_screen
     - mouse_manager
@@ -44,7 +45,11 @@ entity_manager:
     - ability_manager
 main_menu_mode:
   compose:
-    - font_manager
+    - resource_manager
+    - config_manager
+    - snelps_screen
+intro_mode:
+  compose:
     - resource_manager
     - config_manager
     - snelps_screen

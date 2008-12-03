@@ -27,11 +27,17 @@ class SoundManager
 
     if @enabled
       STDOUT.puts "loading background music..."
+      STDOUT.puts "TODO, load sounds/music from config file"
       @music = {}
       @music[:background_music] = @resource_manager.load_music("Ethan1.ogg")
       @music[:background_music].fade_out 3
       @music[:menu_music] = @resource_manager.load_music("loop.ogg")
       @music[:menu_music].fade_out 3
+
+
+      @music[:intro_music] = @resource_manager.load_music("intro.ogg")
+      @music[:intro_music].fade_out 3
+
 
       @sounds = {}
       @sounds[:move] = @resource_manager.load_sound("whiff.ogg")
