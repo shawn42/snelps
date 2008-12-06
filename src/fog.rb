@@ -48,11 +48,8 @@ class Fog
   end
 
   def draw(screen)
-    x_soff = @viewport.screen_x_offset
-    y_soff = @viewport.screen_y_offset
-
     wx,wy = *@viewport.world_to_view(0,0)
-    @mask_image.blit screen, [wx+x_soff,wy+y_soff]
+    @mask_image.blit screen, [wx,wy]
   end
 
   def draw_minimap_fog(screen)

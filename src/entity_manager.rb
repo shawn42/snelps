@@ -3,6 +3,8 @@ require 'publisher'
 require 'commands'
 require 'entity'
 require 'entity_selection'
+require 'occupancy_grid'
+
 class EntityManager
   extend Publisher
   include Commands
@@ -300,7 +302,9 @@ class EntityManager
     end
   end
 
-  def handle_mouse_drag(x, y, event)
+  def handle_mouse_drag(event)
+    x = event.data[:start_x]
+    y = event.data[:start_y]
     new_x = event.data[:x]
     new_y = event.data[:y]
 		x_array = [x, new_x].sort
@@ -375,6 +379,8 @@ class EntityManager
   end
 
   def create_entity(p_id, entity_type, tile_x, tile_y)
+#    puts "#{p_id} #{entity_type} #{tile_x},#{tile_y}"
+#    puts "#{occupancy_grids.size}"
     x, y = @map.tiles_to_coords(tile_x.to_i,tile_y.to_i)
     ent_id = @ent_id_incrementer += 1
     klass = Object.const_get Inflector.camelize(entity_type)

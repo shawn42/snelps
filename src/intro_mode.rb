@@ -4,7 +4,7 @@ class IntroMode < Rubygoo::Container
   extend Publisher
 
   can_fire :mode_change, :music_play, :music_stop, :sound_play,
-    :network_msg_to, :config_manager
+    :network_msg_to
 
   def initialize(opts)
     @resource_manager = opts[:resource_manager]

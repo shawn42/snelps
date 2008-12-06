@@ -25,7 +25,7 @@ class ModeContainer < Rubygoo::Container
       :h => @snelps_screen.size[1]
     setup
 
-    add @main_menu_mode, @intro_mode
+    add @main_menu_mode, @intro_mode, @campaign_mode
   end
 
   # XXX this feels like a hack, where should this really go?
@@ -35,32 +35,24 @@ class ModeContainer < Rubygoo::Container
     self.app.mouse = @mouse_view
   end
 
-  def key_released(evt)
-    dispatch_mode_event :handle_key_up, evt
-  end
-
   def mouse_down(evt)
     @mouse_manager.mouse_down evt
   end
 
   def mouse_up(evt)
     @mouse_manager.mouse_up evt
-    dispatch_mode_event :handle_click, evt
   end
 
   def mouse_drag(evt)
     @mouse_manager.mouse_up evt
-    dispatch_mode_event :handle_mouse_drag, @mouse_manager.start_x,@mouse_manager.start_y, evt
   end
 
   def mouse_motion(evt)
     @mouse_manager.mouse_motion evt
-    dispatch_mode_event :handle_mouse_motion, evt
   end
 
   def mouse_dragging(evt)
     @mouse_manager.mouse_motion evt
-    dispatch_mode_event :handle_mouse_dragging, @mouse_manager.start_x,@mouse_manager.start_y, evt
   end
 
   def setup()
@@ -87,29 +79,18 @@ class ModeContainer < Rubygoo::Container
       end
     end
 
-    @network_manager[:from_server].when :msg_received do |e| dispatch_mode_event :handle_network, e end
+    @network_manager[:from_server].when :msg_received do |e| 
+      @modes[@mode].on_network e 
+#      dispatch_mode_event :handle_network, e 
+    end
   
     change_mode_to :intro
   end
 
-  def dispatch_mode_event(name, *args)
-    @modes[@mode].send(name, *args) if @mode == :campaign_play
-  end
-  
   def change_mode_to(mode, *args)
     @modes[@mode].stop unless @modes[@mode].nil?
     @mode = mode
     @modes[@mode].start *args
-  end
-
-  def update(time)
-    @modes[@mode].update time if @mode == :campaign_play
-  end
-
-  def draw(renderer)
-    if @mode == :campaign_play
-      @modes[@mode].handle_draw @snelps_screen.screen 
-    end
   end
 
   def focussed?()

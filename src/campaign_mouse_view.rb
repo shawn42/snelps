@@ -17,14 +17,14 @@ class CampaignMouseView < Rubygoo::Widget
 
   def draw(dest)
     if @mouse.dragging?
-      dest.draw_box(@mouse.start_x, @mouse.start_y, @mouse.x, @mouse.y, Rubygoo::GooColor.css_color(:Green))
+      dest.draw_box(@mouse.start_x, @mouse.start_y, @mouse.x, @mouse.y, Rubygoo::GooColor.color(:Green))
       sorted_x = [@mouse.x,@mouse.start_x].sort
       sorted_y = [@mouse.y,@mouse.start_y].sort
       x = sorted_x[0]
       y = sorted_y[0]
       w = sorted_x[1] - x
       h = sorted_y[1] - y
-      dest.fill(@mouse.start_x, @mouse.start_y, @mouse.x, @mouse.y, Rubygoo::GooColor.css_color(:Green, 100))
+      dest.fill(@mouse.start_x, @mouse.start_y, @mouse.x, @mouse.y, Rubygoo::GooColor.color(:Green, 100))
     end
     dest.draw_image(@cursor, @x-16, @y-16)
   end

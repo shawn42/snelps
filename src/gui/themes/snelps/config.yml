@@ -15,8 +15,9 @@ Rubygoo::Widget:
     - 55
     - 55
     - 155
-Rubygoo::Button: 
-  :bg_color: :DimGray
+Rubygoo::Label: 
+  :bg_color: :none
+  :border_color: :none
 Rubygoo::CheckBox:
   :checked_color: :FireBrick
 Rubygoo::TextField:

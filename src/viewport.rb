@@ -3,12 +3,12 @@ class Viewport
   extend Publisher
   can_fire :screen_scroll
 
-  SCROLL_DELAY = 40
+  SCROLL_DELAY = 30
   ACTIVE_EDGE_WIDTH = 35
   SCROLL_SPEED = 3#0.7
   JUMP_DISTANCE = 32*6#0.7
   attr_accessor :x_offset, :y_offset, :world_width, :world_height,
-    :screen_x_offset, :screen_y_offset, :width, :height
+    :screen_x_offset, :screen_y_offset, :width, :height, :vx, :vy
 
   constructor :snelps_screen, :config_manager
 
@@ -22,16 +22,6 @@ class Viewport
     @vx = 0
     @vy = 0
     @last_update_time = 0
-
-    # used for scroll detection
-    @ll_view_line = @screen_x_offset
-    @lr_view_line = @screen_x_offset + ACTIVE_EDGE_WIDTH
-    @rl_view_line = @screen_x_offset + @width - ACTIVE_EDGE_WIDTH
-    @rr_view_line = @screen_x_offset + @width
-    @tt_view_line = @screen_y_offset
-    @tb_view_line = @screen_y_offset + ACTIVE_EDGE_WIDTH
-    @bt_view_line = @screen_y_offset + @height - ACTIVE_EDGE_WIDTH
-    @bb_view_line = @screen_y_offset + @height
   end
 
   def set_map_size(width, height)
@@ -138,35 +128,6 @@ class Viewport
     @vx = 0
 
     fire :screen_scroll, [orig_x_offset-@x_offset,orig_y_offset-@y_offset]
-  end
-
-  def scroll(event)
-    mouse_x = event.data[:x]
-    mouse_y = event.data[:y]
-
-    if @ll_view_line < mouse_x and mouse_x < @lr_view_line
-      unless max_left?
-        @vx = (mouse_x - @screen_x_offset - ACTIVE_EDGE_WIDTH) * SCROLL_SPEED
-      end
-    elsif @rl_view_line < mouse_x and mouse_x < @rr_view_line
-      unless max_right?
-        @vx = (ACTIVE_EDGE_WIDTH - (@width - mouse_x + @screen_x_offset)) * SCROLL_SPEED
-      end
-    else
-      @vx = 0
-    end
-
-    if @tb_view_line > mouse_y and mouse_y > @tt_view_line
-      unless max_up?
-        @vy = (mouse_y - @screen_y_offset - ACTIVE_EDGE_WIDTH) * SCROLL_SPEED
-      end
-    elsif @bb_view_line > mouse_y and mouse_y > @bt_view_line
-      unless max_bottom?
-        @vy = (ACTIVE_EDGE_WIDTH - (@height - mouse_y + @screen_y_offset)) * SCROLL_SPEED
-      end
-    else
-      @vy = 0
-    end
   end
 
   # used when drawing, drawing is done on a surface not the screen

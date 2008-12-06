@@ -7,10 +7,11 @@ class MiniMap
 
   MINI_MAP_UPDATE_TIME = 200
   MINI_MAP_X = 850
-  MINI_MAP_Y = 160
+  MINI_MAP_Y = 150
   SCALE = 0.08
 
   attr_accessor :fog
+  attr_reader :image
 
   def initialize(map, viewport, entity_manager)
     @last_updated = 0
@@ -70,22 +71,14 @@ class MiniMap
     y = SCALE * @viewport.y_offset
     @image.draw_box([x, y], [x+@w, y+@h], WHITE) 
   end
-
-  def draw(destination)
-    @image.blit destination, [MINI_MAP_X,MINI_MAP_Y]
-  end
   
   protected
   def translate_event_coords(event)
-    pos = 
-    x_click = event.data[:x]
-    y_click = event.data[:y]
+    x_click = event.data[:x] + @viewport.screen_x_offset
+    y_click = event.data[:y] + @viewport.screen_y_offset
 
-    scaled_x = x_click - MINI_MAP_X
-    scaled_y = y_click - MINI_MAP_Y
-    
-    x = scaled_x / SCALE + @viewport.screen_x_offset
-    y = scaled_y / SCALE + @viewport.screen_y_offset
+    x = x_click / SCALE + @viewport.screen_x_offset
+    y = y_click / SCALE + @viewport.screen_y_offset
     return x, y
   end
 end

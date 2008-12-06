@@ -31,30 +31,30 @@ class MainMenuMode < Rubygoo::Container
     warrior = Rubygoo::Icon.new :x=>300,:y=>90,:icon=>@warrior_image
     add warrior
 
-    button = Rubygoo::Button.new "Campaign", :x=>150,:y=>550 
+    button = Rubygoo::Button.new "Campaign", :x=>150,:y=>550, :x_pad=>40,:y_pad=>40
     button.when :pressed do |b|
       fire :mode_change, :campaign_play, "snelps"
     end
     add button
 
-    button = Rubygoo::Button.new "Quit",:x=>712,:y=>550 
+    button = Rubygoo::Button.new "Quit",:x=>712,:y=>550, :x_pad=>40,:y_pad=>40
     button.when :pressed do |b|
       throw :rubygame_quit
     end
     add button
 
-    button = Rubygoo::Button.new "Settings",:x=>450,:y=>550
+    button = Rubygoo::Button.new "Settings",:x=>450,:y=>550, :x_pad=>40,:y_pad=>40
     button.when :pressed do |b|
       settings = @config_manager.settings.dup
 
       # TODO finish RUBYGOO
-      settings_dialog = SettingsDialog.new :modal => app, :x=>100, :y=>100, :w=>824, :h=>600, :settings => settings
+      settings_dialog = SettingsDialog.new :modal => app, :x=>150, :y=>100, :w=>824, :h=>600, :settings => settings
       settings_dialog.when :save do |d|
         @config_manager[:fullscreen] = d.settings[:fullscreen]
         @config_manager[:sound] = d.settings[:sound]
         @config_manager.save
       end
-      settings_dialog.show
+      settings_dialog.display
     end
     add button
   end

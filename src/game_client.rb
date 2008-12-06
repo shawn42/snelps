@@ -1,5 +1,5 @@
 class GameClient
-  STEP_SIZE = 25.0
+  STEP_SIZE = 20.0
 
   attr_accessor :viewport
   constructor :mode_container, :snelps_screen, :input_manager

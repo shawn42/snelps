@@ -1,27 +1,39 @@
+require 'rubygoo'
 require 'publisher'
-require 'base_mode'
 require 'player'
 require 'map'
 require 'fog'
 require 'mini_map'
-require 'occupancy_grid'
-require 'story_dialog'
-require 'abilities_panel'
-require 'inflector'
-class CampaignMode < BaseMode
+require 'gameplay_view'
+require 'mini_map_view'
+
+class CampaignMode < Rubygoo::Container
   extend Publisher
   include Commands
 
   can_fire :mode_change, :music_play, :music_stop, :sound_play,
     :network_msg_to
 
-  attr_accessor :mini_map, :font_manager
-  constructor :resource_manager, :font_manager, :entity_manager,
-    :viewport, :snelps_screen, :network_manager, :mouse_manager,
-    :entity_builder
+  def initialize(opts)
+    @resource_manager = opts[:resource_manager]
+    @snelps_screen = opts[:snelps_screen]
+    @config_manager = opts[:config_manager]
+    @entity_manager = opts[:entity_manager]
+    @viewport = opts[:viewport]
+    @network_manager = opts[:network_manager]
+    @entity_builder = opts[:entity_builder]
+
+    opts[:w] = @snelps_screen.size[0]
+    opts[:h] = @snelps_screen.size[1]
+    opts[:visible] = false
+    opts[:enabled] = false
+    super opts
+
+    setup
+    build_gui
+  end
 
   def setup()
-    base_setup
     @players ||= []
     @entity_manager.players = @players
 
@@ -31,22 +43,82 @@ class CampaignMode < BaseMode
     @entity_manager.when :network_msg_to do |cmd|
       fire :network_msg_to, cmd
     end
-    #TODO screen widths?
-    @view_screen = Surface.new([824, 760])
-    @background = Surface.new(@snelps_screen.size)
+  end
 
-    @title_text = @font_manager.render(:excalibur, 30, "Snelps",true, LIGHT_GRAY)
+  def build_gui()
 
-    @unit_info_text = @font_manager.render(:excalibur, 10, "5/20",true, LIGHT_GRAY)
-    @vim_text = @font_manager.render(:excalibur, 10, "Vim: 20",true, LIGHT_GRAY)
-    @daub_text = @font_manager.render(:excalibur, 10, "Daub: 44",true, LIGHT_GRAY)
+    # ACTUAL GAMEPLAY
+    @gameplay_view = GameplayView.new(:x=>10,:y=>30,:w=>1024-60,:h=>800-50, :visible=>false)
+    add @gameplay_view
+
+    # GUI LABELS
+    add Rubygoo::Label.new("Snelps", :x=>60)
+    add Rubygoo::Label.new("5/20", :x=>630, :y=>20, :font_size=>10)
+    add Rubygoo::Label.new("Vim 200", :x=>680, :y=>20, :font_size=>10)
+    add Rubygoo::Label.new("Daub 200", :x=>730, :y=>20, :font_size=>10)
+
+    # MINIMAP
+    @mini_map_view = MiniMapView.new :x=>850, :y=>150, :visible=>false
+    add @mini_map_view
 
     @unscaled_warrior_image = 
       @resource_manager.load_image 'warrior_concept.png'
     @warrior_image = @unscaled_warrior_image.zoom([0.2,0.2],true).flip(true,false)
+    add Rubygoo::Icon.new(:icon=>@warrior_image,:x=>800)
+
+
+    scroll_w = Viewport::ACTIVE_EDGE_WIDTH
+    # scrolling hotspots
+    scroll_right = Rubygoo::Widget.new :x=>989,:y=>0,
+      :w=>scroll_w,:h=>800
+    # TODO update publisher to allow easier hooking of many events to one callback
+    scroll_right.when :mouse_exit do |evt|
+      @viewport.vx = 0
+    end
+    scroll_right.when :mouse_motion do |evt|
+      if scroll_right.mouse_over?
+        @viewport.vx += Viewport::SCROLL_SPEED
+      end
+    end
+    scroll_left = Rubygoo::Widget.new :x=>0,:y=>0,
+      :w=>scroll_w,:h=>800
+    scroll_left.when :mouse_exit do |evt|
+      @viewport.vx = 0
+    end
+    scroll_left.when :mouse_motion do |evt|
+      if scroll_left.mouse_over?
+        @viewport.vx -= Viewport::SCROLL_SPEED
+      end
+    end
+    scroll_up = Rubygoo::Widget.new :x=>0,:y=>0,
+      :w=>1024,:h=>scroll_w
+    scroll_up.when :mouse_exit do |evt|
+      @viewport.vy = 0
+    end
+    scroll_up.when :mouse_motion do |evt|
+      if scroll_up.mouse_over?
+        @viewport.vy -= Viewport::SCROLL_SPEED
+      end
+    end
+    scroll_down = Rubygoo::Widget.new :x=>0,:y=>765,
+      :w=>1024,:h=>scroll_w
+    scroll_down.when :mouse_exit do |evt|
+      @viewport.vy = 0
+    end
+    scroll_down.when :mouse_motion do |evt|
+      if scroll_down.mouse_over?
+        @viewport.vy += Viewport::SCROLL_SPEED
+      end
+    end
+
+    add scroll_right, scroll_left, scroll_up, scroll_down
   end
 
-  def on_key_up(event)
+  def update(time)
+    @viewport.update time if @viewport
+  end
+
+  def key_released(event)
     case event.data[:key]
     when K_LEFT
       @viewport.jump :left
@@ -63,68 +135,6 @@ class CampaignMode < BaseMode
     end
   end
 
-  def on_click(event)
-    if @mini_map and @mini_map.hit_by? event.data[:x], event.data[:y]
-      @mini_map.handle_mouse_click event
-    else
-      @entity_manager.handle_mouse_click event
-    end
-  end
-
-  def on_mouse_dragging(x, y, event)
-    if @mini_map and @mini_map.hit_by? event.data[:x], event.data[:y]
-      @mini_map.handle_mouse_dragging event
-    end
-  end
-
-  def on_mouse_motion(event)
-    @viewport.scroll event
-  end
-
-  def on_mouse_drag(start_x,start_y,event)
-    @entity_manager.handle_mouse_drag start_x, start_y, event
-  end
-
-  def on_network(event)
-    # TODO, shouldn't do this, these should come from the turn manager
-    # TODO can we break these down into target:method?
-    pieces = event.split(':')
-    cmd = pieces[0]
-    case cmd
-    when PLAYER_JOIN
-      # parse player from event
-      id = pieces[2].to_i
-      snelp = Player::SNELPS[pieces[1].to_i]
-      local = true if pieces[3] == "L"
-
-      player = Player.new :snelp => snelp, :server_id => id, :local => local
-      player.setup
-      @players << player
-
-      @local_player = player if local
-    else
-      target_pieces = pieces[0].split('_')
-      prefix = target_pieces[0]
-      case prefix
-      when ENTITY_PREFIX
-#        case cmd
-#        when ENTITY_CREATE
-#          @entity_manager.handle_create event
-#        when ENTITY_MOVE
-#          @entity_manager.handle_move event
-#        when ENTITY_MELEE_ATTACK
-#          @entity_manager.handle_attack event
-#        when ENTITY_GATHER
-#          @entity_manager.handle_gather event
-#        else
-          @entity_manager.handle event
-#        end
-      else
-        p "unknown network event: [#{prefix} - #{cmd} - #{event}]"
-      end
-    end
-  end
-
   def start(*args)
     @map = nil
 
@@ -133,25 +143,19 @@ class CampaignMode < BaseMode
 
     @current_stage = @campaign[:stages].shift
     campaign_step @current_stage
+
+    self.show
+
   end
 
   def campaign_step(stage)
-    @playing = false
-
-    modal_dialog StoryDialog, stage[:before_story] do |d|
+    #    TODO RUBYGOO DIALOG
+#    modal_dialog StoryDialog, stage[:before_story] do |d|
       start_next_map stage
-    end
-  end
-
-  def stop(*args)
-    fire :music_stop, :background_music
-    @playing = false
-#    @snelps_screen.show_cursor = true
+#    end
   end
 
   def start_next_map(stage)
-
-#    @snelps_screen.show_cursor = false
 
     #TODO get this from main_menu_mode
     # lets make the player a fire snelp
@@ -170,7 +174,7 @@ class CampaignMode < BaseMode
     @map.entity_manager = @entity_manager
     @entity_manager.setup
 
-    @abilities_panel = AbilitiesPanel.new self, :x=>835,:y=>350,:w=>180,:h=>300
+#    @abilities_panel = AbilitiesPanel.new self, :x=>835,:y=>350,:w=>180,:h=>300
 
 
     @fog = Fog.new @map, @entity_manager, @viewport, @resource_manager
@@ -218,74 +222,55 @@ class CampaignMode < BaseMode
       @network_manager[:to_server] << cmd
     end
 
+    # GUI STUFF
+    @view_screen = Surface.new([@viewport.width, @viewport.height])
+    @gameplay_view.view_screen = @view_screen
+    @gameplay_view.map = @map
+    @gameplay_view.entity_manager = @entity_manager
+    @gameplay_view.fog = @fog
+
+    @mini_map_view.mini_map = @mini_map
+
     @map.start_script
-    @playing = true
+    @gameplay_view.show
+    @mini_map_view.show
   end
 
-  def update(time)
-    return unless @playing
-    @mini_map.update time unless @mini_map.nil?
-    @map.update time unless @map.nil?
-    @viewport.update time unless @viewport.nil?
-    @entity_manager.update time unless @entity_manager.nil?
-    @abilities_panel.update time unless @abilities_panel.nil?
+  def on_network(event)
+    # TODO, shouldn't do this, these should come from the turn manager
+    pieces = event.split(':')
+    cmd = pieces[0]
+    case cmd
+    when PLAYER_JOIN
+      # parse player from event
+      id = pieces[2].to_i
+      snelp = Player::SNELPS[pieces[1].to_i]
+      local = true if pieces[3] == "L"
 
-    # TODO, cache these trigger the re-render based on events
-    vim = 0
-    daub = 0
-    vim = @local_player.vim if @local_player
-    daub = @local_player.daub if @local_player
-    @vim_text = @font_manager.render(:excalibur, 10, "Vim: #{vim}",true, LIGHT_GRAY)
-    @daub_text = @font_manager.render(:excalibur, 10, "Daub: #{daub}",true, LIGHT_GRAY)
+      player = Player.new :snelp => snelp, :server_id => id, :local => local
+      player.setup
+      @players << player
 
-    @unit_info_text = @font_manager.render(:excalibur, 10, "5/20",true, LIGHT_GRAY)
-  end
-  
-  def draw(destination)
-    return unless @playing
-
-    @background.blit destination, [0,0]
-
-    # TODO move all this to a layout of somekind?
-    # maybe finally bite the bullet and switch to rubygoo?
-#    @layout = AbsoluteLayout.new self, @font_manager
-#    button = Button.new @layout, "Campaign" do |b|
-#      fire :mode_change, :campaign_play, "snelps"
-#    end
-#    @layout.add button, 150, 550
-#
-#    info_bar = Container.new
-
-    @map.draw @view_screen unless @map.nil?
-    @entity_manager.draw @view_screen unless @entity_manager.nil?
-
-    @view_screen.blit destination, [10,36]
-
-    @fog.draw destination
-
-    destination.draw_box_s([0, 35], [10, 800], LIGHT_PURPLE)
-    destination.draw_box_s([10, 794], [1024, 800], LIGHT_PURPLE)
-    destination.draw_box_s([824, 35], [1024, 794], LIGHT_PURPLE)
-    destination.draw_box_s([0, 0], [1024, 35], LIGHT_PURPLE)
-
-    @mini_map.draw destination unless @mini_map.nil?
-    
-    #outline
-    destination.draw_box([1, 1], [1023, 34], PURPLE)
-    @warrior_image.blit(destination,[800,10])
-    @title_text.blit(destination,[60,1])
-    @unit_info_text.blit(destination,[630,20])
-    @vim_text.blit(destination,[680,20])
-    @daub_text.blit(destination,[730,20])
-
-    @abilities_panel.draw destination unless @abilities_panel.nil?
-
-#    @mouse_manager.draw destination
-
+      @local_player = player if local
+    else
+      target_pieces = pieces[0].split('_')
+      prefix = target_pieces[0]
+      case prefix
+      when ENTITY_PREFIX
+        @entity_manager.handle event
+      else
+        p "unknown network event: [#{prefix} - #{cmd} - #{event}]"
+      end
+    end
   end
 
-  def key_up(event)
-    fire :mode_change, :main_menu if event.data[:key] == K_ES
+
+  def stop(*args)
+    fire :music_stop, :background_music
+    self.hide
   end
 
+  def focussed?()
+    true
+  end
 end
