@@ -43,7 +43,6 @@ class Viewport
   end
 
   # slide the viewport accordingly
-  # TODO recheck these, with new gui stuff
   def do_scroll()
     orig_x_offset = @x_offset
     orig_y_offset = @y_offset

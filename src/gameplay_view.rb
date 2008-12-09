@@ -9,6 +9,7 @@ class GameplayView < Rubygoo::Widget
   def initialize(opts)
     super opts
     @green = Rubygoo::GooColor.color :Green
+    @chartreuse = Rubygoo::GooColor.color :Chartreuse
     @red = Rubygoo::GooColor.color :Red
   end
 
@@ -57,28 +58,63 @@ class GameplayView < Rubygoo::Widget
     end
 
     # can I pull this out into a selectable componenet?
+    # selection indicator
     if ent.is? :selectable and ent.selected?
-      adapter.draw_circle(selection_x,selection_y,selection_radius,@green)
+      adapter.draw_circle(selection_x,selection_y,selection_radius,@chartreuse)
     end
 
-    adapter.draw_image ent.image, draw_x, draw_y
+    dx,dy,sx,sy,sw,sh = clip_ent(draw_x, draw_y, ent)
 
+    # ent image
+    adapter.draw_partial_image ent.image, dx,dy,sx,sy,sw,sh unless sw < 1 or sh < 1
+
+    # health box
     if ent.is? :selectable and ent.selected?
       hb_x = selection_x-HB_WIDTH/2
       hb_y = vy - 20
 
       adapter.fill(hb_x,hb_y,
         hb_x+HB_WIDTH,hb_y+HB_HEIGHT, @red)
-#      destination.draw_box_s([hb_x,hb_y],
-#        [hb_x+HB_WIDTH,hb_y+HB_HEIGHT], RED)
 
       hb_fill = ent.health/ent.class.default_health * HB_WIDTH
       adapter.fill(hb_x,hb_y,
         hb_x+hb_fill,hb_y+HB_HEIGHT, @green)
-#      destination.draw_box_s([hb_x,hb_y],
-#        [hb_x+hb_fill,hb_y+HB_HEIGHT], GREEN)
     end
 
+  end
+
+  def clip_ent(draw_x, draw_y, ent)
+    dx = draw_x
+    dy = draw_y
+    sx = 0
+    sy = 0
+    sw = ent.image.w
+    sh = ent.image.h
+
+    rs = dx+sw
+    ls = dx
+    ts = dy
+    bs = dy+sh
+
+    if rs >= @rect.right
+      sw -= (rs-@rect.right)
+    elsif ls < @rect.left
+      cl = @rect.left-ls
+      sw -= cl
+      dx += cl
+      sx += cl
+    end
+
+    if bs > @rect.bottom
+      sh -= (bs-@rect.bottom)
+    elsif ts <= @rect.top
+      ct = @rect.top-ts
+      sh -= ct
+      dy += ct
+      sy += ct
+    end
+
+    return dx,dy,sx,sy,sw,sh
   end
 
   def draw_ents(adapter)
