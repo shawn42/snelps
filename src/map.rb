@@ -115,12 +115,5 @@ class Map
     @background_image.blit destination, @viewport.world_to_view(0,0)
   end
 
-  def draw(destination)
-    recreate_map_image if @background_image.nil?
-#    @background_image.blit destination, @viewport.world_to_view(0,0)
-    # draw only the visible?
-    @background_image.blit destination, [0,0], 
-      [@viewport.x_offset,@viewport.y_offset,@viewport.width,@viewport.height]
-  end
 end
 

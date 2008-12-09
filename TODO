@@ -1,4 +1,15 @@
 MILESTONE #1 - "move units here" campaign
+
+ - rubygoo integration
+   - add clipping to entity manager!
+   - model updates should not be triggered via gui updates
+   - remove drawable component, as it is not a behavior but a need of the system
+   - remove all GooEvents/drawing knowledge from "models"
+   - create buttons w/ images
+   - create attack/move buttons
+
+ - create ability panel in gui to display currently available abilities
+
  - morphing abilities
    - should attack entities (auto-morph/unmorph) actually live on the occupancy grid? or should they transcend it?
    - unit creation should pass along any target info it has
@@ -8,13 +19,6 @@ MILESTONE #1 - "move units here" campaign
  - change mouse hover to show if something is targetable/attackable
 
  - create map editor
-
- - rubygoo integration
-   - create buttons w/ images
-   - create attack/move buttons
-   - create Element class to parent Button,Checkbox,StoryStack
-
- - create ability panel in gui to display currently available abilities
 
  - clean up and add docs EVERYWHERE
  - add images to story stacks, with ken burns effect (pan/zoom)
@@ -28,7 +32,6 @@ MULTIPLAYER MILESTONE #3
  - how to fire off external server for multiplayer? (separate ruby call?  ruby server.rb? )
 
 PROBLEMS
- - dragging settings window crashes
  - dragging on minimap shouldn't show selection box
  - every movable entity should have its own Pathfinder (where should it get it?)
    - or the same Pathfinder that we can pass in something to lookup map/unit occupancy

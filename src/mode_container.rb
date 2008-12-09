@@ -7,22 +7,30 @@ class ModeContainer < Rubygoo::Container
   can_fire :start_game, :resized
 
   def initialize(opts)
+    @snelps_screen = opts[:snelps_screen]
+    super :w => @snelps_screen.size[0], 
+      :h => @snelps_screen.size[1]
+
     @resource_manager = opts[:resource_manager]
-    @font_manager = opts[:font_manager]
     @sound_manager = opts[:sound_manager]
     @network_manager = opts[:network_manager]
     @turn_manager = opts[:turn_manager]
-    @snelps_screen = opts[:snelps_screen]
+
     @campaign_mode = opts[:campaign_mode]
+    @campaign_mode.w=@w
+    @campaign_mode.h=@h
     @intro_mode = opts[:intro_mode]
+    @intro_mode.w=@w
+    @intro_mode.h=@h
     @main_menu_mode = opts[:main_menu_mode]
+    @main_menu_mode.w=@w
+    @main_menu_mode.h=@h
+
     @mouse_manager = opts[:mouse_manager]
 
     @mouse_view = CampaignMouseView.new :mouse => @mouse_manager,
       :resource_manager => @resource_manager
       
-    super :w => @snelps_screen.size[0], 
-      :h => @snelps_screen.size[1]
     setup
 
     add @main_menu_mode, @intro_mode, @campaign_mode
@@ -81,7 +89,6 @@ class ModeContainer < Rubygoo::Container
 
     @network_manager[:from_server].when :msg_received do |e| 
       @modes[@mode].on_network e 
-#      dispatch_mode_event :handle_network, e 
     end
   
     change_mode_to :intro

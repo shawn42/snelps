@@ -11,7 +11,9 @@ class EntityManager
 
   attr_accessor :map, :occupancy_grids, :current_selection, 
     :selections, :current_abilities, :base_entities, :players,
-    :viewable_rows, :viewable_cols, :current_abilities
+    :viewable_rows, :viewable_cols, :current_abilities, 
+    :available_z_levels, :viewable_entities_dirty, 
+    :viewable_entities
 
   can_fire :sound_play, :network_msg_to, :occupancy_grid_created, :occupancy_change
 
@@ -429,40 +431,6 @@ class EntityManager
     for entity in @id_entities.values
       entity.update(time)
     end
-  end
-  
-  def draw(destination)
-    if @trace
-      half_tile = @map.half_tile_size
-      @map.width.times do |i|
-        @map.height.times do |j|
-          for z, grid in @occupancy_grids
-            if grid.occupied?(i,j)
-              occ_x, occ_y = @map.tiles_to_coords(i,j)
-              occ_x, occ_y = @viewport.world_to_view(occ_x,occ_y)
-
-              destination.draw_box_s([occ_x-half_tile,occ_y-half_tile],
-                [occ_x+half_tile,occ_y+half_tile], RED_HALF_ALPHA)
-            end
-          end
-        end
-      end
-    end
-
-
-    @available_z_levels.each do |az|
-      if @viewable_entities_dirty
-        @viewable_entities[az] = []
-        @occupancy_grids[az].get_occupants_by_range(@viewable_rows,@viewable_cols).each do |ze|
-          @viewable_entities[az] << ze
-        end
-      end
-      for ze in @viewable_entities[az]
-        ze.draw destination
-      end
-    end
-    # TODO any race conditions here??
-    @viewable_entities_dirty = false 
   end
 
   def update_viewable_tile_range()

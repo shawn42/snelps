@@ -1,6 +1,3 @@
-font_manager:
-  compose:
-    - resource_manager
 game_client:
   compose:
     - mode_container
@@ -9,7 +6,6 @@ game_client:
 mode_container:
   compose:
     - resource_manager
-    - font_manager
     - sound_manager
     - network_manager
     - turn_manager
@@ -56,7 +52,6 @@ intro_mode:
 campaign_mode:
   compose:
     - entity_builder
-    - font_manager
     - resource_manager
     - entity_manager
     - viewport

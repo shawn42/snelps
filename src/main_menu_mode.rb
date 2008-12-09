@@ -9,15 +9,12 @@ class MainMenuMode < Rubygoo::Container
     :network_msg_to, :config_manager
 
   def initialize(opts)
-    @resource_manager = opts[:resource_manager]
-    @snelps_screen = opts[:snelps_screen]
-    @config_manager = opts[:config_manager]
-
-    opts[:w] = @snelps_screen.size[0]
-    opts[:h] = @snelps_screen.size[1]
     opts[:visible] = false
     opts[:enabled] = false
     super opts
+
+    @resource_manager = opts[:resource_manager]
+    @config_manager = opts[:config_manager]
 
     build_gui
   end
@@ -48,7 +45,7 @@ class MainMenuMode < Rubygoo::Container
       settings = @config_manager.settings.dup
 
       # TODO finish RUBYGOO
-      settings_dialog = SettingsDialog.new :modal => app, :x=>150, :y=>100, :w=>824, :h=>600, :settings => settings
+      settings_dialog = SettingsDialog.new :modal => app, :x=>150, :y=>100, :w=>380, :h=>370, :settings => settings
       settings_dialog.when :save do |d|
         @config_manager[:fullscreen] = d.settings[:fullscreen]
         @config_manager[:sound] = d.settings[:sound]

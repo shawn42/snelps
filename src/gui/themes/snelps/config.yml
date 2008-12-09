@@ -19,7 +19,7 @@ Rubygoo::Label:
   :bg_color: :none
   :border_color: :none
 Rubygoo::CheckBox:
-  :checked_color: :FireBrick
+  :checked_color: :DarkViolet
 Rubygoo::TextField:
   :fg_color: :FireBrick
   :bg_color: :Gray

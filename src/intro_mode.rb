@@ -7,13 +7,10 @@ class IntroMode < Rubygoo::Container
     :network_msg_to
 
   def initialize(opts)
-    @resource_manager = opts[:resource_manager]
-    @snelps_screen = opts[:snelps_screen]
-    @config_manager = opts[:config_manager]
-
-    opts[:w] = @snelps_screen.size[0]
-    opts[:h] = @snelps_screen.size[1]
     super opts
+
+    @resource_manager = opts[:resource_manager]
+    @config_manager = opts[:config_manager]
 
     build_gui
   end

@@ -1,4 +1,3 @@
-require 'publisher'
 
 class MiniMap
   extend Publisher
@@ -34,14 +33,12 @@ class MiniMap
   end
 
 
-  def handle_mouse_click(event)
-    x, y = translate_event_coords event
-    fire :center_viewport, x, y
+  def handle_mouse_click(x,y)
+    fire :center_viewport, *translate_event_coords(x,y)
   end
 
-  def handle_mouse_dragging(event)
-    x, y = translate_event_coords event
-    fire :center_viewport, x, y
+  def handle_mouse_dragging(x,y)
+    fire :center_viewport, *translate_event_coords(x,y)
   end
 
   def update(time)
@@ -73,13 +70,10 @@ class MiniMap
   end
   
   protected
-  def translate_event_coords(event)
-    x_click = event.data[:x] + @viewport.screen_x_offset
-    y_click = event.data[:y] + @viewport.screen_y_offset
-
-    x = x_click / SCALE + @viewport.screen_x_offset
-    y = y_click / SCALE + @viewport.screen_y_offset
-    return x, y
+  def translate_event_coords(x,y)
+    new_x = x / SCALE + @viewport.screen_x_offset
+    new_y = y / SCALE + @viewport.screen_y_offset
+    return new_x, new_y
   end
 end
 

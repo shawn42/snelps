@@ -65,10 +65,6 @@ class ResourceManager
     end
   end
 
-  def load_ttf_font(name, size)
-    TTF.new(DATA_PATH + "fonts/" + name, size)
-  end
-
   def load_config(name)
     conf = YAML::load_file(CONFIG_PATH + name + ".yml")
     user_file = "#{ENV['HOME']}/.snelps/#{name}.yml"

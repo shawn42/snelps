@@ -16,15 +16,12 @@ class CampaignMode < Rubygoo::Container
 
   def initialize(opts)
     @resource_manager = opts[:resource_manager]
-    @snelps_screen = opts[:snelps_screen]
     @config_manager = opts[:config_manager]
     @entity_manager = opts[:entity_manager]
     @viewport = opts[:viewport]
     @network_manager = opts[:network_manager]
     @entity_builder = opts[:entity_builder]
 
-    opts[:w] = @snelps_screen.size[0]
-    opts[:h] = @snelps_screen.size[1]
     opts[:visible] = false
     opts[:enabled] = false
     super opts
@@ -48,7 +45,7 @@ class CampaignMode < Rubygoo::Container
   def build_gui()
 
     # ACTUAL GAMEPLAY
-    @gameplay_view = GameplayView.new(:x=>10,:y=>30,:w=>1024-60,:h=>800-50, :visible=>false)
+    @gameplay_view = GameplayView.new(:x=>10,:y=>30, :visible=>false)
     add @gameplay_view
 
     # GUI LABELS
@@ -223,9 +220,8 @@ class CampaignMode < Rubygoo::Container
     end
 
     # GUI STUFF
-    @view_screen = Surface.new([@viewport.width, @viewport.height])
-    @gameplay_view.view_screen = @view_screen
     @gameplay_view.map = @map
+    @gameplay_view.viewport = @viewport
     @gameplay_view.entity_manager = @entity_manager
     @gameplay_view.fog = @fog
 

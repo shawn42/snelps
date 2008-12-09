@@ -39,8 +39,8 @@ class SettingsDialog < Rubygoo::Dialog
     add ok_button
   end
 
-  def draw(adapter)
-    super adapter
+  def update_rect()
+    super
   end
 
   def key_released(event)

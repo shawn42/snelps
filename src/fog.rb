@@ -4,8 +4,9 @@ require 'mini_map'
 include Colors
 
 # blocks the players view from things they haven't discovered
-# TODO change this to modify some kind of masking image instead of maintaining this; said mask could also be used for the minimap
 class Fog
+  attr_reader :mask_image
+
   def initialize(map,entity_manager,viewport,resource_manager)
     @entity_manager = entity_manager
     @viewport = viewport
@@ -45,11 +46,6 @@ class Fog
         end
       end
     end
-  end
-
-  def draw(screen)
-    wx,wy = *@viewport.world_to_view(0,0)
-    @mask_image.blit screen, [wx,wy]
   end
 
   def draw_minimap_fog(screen)
