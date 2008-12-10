@@ -11,11 +11,11 @@ class EntityManager
 
   attr_accessor :map, :occupancy_grids, :current_selection, 
     :selections, :current_abilities, :base_entities, :players,
-    :viewable_rows, :viewable_cols, :current_abilities, 
+    :viewable_rows, :viewable_cols, 
     :available_z_levels, :viewable_entities_dirty, 
-    :viewable_entities
+    :viewable_entities, :current_abilities, :current_action
 
-  can_fire :sound_play, :network_msg_to, :occupancy_grid_created, :occupancy_change
+  can_fire :sound_play, :network_msg_to, :occupancy_grid_created, :occupancy_change, :selection_change
 
   constructor :viewport, :resource_manager, :sound_manager, :network_manager,
     :input_manager, :ability_manager 
@@ -139,23 +139,6 @@ class EntityManager
           file.close
         end
       end
-    when K_G
-      act = :gather
-      @current_action = (@current_action == act ? nil : act)
-    when K_A
-      act = :melee_attack
-      @current_action = (@current_action == act ? nil : act)
-    when K_M
-      act = :move
-      @current_action = (@current_action == act ? nil : act)
-    when K_S
-      act = :sledgehammer
-      @current_action = (@current_action == act ? nil : act)
-    when K_T
-      @trace = !@trace
-      for entity in @id_entities.values
-        entity.trace = @trace
-      end
     when K_N
       # TODO create random wandering ent
       begin
@@ -254,8 +237,7 @@ class EntityManager
     end
 
     @current_abilities = @ability_manager.abilities_for @current_selection
-
-    p @current_abilities
+    fire :selection_change if selection_change
     selection_change
   end
 

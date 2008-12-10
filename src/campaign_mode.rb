@@ -5,6 +5,7 @@ require 'map'
 require 'fog'
 require 'mini_map'
 require 'gameplay_view'
+require 'abilities_panel'
 require 'mini_map_view'
 
 class CampaignMode < Rubygoo::Container
@@ -47,6 +48,10 @@ class CampaignMode < Rubygoo::Container
     # ACTUAL GAMEPLAY
     @gameplay_view = GameplayView.new(:x=>10,:y=>30, :visible=>false)
     add @gameplay_view
+
+    @abilities_panel = AbilitiesPanel.new :x=>835,:y=>350,:w=>180,:h=>300
+    add @abilities_panel
+
 
     # GUI LABELS
     add Rubygoo::Label.new("Snelps", :x=>60)
@@ -171,7 +176,12 @@ class CampaignMode < Rubygoo::Container
     @map.entity_manager = @entity_manager
     @entity_manager.setup
 
-#    @abilities_panel = AbilitiesPanel.new self, :x=>835,:y=>350,:w=>180,:h=>300
+    @entity_manager.when :selection_change do
+      @abilities_panel.update_abilities(@entity_manager.current_abilities)
+    end
+    @abilities_panel.when :ability_selected do |ab|
+      @entity_manager.current_action = ab
+    end
 
 
     @fog = Fog.new @map, @entity_manager, @viewport, @resource_manager
