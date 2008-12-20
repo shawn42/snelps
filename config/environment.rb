@@ -26,3 +26,5 @@ CAMPAIGN_PATH = DATA_PATH + "campaigns/"
 
 require 'metaclass'
 require 'attribute'
+
+SNELPS_VERSION = "0.0.3"

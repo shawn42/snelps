@@ -4,7 +4,7 @@ Rubygoo::App:
 Rubygoo::Container: 
   :bg_color: :none
 Rubygoo::Widget: 
-  :font: excalibur.ttf
+  :font: VeraBd.ttf
   :font_size: 30
   :color: :LightGray
   :focus_color: :FireBrick
@@ -32,4 +32,6 @@ Rubygoo::MouseCursor:
 Rubygoo::Dialog:
   :bg_color: :MediumPurple
 IntroMode:
+  :bg_color: :Black
+:main_menu: 
   :bg_color: :Black
