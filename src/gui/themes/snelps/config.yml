@@ -1,40 +1,15 @@
-#--- 
-#Rubygoo::App: 
-#  :bg_color: :Snow
-#Rubygoo::Container: 
-#  :bg_color: :Silver
-#Rubygoo::Widget:
-#  :font: Vera.ttf
-#  :font_size: 20
-#  :color: :Tomato
-#  :focus_color: :LightSlateGray
-#  :bg_color: :WhiteSmoke
-#  :border_color: :DarkSlateBlue
-#Rubygoo::Button: 
-#  :bg_color: :LightGray
-#Rubygoo::CheckBox:
-#  :checked_color: :LightSlateGray
-#Rubygoo::TextField:
-#  :fg_color: :Black
-#  :bg_color: :Silver
-#  :bg_select_color: :DarkSlateBlue
-#  :fg_select_color: :Snow
-#  :border_color: :DarkSlateBlue
-#Rubygoo::MouseCursor:
-#  :color: :DarkSlateGray
-#  :mouse_cursor: cursor.png
 --- 
 Rubygoo::App: 
-  :bg_color: :Snow
+  :bg_color: :Purple
 Rubygoo::Container: 
   :bg_color: :none
 Rubygoo::Widget: 
-  :font: Vera.ttf
-  :font_size: 20
-  :color: :Tomato
-  :focus_color: :LightSlateGray
-  :bg_color: :WhiteSmoke
-  :border_color: :DarkSlateBlue
+  :font: VeraBd.ttf
+  :font_size: 30
+  :color: :LightGray
+  :focus_color: :FireBrick
+  :bg_color: :Gray
+  :border_color: :FireBrick
   :hover_color:
     - 55
     - 55
@@ -43,18 +18,16 @@ Rubygoo::Widget:
 Rubygoo::Label: 
   :bg_color: :none
   :border_color: :none
-Rubygoo::Button: 
-  :bg_color: :LightGray
 Rubygoo::CheckBox:
-  :checked_color: :LightSlateGray
+  :checked_color: :DarkViolet
 Rubygoo::TextField:
-  :fg_color: :Black
-  :bg_color: :Silver
-  :bg_select_color: :DarkSlateBlue
+  :fg_color: :FireBrick
+  :bg_color: :Gray
+  :bg_select_color: :FireBrick
   :fg_select_color: :Snow
-  :border_color: :DarkSlateBlue
+  :border_color: :Black
 Rubygoo::MouseCursor:
-  :color: :DarkSlateGray
+  :color: :Snow
   :mouse_cursor: cursor.png
 Rubygoo::Dialog:
   :bg_color: :MediumPurple
