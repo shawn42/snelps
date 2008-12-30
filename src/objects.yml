@@ -37,7 +37,6 @@ entity_manager:
     - resource_manager
     - viewport
     - sound_manager
-    - network_manager
     - input_manager
     - ability_manager
 main_menu_mode:

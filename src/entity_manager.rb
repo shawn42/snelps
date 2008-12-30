@@ -17,7 +17,7 @@ class EntityManager
 
   can_fire :sound_play, :network_msg_to, :occupancy_grid_created, :occupancy_change, :selection_change
 
-  constructor :viewport, :resource_manager, :sound_manager, :network_manager,
+  constructor :viewport, :resource_manager, :sound_manager,
     :input_manager, :ability_manager 
   
   def setup()
