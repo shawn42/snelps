@@ -22,6 +22,10 @@ class MultiplayerMode < GameMode
       start_next_map map_name
       self.show
     end
+    dialog.when :cancel do
+      fire :mode_change, :main_menu
+    end
+
     dialog.display
   end
 end
