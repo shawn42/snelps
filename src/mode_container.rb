@@ -19,6 +19,11 @@ class ModeContainer < Rubygoo::Container
     @campaign_mode = opts[:campaign_mode]
     @campaign_mode.w=@w
     @campaign_mode.h=@h
+    
+    @multiplayer_mode = opts[:multiplayer_mode]
+    @multiplayer_mode.w=@w
+    @multiplayer_mode.h=@h
+    
     @intro_mode = opts[:intro_mode]
     @intro_mode.w=@w
     @intro_mode.h=@h
@@ -33,7 +38,7 @@ class ModeContainer < Rubygoo::Container
       
     setup
 
-    add @main_menu_mode, @intro_mode, @campaign_mode
+    add @main_menu_mode, @intro_mode, @campaign_mode, @multiplayer_mode
   end
 
   # XXX this feels like a hack, where should this really go?
@@ -67,6 +72,7 @@ class ModeContainer < Rubygoo::Container
     @modes = {}
     @modes[:main_menu] = @main_menu_mode
     @modes[:campaign_play] = @campaign_mode
+    @modes[:multi_play] = @multiplayer_mode
     @modes[:intro] = @intro_mode
 
     @modes.each do |k,m|

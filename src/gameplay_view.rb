@@ -146,13 +146,9 @@ class GameplayView < Rubygoo::Widget
   end
 
   def update(time)
-    @map.update time
-    @entity_manager.update time
     @map.update time unless @map.nil?
     @viewport.update time unless @viewport.nil?
     @entity_manager.update time unless @entity_manager.nil?
-#    @abilities_panel.update time unless @abilities_panel.nil?
-
   end
 
 end

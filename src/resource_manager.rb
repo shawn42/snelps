@@ -10,15 +10,15 @@ class ResourceManager
   end
   
   def load_map(map_name)
-    map = YAML::load_file(MAP_PATH + map_name + ".yml")
-    map.script = MapScript.new(File.open(MAP_PATH + map_name + ".rb").readlines.join("\n"))
+    map = YAML::load_file("#{MAP_PATH}#{map_name}.yml")
+    map.script = MapScript.new(File.open("#{MAP_PATH}#{map_name}.rb").readlines.join("\n"))
     map.resource_manager = self
     map.script.map = map
     map
   end
 
   def save_map(map, file_name)
-    File.open MAP_PATH + file_name + ".yml", "w" do |f|
+    File.open "#{MAP_PATH}#{file_name}.yml", "w" do |f|
       YAML::dump(map, f)
     end
   end

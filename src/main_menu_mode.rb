@@ -47,7 +47,7 @@ class MainMenuMode < Rubygoo::Container
       @resource_manager.load_image 'menu/multip_btn_on.png'
     button = Rubygoo::Button.new "Multiplayer", :x=>416,:y=>563, :x_pad=>0,:y_pad=>0, :image=>multi_off_img, :hover_image=>multi_on_img
     button.when :pressed do |b|
-      fire :mode_change, :campaign_play, "snelps"
+      fire :mode_change, :multi_play, "snelps"
     end
     add button
 

@@ -12,6 +12,7 @@ mode_container:
     - main_menu_mode
     - intro_mode
     - campaign_mode
+    - multiplayer_mode
     - snelps_screen
     - mouse_manager
 resource_manager:
@@ -50,6 +51,15 @@ intro_mode:
     - config_manager
     - snelps_screen
 campaign_mode:
+  compose:
+    - entity_builder
+    - resource_manager
+    - entity_manager
+    - viewport
+    - snelps_screen
+    - network_manager
+    - mouse_manager
+multiplayer_mode:
   compose:
     - entity_builder
     - resource_manager

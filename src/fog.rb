@@ -25,7 +25,7 @@ class Fog
     @entity_manager.when :occupancy_grid_created do |grid, z|
       grid.when :occupancy_change do |operation, occupant, tx, ty|
         # TODO un-hardcode the player id
-        if occupant.player_id == 1
+        if occupant && occupant.player_id == 1
           # TODO why is occupy, leave messed up?
 #          if operation == :occupy 
             # TODO fix this for the visibility range
