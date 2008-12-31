@@ -19,7 +19,6 @@ module Livable
   def die()
     if @alive
       @alive = false
-      teleport_to nil
       death_sound
       fire :death, self 
       self.destroy
