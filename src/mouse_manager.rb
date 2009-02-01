@@ -41,16 +41,15 @@ class MouseManager < Rubygoo::Widget
   end
 
   def mouse_up(event)
-    if event.data[:button] == LEFT_BUTTON
+    data = event.data
+    if data[:button] == LEFT_BUTTON
       @dragging = false
 
-      if @start_x == event.data[:x] and @start_y == event.data[:y]
+      if @start_x == data[:x] and @start_y == data[:y]
         #clicked
-#        puts "clicked"
         fire :mouse_click, event
       else
         # drag
-#        puts "drag received"
         fire :mouse_drag, @start_x, @start_y, event
       end
     end

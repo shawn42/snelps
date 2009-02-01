@@ -21,6 +21,7 @@ class GameMode < Rubygoo::Container
     @entity_manager = opts[:entity_manager]
     @viewport = opts[:viewport]
     @network_manager = opts[:network_manager]
+    @connection_manager = opts[:connection_manager]
     @entity_builder = opts[:entity_builder]
 
     opts[:visible] = false
@@ -146,7 +147,7 @@ class GameMode < Rubygoo::Container
 
     #TODO get this from main_menu_mode
     # lets make the player a fire snelp
-    player_cmd = Player.create_player_cmd :fire
+    player_cmd = Player.create_player_cmd(:fire,@connection_manager.player_id)
     fire :network_msg_to, player_cmd
     
     @map = Map.load_from_file @resource_manager, map
@@ -182,9 +183,7 @@ class GameMode < Rubygoo::Container
     end
 
     @map.script.when :defeat do
-      # TODO add summary report page?
-      p "DEFEAT"
-#      fire :mode_change, :main_menu
+      handle_map_script_defeat
     end
 
     @map.script.when :create_entity do |player,ent_type,tile_x,tile_y|
@@ -195,15 +194,19 @@ class GameMode < Rubygoo::Container
       if @entity_manager.has_obstacle?(tile_x, tile_y, z)
         raise "obstacle: invalid map script #{player} #{ent_type} #{tile_x},#{tile_y},#{z}"
       else
+        if player == :local 
+          player = @network_manager.wrapped_session.player_number
+        end
         cmd = @entity_manager.create_entity_cmd(player,ent_type,tile_x,tile_y)
-        @network_manager[:to_server] << cmd
+        @network_manager.push_to_server cmd
       end
     end
 
-    @map.script.when :create_player do |snelp,player_type|
-      cmd = Player.create_player_cmd snelp, player_type
-      @network_manager[:to_server] << cmd
-    end
+#    @map.script.when :create_player do |snelp,player_type|
+#      cmd = Player.create_player_cmd snelp, player_type
+#      cmd = Player.create_player_cmd(snelp,@connection_manager.player_id)
+#      @network_manager.push_to_server cmd
+#    end
 
     # GUI STUFF
     @gameplay_view.map = @map
@@ -226,14 +229,16 @@ class GameMode < Rubygoo::Container
     when PLAYER_JOIN
       # parse player from event
       id = pieces[2].to_i
+      local = true if id == @connection_manager.player_id
       snelp = Player::SNELPS[pieces[1].to_i]
-      local = true if pieces[3] == "L"
 
       player = Player.new :snelp => snelp, :server_id => id, :local => local
       player.setup
       @players << player
 
-      @local_player = player if local
+      if local
+        @entity_manager.local_player = player
+      end
     else
       target_pieces = pieces[0].split('_')
       prefix = target_pieces[0]

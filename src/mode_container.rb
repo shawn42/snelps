@@ -89,11 +89,11 @@ class ModeContainer < Rubygoo::Container
         @sound_manager.play_sound sound_key
       end
       m.when :network_msg_to do |cmd|
-        @network_manager[:to_server].push cmd
+        @network_manager.push_to_server cmd
       end
     end
 
-    @network_manager[:from_server].when :msg_received do |e| 
+    @network_manager.when :msg_received do |e| 
       @modes[@mode].on_network e 
     end
   

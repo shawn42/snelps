@@ -24,8 +24,8 @@ class Fog
 
     @entity_manager.when :occupancy_grid_created do |grid, z|
       grid.when :occupancy_change do |operation, occupant, tx, ty|
-        # TODO un-hardcode the player id
-        if occupant && occupant.player_id == 1
+        begin
+        if occupant && occupant.player_id == @entity_manager.local_player.server_id
           # TODO why is occupy, leave messed up?
 #          if operation == :occupy 
             # TODO fix this for the visibility range
@@ -44,6 +44,10 @@ class Fog
             end
 #          end
         end
+        rescue Exception => foo
+          p foo
+        end
+
       end
     end
   end

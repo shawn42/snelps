@@ -54,9 +54,8 @@ class MiniMap
     @image = Surface.new(@map_image.size)
     @map_image.blit @image, [0,0]
 
-    # hard code the player for now (they can only see where their
-    # entities are
-    for ent in @entity_manager.get_player_ents(1)
+    local_id = @entity_manager.local_player.nil? ? -1 : @entity_manager.local_player.server_id
+    for ent in @entity_manager.get_player_ents(local_id)
       entx = ent.x * SCALE
       enty = ent.y * SCALE
       @image.draw_circle_s [entx.floor,enty.floor], 1, RED

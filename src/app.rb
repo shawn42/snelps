@@ -3,18 +3,28 @@ $: << "#{File.dirname(__FILE__)}/../config"
 $PROFILING = false
 
 require 'rubygems'
+require 'rubygame'
+include Rubygame
+
 if $PROFILING
   require "ruby-prof"
 end
+
+#alias :orig_puts :puts
+#def puts(it)
+#  orig_puts "==============="
+#  caller.each do |c|
+#    orig_puts c
+#  end
+#  sleep 2
+#end
+
 require "environment"
 require 'metaclass'
 require 'publisher'
 require 'constructor'
 require 'diy'
 require 'linked_list'
-
-require 'rubygame'
-include Rubygame
 
 require 'resource_manager'
 require 'input_manager'

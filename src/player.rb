@@ -14,7 +14,7 @@ class Player
 
   # creates the player join command for the server to digest.
   # snelp is the type of snelp this player is representing in the game
-  def self.create_player_cmd(snelp)
-    [PLAYER_JOIN,SNELPS.index(snelp)].join ":"
+  def self.create_player_cmd(snelp,player_id)
+    [PLAYER_JOIN,SNELPS.index(snelp),player_id].join ":"
   end
 end

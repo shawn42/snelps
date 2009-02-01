@@ -6,14 +6,27 @@ class MultiplayerMode < GameMode
   def start(*args)
     @map = nil
     show_map_selector
+
+    # campaign mode will call a different connection method
+    @network_manager.wrapped_session = 
+      @connection_manager.connect_to_server
     
     fire :music_play, :background_music
 
     #super
   end
   
+  def stop(*args)
+    @connection_manager.quit
+    super *args
+  end
+
   def handle_map_script_victory
     puts 'multi victory means wha?'
+  end
+
+  def handle_map_script_defeat
+    puts 'multi defeat means wha?'
   end
   
   def show_map_selector

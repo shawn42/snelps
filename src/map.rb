@@ -107,7 +107,7 @@ class Map
   end
 
   def update(time)
-#    @script.update time 
+    @script.update time 
   end
 
   def draw_full(destination)

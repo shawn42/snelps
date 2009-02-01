@@ -1,3 +1,3 @@
 module Drawable 
-  attr_accessor :trace, :image, :w_offset, :h_offset
+  attr_accessor :image, :w_offset, :h_offset
 end

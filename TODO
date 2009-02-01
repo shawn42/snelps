@@ -1,14 +1,13 @@
-MILESTONE #1 - "move units here" campaign
+ - get campaign working w/o external server running
+ - get player slot registration working
+   - build multiplayer map
+
+"move units here" campaign
 
  - rubygoo integration
-   - add clipping to entity manager!
    - model updates should not be triggered via gui updates
    - remove drawable component, as it is not a behavior but a need of the system
    - remove all GooEvents/drawing knowledge from "models"
-   - create buttons w/ images
-   - create attack/move buttons
-
- - create ability panel in gui to display currently available abilities
 
  - morphing abilities
    - should attack entities (auto-morph/unmorph) actually live on the occupancy grid? or should they transcend it?
@@ -20,14 +19,14 @@ MILESTONE #1 - "move units here" campaign
 
  - create map editor
 
- - clean up and add docs EVERYWHERE
  - add images to story stacks, with ken burns effect (pan/zoom)
 
-MILESTONE #2 - "gameplay"
+"gameplay"
  - add structures (basic unit creation) (larger than one tile)
  - add structure placement "grid-locking"
+ - move music to map definition
 
-MULTIPLAYER MILESTONE #3
+MULTIPLAYER
  - add simple intro UI (map selection)
  - how to fire off external server for multiplayer? (separate ruby call?  ruby server.rb? )
 
@@ -38,4 +37,4 @@ PROBLEMS
 
 BACKLOG
  - add logger to app
-
+ - clean up and add docs EVERYWHERE

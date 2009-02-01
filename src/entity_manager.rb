@@ -11,7 +11,7 @@ class EntityManager
 
   attr_accessor :map, :occupancy_grids, :current_selection, 
     :selections, :current_abilities, :base_entities, :players,
-    :viewable_rows, :viewable_cols, 
+    :viewable_rows, :viewable_cols, :local_player,
     :available_z_levels, :viewable_entities_dirty, 
     :viewable_entities, :current_abilities, :current_action
 
@@ -21,7 +21,6 @@ class EntityManager
     :input_manager, :ability_manager 
   
   def setup()
-    @trace = false
     
     # stores the selections for later retrieval
     @selections = {}
@@ -139,19 +138,6 @@ class EntityManager
           file.close
         end
       end
-    when K_N
-      # TODO create random wandering ent
-      begin
-        10.times do
-          w = rand(@map.width)
-          h = rand(@map.height)
-          @map.script.create_entity nil, :animal, w, h
-        end
-        puts @id_entities.size
-      rescue Exception => ex
-        puts "K_N [#{ex}]"
-        puts ex.backtrace
-      end
     when K_1
       change_group_selection event, 1
     when K_2
@@ -212,7 +198,7 @@ class EntityManager
       unless grid_ents.empty?
         for entity in grid_ents
           # TODO, unhardcode the player id
-          if entity.is? :selectable and entity.player_id == 1
+          if entity.is? :selectable and entity.player_id == @local_player.server_id
             # still select if we are dragging, but if clicking we 
             # don't want them selected anymore
             selection_change = true
@@ -310,7 +296,7 @@ class EntityManager
     @id_entities[ent.server_id] = ent
 
     # TODO, un hardcode the player id
-    @base_entities[ent.server_id] = ent if ent.is?(:collector) and ent.player_id == 1
+    @base_entities[ent.server_id] = ent if ent.is?(:collector) and ent.player_id == @local_player.server_id
 
     # assumes a knowlege that the ent is :positionable
     # should register for enabled callback?
@@ -363,8 +349,6 @@ class EntityManager
   end
 
   def create_entity(p_id, entity_type, tile_x, tile_y)
-#    puts "#{p_id} #{entity_type} #{tile_x},#{tile_y}"
-#    puts "#{occupancy_grids.size}"
     x, y = @map.tiles_to_coords(tile_x.to_i,tile_y.to_i)
     ent_id = @ent_id_incrementer += 1
     klass = Object.const_get Inflector.camelize(entity_type)
@@ -399,8 +383,7 @@ class EntityManager
       :map => @map,
       :entity_manager => self,
       :x => x,
-      :y => y,
-      :trace => @trace
+      :y => y
      }
     )
 

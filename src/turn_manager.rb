@@ -8,6 +8,9 @@ class TurnManager
 
   def setup()
     @turn_num = 0
+    @network_manager.when :msg_received do |e| 
+      # add to turn
+    end
   end
 
   def handle_turn(msg)
@@ -19,22 +22,6 @@ class TurnManager
       else
         puts "OUT OF SYNC!!!"
         puts "EXPECTED TURN:#{@turn_num + 1} but got #{val}"
-      end
-    end
-  end
-  
-  def start(game)
-    @game = game
-    @network_manager[:turns_from_server].when :msg_received do |cmd|
-      handle_turn(cmd)
-    end
-
-    # heartbeat to let the server know that we're still here... is this
-    # needed?
-    @heartbeat_thread = Thread.new do
-      loop do
-        @network_manager[:to_server].push "#{HEARTBEAT}:TOKEN"
-        sleep 10
       end
     end
   end

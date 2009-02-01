@@ -57,6 +57,7 @@ campaign_mode:
     - viewport
     - snelps_screen
     - network_manager
+    - connection_manager
     - mouse_manager
 multiplayer_mode:
   compose:
@@ -66,6 +67,7 @@ multiplayer_mode:
     - viewport
     - snelps_screen
     - network_manager
+    - connection_manager
     - mouse_manager
 viewport:
   compose:
@@ -83,3 +85,4 @@ entity_builder:
 ability_manager:
   compose:
     - resource_manager
+connection_manager:
