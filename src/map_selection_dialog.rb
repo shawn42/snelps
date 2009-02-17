@@ -29,11 +29,14 @@ class MapSelectionDialog < Rubygoo::Dialog
     add ok_button
   end
   
-  def update_rect()
+  def update_rect
     super
   end
 
   def key_released(event)
-    close if event.data[:key] == K_ESCAPE
+    if event.data[:key] == K_ESCAPE
+      close 
+      fire :cancel
+    end
   end
 end

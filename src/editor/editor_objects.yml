@@ -1,0 +1,64 @@
+game_client:
+  compose:
+    - mode_container
+    - snelps_screen
+    - input_manager
+mode_container:
+  library: editor_mode_container
+  compose:
+    - resource_manager
+    - sound_manager
+    - editor_mode
+    - snelps_screen
+    - mouse_manager
+resource_manager:
+sound_manager:
+  compose:
+    - resource_manager
+    - config_manager
+input_manager:
+  compose:
+    - mouse_manager
+network_manager:
+  library: nil
+mouse_manager:
+  compose:
+    - viewport
+    - resource_manager
+entity_manager:
+  compose:
+    - resource_manager
+    - viewport
+    - sound_manager
+    - input_manager
+    - ability_manager
+editor_mode:
+  compose:
+    - entity_builder
+    - resource_manager
+    - entity_manager
+    - map_editor
+    - viewport
+    - snelps_screen
+    - mouse_manager
+map_editor:
+  compose:
+    - input_manager
+    - viewport
+    - sound_manager
+viewport:
+  compose:
+    - snelps_screen
+    - config_manager
+snelps_screen:
+  compose:
+    - config_manager
+config_manager:
+  compose:
+    - resource_manager
+entity_builder:
+  compose:
+    - resource_manager
+ability_manager:
+  compose:
+    - resource_manager

@@ -18,7 +18,7 @@ class Map
   alias :h :height
 
   def start_script()
-    @script.start
+    @script.start if @script
   end
 
   def load_images()
@@ -59,7 +59,7 @@ class Map
     map.tiles = NArray.object(map.width, map.height)
     map.converted_tiles.each_with_index do |row,i|
       row.each_with_index do |col,j|
-        map.tiles[i,j] = col
+        map.tiles[j,i] = col
       end
     end
     map.load_images
@@ -107,7 +107,7 @@ class Map
   end
 
   def update(time)
-    @script.update time 
+    @script.update time if @update
   end
 
   def draw_full(destination)

@@ -63,6 +63,6 @@ end
 
 on :tick do |tick_time, total_time|
   # 30 seconds to find the goal
-  fire :defeat if total_time > 30000
+  fire :defeat if total_time > 300000
 end
 
