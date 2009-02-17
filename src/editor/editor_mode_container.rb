@@ -23,6 +23,7 @@ class ModeContainer < Rubygoo::Container
     @mouse_view = EditorMouseView.new :mouse => @mouse_manager,
       :resource_manager => @resource_manager
       
+    @editor_mode.editor_mouse_view = @mouse_view
     add @editor_mode
 
     setup

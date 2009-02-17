@@ -12,6 +12,7 @@ class EditorMode < Rubygoo::Container
   extend Publisher
   include Commands
 
+  attr_accessor :editor_mouse_view
   can_fire :mode_change, :music_play, :music_stop, :sound_play
 
   def initialize(opts)
@@ -20,6 +21,7 @@ class EditorMode < Rubygoo::Container
     @entity_manager = opts[:entity_manager]
     @map_editor = opts[:map_editor]
     @viewport = opts[:viewport]
+    @editor_mouse_view = opts[:editmouse_view]
     @entity_builder = opts[:entity_builder]
 
     opts[:visible] = false
@@ -41,9 +43,9 @@ class EditorMode < Rubygoo::Container
       @terrain_panel.change_group tg
     end
 
-    @terrain_panel.when :tile_selected do |tile|
-      p "now stamping #{tile}"
-      @map_editor.current_tile_stamp = tile
+    @terrain_panel.when :tile_selected do |tile_id|
+      @map_editor.current_tile_stamp = tile_id
+      @editor_mouse_view.cursor = @map.tile_image_for tile_id
     end
 
     add @terrain_panel

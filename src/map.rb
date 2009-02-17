@@ -27,22 +27,22 @@ class Map
     @width.times do |i|
       @height.times do |j|
         tile_id = @tiles[i,j]
-        tile_type = nil
-        tile_conf = nil
-        for type, config in @tile_config
-          range = (config[:first]..config[:last])
-          if range.include? tile_id
-            tile_type = type
-            tile_conf = config
-            break
-          end
-        end
-        raise "unknown tile id: #{tile_id} in map" if tile_type.nil?
-        @tile_images[i,j] = 
-          # TODO clean this up TERRAIN_DIR?
-          @resource_manager.load_image File.join("terrain","#{tile_conf[:prefix]}#{tile_id}#{tile_conf[:suffix]}")
+        @tile_images[i,j] = tile_image_for tile_id
       end
     end
+  end
+
+  def tile_image_for(tile_id)
+    for type, config in @tile_config
+      range = (config[:first]..config[:last])
+      if range.include? tile_id
+        tile_type = type
+        tile_conf = config
+          # TODO clean this up TERRAIN_DIR?
+        return @resource_manager.load_image(File.join("terrain","#{tile_conf[:prefix]}#{tile_id}#{tile_conf[:suffix]}"))
+      end
+    end
+    raise "unknown tile id: #{tile_id} in map" if tile_type.nil?
   end
 
   def pixel_height()
