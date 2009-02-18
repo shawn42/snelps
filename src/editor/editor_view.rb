@@ -27,7 +27,6 @@ class EditorView < Rubygoo::Widget
 
     adapter.draw_partial_image @map.background_image, @x,@y, @viewport.x_offset,@viewport.y_offset,@viewport.width,@viewport.height
 
-    adapter.draw_partial_image @fog.mask_image, @x,@y, @viewport.x_offset,@viewport.y_offset,@viewport.width,@viewport.height if @fog
   end
 
   def mouse_up(event)

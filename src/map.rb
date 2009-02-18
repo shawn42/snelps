@@ -12,7 +12,7 @@ class Map
 
   attr_accessor :tile_size, :height, :width, :tile_images, :tiles,
     :converted_tiles, :viewport, :resource_manager, :half_tile_size,
-    :background_image, :script, :entity_manager, :tile_config
+    :background_image, :script, :entity_manager, :tile_config, :show_grid
 
   alias :w :width
   alias :h :height
@@ -102,6 +102,17 @@ class Map
         x = i * @tile_size
         y = j * @tile_size
         @tile_images[i,j].blit @background_image, @viewport.world_to_view(x,y)
+      end
+    end
+
+    if @show_grid
+      ts = @tile_size
+      @white = [250,250,250,250]
+      @width.times do |c|
+        @background_image.draw_line [ts*c,0],[ts*c,pixel_height],@white
+      end
+      @height.times do |r|
+        @background_image.draw_line [0,ts*r],[pixel_width,ts*r],@white
       end
     end
   end

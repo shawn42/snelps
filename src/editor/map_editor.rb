@@ -19,6 +19,13 @@ class MapEditor
 
   def handle_key_up(event)
     case event.data[:key]
+    when K_G
+      if @map.show_grid
+        @map.show_grid = false
+      else
+        @map.show_grid = true
+      end
+      @map.recreate_map_image
     when K_S
       @map.save "temp"
     when K_LSHIFT
