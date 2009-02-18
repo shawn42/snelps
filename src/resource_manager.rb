@@ -38,7 +38,11 @@ class ResourceManager
           image = Rubygame::Surface.load(File.expand_path(DATA_PATH + "gfx/entities/" + file_name))
         end
       rescue Exception => ex
-        image = Rubygame::Surface.load(File.expand_path(GDATA_PATH + "gfx/" + file_name))
+        begin
+          image = Rubygame::Surface.load(File.expand_path(GDATA_PATH + "gfx/" + file_name))
+        rescue Exception => ex
+          return nil
+        end
       end
       ent_images[file_name] = image
     else

@@ -3,14 +3,26 @@
   :prefix: grass-
   :suffix: .png
   :first: 1
-  :last: 16
+  :last: 1
 :water: 
   :prefix: water-
   :suffix: .png
-  :first: 17
-  :last: 32
-:dirt: 
-  :prefix: dirt-
+  :first: 51
+  :last: 52
+:sand: 
+  :prefix: sand-
   :suffix: .png
-  :first: 33
-  :last: 48
+  :first: 151
+  :last: 151
+:sand_water: # transitions must be in alphabetical order
+  :transition: true
+  :prefix: sand_water-
+  :suffix: .png
+  :first: 201
+  :last: 250
+:grass_sand: 
+  :transition: true
+  :prefix: grass_sand-
+  :suffix: .png
+  :first: 301
+  :last: 350

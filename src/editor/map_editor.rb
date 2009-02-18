@@ -2,7 +2,7 @@ require 'publisher'
 
 class MapEditor
   extend Publisher
-  attr_accessor :map, :current_tile_stamp
+  attr_accessor :map, :current_tile_stamp, :multi_select
 
   constructor :sound_manager, :input_manager, :viewport
   
@@ -10,10 +10,19 @@ class MapEditor
     
   end
 
+  def handle_key_down(event)
+    case event.data[:key]
+    when K_LSHIFT
+      @multi_select = true
+    end
+  end
+
   def handle_key_up(event)
     case event.data[:key]
     when K_S
       @map.save "temp"
+    when K_LSHIFT
+      @multi_select = false
     end
   end
 

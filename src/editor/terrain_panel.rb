@@ -2,7 +2,7 @@
 # selected entities.
 require 'rubygoo'
 class TerrainPanel < Rubygoo::Container
-  attr_accessor :map
+  attr_accessor :map, :group
 
   can_fire :tile_selected, :tile_group_selected
 
@@ -41,13 +41,16 @@ class TerrainPanel < Rubygoo::Container
       tile_id = range_array.first
       icon = @map.resource_manager.load_image File.join("terrain","#{config[:prefix]}#{tile_id}#{config[:suffix]}")
 
-      type_button = Rubygoo::Button.new " ",:x=>starting_x,:y=>starting_y,:image=>icon,:w=>tile_width,:h=>tile_width
-      type_button.when :pressed do |event|
-        fire :tile_group_selected, type
-#        change_group type
+      #only make a button for non-transition groups
+      unless config[:transition]
+        type_button = Rubygoo::Button.new " ",:x=>starting_x,:y=>starting_y,:image=>icon,:w=>tile_width,:h=>tile_width
+        type_button.when :pressed do |event|
+          fire :tile_group_selected, type
+  #        change_group type
+        end
+        add type_button
+        starting_x += tile_width + group_pad
       end
-      add type_button
-      starting_x += tile_width + group_pad
 
 
       starting_sub_x = @x
@@ -62,18 +65,20 @@ class TerrainPanel < Rubygoo::Container
         tid = range_array[i]
 
         icon = @map.resource_manager.load_image File.join("terrain","#{config[:prefix]}#{tid}#{config[:suffix]}")
-        terrain_button = Rubygoo::Button.new " ",:x=>sub_x,:y=>sub_y,:image=>icon,:w=>tile_width,:h=>tile_width
+        if icon
+          terrain_button = Rubygoo::Button.new " ",:x=>sub_x,:y=>sub_y,:image=>icon,:w=>tile_width,:h=>tile_width
 
-        terrain_button.when :pressed do |event|
-          fire :tile_selected, tid
-        end
-        type_sub_panel.add terrain_button
+          terrain_button.when :pressed do |event|
+            fire :tile_selected, tid
+          end
+          type_sub_panel.add terrain_button
 
-        if sub_x > (starting_sub_x + 110)
-          sub_x = starting_sub_x 
-          sub_y += tile_width + sub_pad
-        else
-          sub_x += tile_width + sub_pad
+          if sub_x > (starting_sub_x + 110)
+            sub_x = starting_sub_x 
+            sub_y += tile_width + sub_pad
+          else
+            sub_x += tile_width + sub_pad
+          end
         end
 
       end

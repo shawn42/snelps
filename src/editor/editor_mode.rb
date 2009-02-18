@@ -40,6 +40,9 @@ class EditorMode < Rubygoo::Container
 
     @terrain_panel = TerrainPanel.new :x=>835,:y=>350,:w=>180,:h=>300
     @terrain_panel.when :tile_group_selected do |tg|
+      if @map_editor.multi_select
+        tg = [tg.to_s,@terrain_panel.group.to_s].sort.join('_').to_sym
+      end
       @terrain_panel.change_group tg
     end
 
@@ -117,6 +120,10 @@ class EditorMode < Rubygoo::Container
 
   def update(time)
     @viewport.update time if @viewport
+  end
+
+  def key_pressed(event)
+    @map_editor.handle_key_down event
   end
 
   def key_released(event)
