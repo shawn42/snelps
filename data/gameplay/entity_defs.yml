@@ -388,3 +388,17 @@
       :suffix: .png
       :first: 1
       :last: 31
+:palm: 
+  :z: 1
+  :components: 
+  - :able
+  - :positionable
+  - :audible
+  - :animated
+  - :drawable
+  :animations:
+    :idle:
+      :prefix: flora/palm-
+      :suffix: .png
+      :first: 1
+      :last: 1
