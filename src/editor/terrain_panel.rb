@@ -90,7 +90,6 @@ class TerrainPanel < Rubygoo::Container
     end
 
     def change_group(type)
-      puts "change called"
       @terrain_sub_panels[@group].hide if @group and @terrain_sub_panels[@group]
       @group = type
       @terrain_sub_panels[@group].show if @terrain_sub_panels[@group]

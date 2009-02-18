@@ -7,7 +7,7 @@ class EditorMouseView < Rubygoo::Widget
     @mouse = opts[:mouse]
     
     #TODO change this to come from theme props
-    @cursor = opts[:resource_manager].load_image 'brush3.png'
+    @pointer = opts[:resource_manager].load_image 'brush3.png'
     super opts
   end
 
@@ -17,8 +17,11 @@ class EditorMouseView < Rubygoo::Widget
   end
 
   def draw(dest)
-    off_x = @x - @cursor.size[0]/2
-    off_y = @y - @cursor.size[1]/2
-    dest.draw_image(@cursor, off_x, off_y)
+    if @cursor
+      off_x = @x - @cursor.size[0]/2
+      off_y = @y - @cursor.size[1]/2
+      dest.draw_image(@cursor, off_x, off_y)
+    end
+    dest.draw_image(@pointer, @x-16, @y-16)
   end
 end
