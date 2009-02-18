@@ -26,6 +26,6 @@ class CampaignMouseView < Rubygoo::Widget
       h = sorted_y[1] - y
       dest.fill(@mouse.start_x, @mouse.start_y, @mouse.x, @mouse.y, Rubygoo::GooColor.color(:Green, 100))
     end
-    dest.draw_image(@cursor, @x-16, @y-16)
+    dest.draw_image(@cursor, @x-16, @y-16) if @cursor
   end
 end
