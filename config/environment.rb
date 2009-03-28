@@ -14,7 +14,7 @@ ADDITIONAL_LOAD_PATHS.each do |path|
 	$:.push path
 end
 # WHY DO I NEED THIS TO RUN ruby -w
-$:.push "/usr/local/lib/ruby/site_ruby/1.8/i686-darwin8.10.1"
+#$:.push "/usr/local/lib/ruby/site_ruby/1.8/i686-darwin8.10.1"
 APP_ROOT = File.dirname(__FILE__) + "/../"
 DATA_PATH =  APP_ROOT + "data/"
 GDATA_PATH =  APP_ROOT + "glob2_data/"

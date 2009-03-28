@@ -1,3 +1,4 @@
+ - palms draw their trunks in the wrong square
  - get campaign working w/o external server running
  - get player slot registration working
    - build multiplayer map
@@ -16,8 +17,6 @@
 
  - change gatherer/collector to keep track of which resource is held/deposited
  - change mouse hover to show if something is targetable/attackable
-
- - create map editor
 
  - add images to story stacks, with ken burns effect (pan/zoom)
 
