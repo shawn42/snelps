@@ -33,6 +33,10 @@ class GameplayView < Rubygoo::Widget
   end
 
   def draw_ent(adapter,ent)
+
+    # TODO XXX why is this needed?
+    return if ent.nil? or ent.image.nil?
+
     vx,vy = @viewport.world_to_view ent.x+@x, ent.y+@y
 
     ht = @map.half_tile_size
