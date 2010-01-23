@@ -615,3 +615,216 @@
         :suffix: .png
         :first: 1
         :last: 8
+:water_warrior: 
+  :player_id: 0
+  :z: 1
+  :health: 100
+  :armor: 5
+  :attack_power: 10
+  :speed: 30
+  :carrying_capacity: 10
+  :components: 
+  - :livable
+  - :able
+  - :selectable
+  - :positionable
+  - :movable
+  - :pathable
+  - :audible
+  - :animated
+  - :drawable
+  - :rangable
+  - :gatherer
+  - :melee_attacker
+  :sounds:
+  - :selected: warrior_select.wav
+  - :acknowledge: warrior_ack.wav
+  :animations:
+    :idle:
+      :prefix: water_warrior/walk_s000
+      :suffix: .png
+      :first: 1
+      :last: 1
+    :moving:
+      :nw:
+        :prefix: water_warrior/walk_nw000
+        :suffix: .png
+        :first: 1
+        :last: 8
+      :n:
+        :prefix: water_warrior/walk_n000
+        :suffix: .png
+        :first: 1
+        :last: 8
+      :ne:
+        :prefix: water_warrior/walk_ne000
+        :suffix: .png
+        :first: 1
+        :last: 8
+      :e:
+        :prefix: water_warrior/walk_e000
+        :suffix: .png
+        :first: 1
+        :last: 8
+      :se:
+        :prefix: water_warrior/walk_se000
+        :suffix: .png
+        :first: 1
+        :last: 8
+      :s:
+        :prefix: water_warrior/walk_s000
+        :suffix: .png
+        :first: 1
+        :last: 8
+      :sw:
+        :prefix: water_warrior/walk_sw000
+        :suffix: .png
+        :first: 1
+        :last: 8
+      :w:
+        :prefix: water_warrior/walk_w000
+        :suffix: .png
+        :first: 1
+        :last: 8
+:wind_warrior: 
+  :player_id: 0
+  :z: 1
+  :health: 100
+  :armor: 5
+  :attack_power: 10
+  :speed: 30
+  :carrying_capacity: 10
+  :components: 
+  - :livable
+  - :able
+  - :selectable
+  - :positionable
+  - :movable
+  - :pathable
+  - :audible
+  - :animated
+  - :drawable
+  - :rangable
+  - :gatherer
+  - :melee_attacker
+  :sounds:
+  - :selected: warrior_select.wav
+  - :acknowledge: warrior_ack.wav
+  :animations:
+    :idle:
+      :prefix: wind_warrior/walk_s000
+      :suffix: .png
+      :first: 1
+      :last: 1
+    :moving:
+      :nw:
+        :prefix: wind_warrior/walk_nw000
+        :suffix: .png
+        :first: 1
+        :last: 8
+      :n:
+        :prefix: wind_warrior/walk_n000
+        :suffix: .png
+        :first: 1
+        :last: 8
+      :ne:
+        :prefix: wind_warrior/walk_ne000
+        :suffix: .png
+        :first: 1
+        :last: 8
+      :e:
+        :prefix: wind_warrior/walk_e000
+        :suffix: .png
+        :first: 1
+        :last: 8
+      :se:
+        :prefix: wind_warrior/walk_se000
+        :suffix: .png
+        :first: 1
+        :last: 8
+      :s:
+        :prefix: wind_warrior/walk_s000
+        :suffix: .png
+        :first: 1
+        :last: 8
+      :sw:
+        :prefix: wind_warrior/walk_sw000
+        :suffix: .png
+        :first: 1
+        :last: 8
+      :w:
+        :prefix: wind_warrior/walk_w000
+        :suffix: .png
+        :first: 1
+        :last: 8
+:fire_warrior: 
+  :player_id: 0
+  :z: 1
+  :health: 100
+  :armor: 5
+  :attack_power: 10
+  :speed: 30
+  :carrying_capacity: 10
+  :components: 
+  - :livable
+  - :able
+  - :selectable
+  - :positionable
+  - :movable
+  - :pathable
+  - :audible
+  - :animated
+  - :drawable
+  - :rangable
+  - :gatherer
+  - :melee_attacker
+  :sounds:
+  - :selected: warrior_select.wav
+  - :acknowledge: warrior_ack.wav
+  :animations:
+    :idle:
+      :prefix: fire_warrior/walk_s000
+      :suffix: .png
+      :first: 1
+      :last: 1
+    :moving:
+      :nw:
+        :prefix: fire_warrior/walk_nw000
+        :suffix: .png
+        :first: 1
+        :last: 8
+      :n:
+        :prefix: fire_warrior/walk_n000
+        :suffix: .png
+        :first: 1
+        :last: 8
+      :ne:
+        :prefix: fire_warrior/walk_ne000
+        :suffix: .png
+        :first: 1
+        :last: 8
+      :e:
+        :prefix: fire_warrior/walk_e000
+        :suffix: .png
+        :first: 1
+        :last: 8
+      :se:
+        :prefix: fire_warrior/walk_se000
+        :suffix: .png
+        :first: 1
+        :last: 8
+      :s:
+        :prefix: fire_warrior/walk_s000
+        :suffix: .png
+        :first: 1
+        :last: 8
+      :sw:
+        :prefix: fire_warrior/walk_sw000
+        :suffix: .png
+        :first: 1
+        :last: 8
+      :w:
+        :prefix: fire_warrior/walk_w000
+        :suffix: .png
+        :first: 1
+        :last: 8

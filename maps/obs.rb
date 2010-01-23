@@ -8,9 +8,9 @@ create_entity nil, :animal, 14, 25
 create_entity nil, :animal, 28, 5
 
 create_entity :local, :fire_explorer, 4, 4
-create_entity :local, :fire_explorer, 22, 22
-create_entity :local, :fire_explorer, 22, 23
-create_entity :local, :fire_explorer, 23, 22
+create_entity :local, :water_warrior, 22, 22
+create_entity :local, :wind_warrior, 22, 23
+create_entity :local, :fire_warrior, 23, 22
 create_entity :local, :wind_worker, 23, 23
 create_entity :local, :water_worker, 23, 24
 
