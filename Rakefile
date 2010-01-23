@@ -28,11 +28,11 @@ end
 
 desc "Run Snelps"
 task :run do |t|
-#  if Platform.mac?
+  if Platform.mac?
     sh "rsdl src/app.rb"
-#  else
-#    sh "ruby src/app.rb"
-#  end
+  else
+    sh "ruby src/app.rb"
+  end
 end
 
 desc "Run Snelps Editor"

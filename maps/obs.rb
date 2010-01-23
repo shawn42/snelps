@@ -11,15 +11,15 @@ create_entity :local, :fire_explorer, 4, 4
 create_entity :local, :fire_explorer, 22, 22
 create_entity :local, :fire_explorer, 22, 23
 create_entity :local, :fire_explorer, 23, 22
-create_entity :local, :fire_explorer, 23, 23
-create_entity :local, :fire_explorer, 23, 24
+create_entity :local, :wind_worker, 23, 23
+create_entity :local, :water_worker, 23, 24
 
 create_entity nil, :vim, 1, 1
 
 create_entity :local, :well_spring, 5, 11
 create_entity :local, :big_base, 10, 11
 create_entity :local, :earth_worker, 12, 11
-create_entity :local, :earth_worker, 14, 11
+create_entity :local, :earth_warrior, 14, 11
 
 create_entity nil, :portal, 59, 59
 
