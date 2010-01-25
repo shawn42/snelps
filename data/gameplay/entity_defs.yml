@@ -2,10 +2,10 @@
 :earth_worker: 
   :player_id: 0
   :z: 1
-  :health: 100
+  :health: 130
   :armor: 5
   :attack_power: 10
-  :speed: 30
+  :speed: 25
   :carrying_capacity: 10
   :components: 
   - :livable
@@ -547,10 +547,10 @@
 :earth_warrior: 
   :player_id: 0
   :z: 1
-  :health: 100
+  :health: 130
   :armor: 5
   :attack_power: 10
-  :speed: 30
+  :speed: 35
   :carrying_capacity: 10
   :components: 
   - :livable
@@ -621,7 +621,7 @@
   :health: 100
   :armor: 5
   :attack_power: 10
-  :speed: 30
+  :speed: 40
   :carrying_capacity: 10
   :components: 
   - :livable
@@ -692,7 +692,7 @@
   :health: 100
   :armor: 5
   :attack_power: 10
-  :speed: 30
+  :speed: 45
   :carrying_capacity: 10
   :components: 
   - :livable
@@ -763,7 +763,7 @@
   :health: 100
   :armor: 5
   :attack_power: 10
-  :speed: 30
+  :speed: 40
   :carrying_capacity: 10
   :components: 
   - :livable
