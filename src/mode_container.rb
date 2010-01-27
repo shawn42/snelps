@@ -99,6 +99,11 @@ class ModeContainer < Rubygoo::Container
   
     change_mode_to :intro
   end
+  
+  def update(time)
+    super
+    @network_manager.send_all
+  end
 
   def change_mode_to(mode, *args)
     @modes[@mode].stop unless @modes[@mode].nil?
