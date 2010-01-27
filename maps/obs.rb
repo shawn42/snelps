@@ -21,12 +21,13 @@ create_entity :local, :big_base, 10, 11
 create_entity :local, :earth_worker, 12, 11
 create_entity :local, :earth_warrior, 14, 11
 
-create_entity nil, :portal, 59, 59
 
 create_entity :local, :fire_worker, 1, 2
 create_entity :local, :fire_worker, 1, 3
 create_entity :local, :fire_worker, 2, 3
 create_entity :local, :fire_worker, 2, 2
+
+create_entity nil, :portal, 59, 59
 
 on :occupancy_change do |type,ent,x,y|
   fire :victory if x == 59 and y == 59 and ent.player_id == local_player.server_id

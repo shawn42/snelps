@@ -61,6 +61,7 @@ class AbilityManager
         allowed_abilities << name if sufficient_ents
       end
     end
+    STDERR.puts allowed_abilities.inspect
     allowed_abilities
   end
 

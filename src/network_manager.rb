@@ -10,6 +10,10 @@ class NetworkManager
 
   attr_accessor :wrapped_session
 
+  def initialize
+    @mutex = Mutex.new
+  end
+
   def wrapped_session=(sess)
     @wrapped_session = sess
     @wrapped_session.when :message_from_server do |msg|
@@ -19,19 +23,9 @@ class NetworkManager
 
   def push_to_server(msg)
     if @wrapped_session
-      @msg_queue ||= []
-      @msg_queue << msg
+      @wrapped_session.message_to_server msg
     else
       raise "no wrapped_session"
     end
-  end
-
-  def send_all
-    # race condition on the queue here?
-    return if @msg_queue.nil?
-    @msg_queue.each do |msg|
-      @wrapped_session.message_to_server msg
-    end
-    @msg_queue = []
   end
 end

@@ -34,7 +34,7 @@ class InputManager
           when KeyUpEvent
             fire :key_up, event
           when QuitEvent
-            raise :rubygame_quit
+            throw :rubygame_quit
           end
         end
 
