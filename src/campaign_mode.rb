@@ -5,7 +5,6 @@ class CampaignMode < GameMode
   def start(*args)
     @map = nil
 
-    require 'profile'
     # TODO use a 'local' connection
 #    @network_manager.wrapped_session = 
 #      @connection_manager.connect_to_server
