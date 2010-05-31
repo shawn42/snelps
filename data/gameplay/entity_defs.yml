@@ -499,10 +499,10 @@
   - :collector
   :animations:
     :idle:
-      :prefix: base
+      :prefix: wellspring_level_1/wellspring-base-
       :suffix: .png
       :first: 1
-      :last: 1
+      :last: 14
 :sledgehammer: 
   :player_id: 0
   :ttl: 2000
