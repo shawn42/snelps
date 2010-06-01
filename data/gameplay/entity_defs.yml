@@ -498,16 +498,16 @@
   - :selectable
   - :collector
   :animations:
-    :idle:
+    :production:
       :prefix: wellspring_level_1/idle-
       :suffix: .png
       :first: 1
       :last: 24
-    :producing:
+    :idle:
       :prefix: wellspring_level_1/producing-
       :suffix: .png
       :first: 1
-      :last: 14
+      :last: 12
 :sledgehammer: 
   :player_id: 0
   :ttl: 2000
