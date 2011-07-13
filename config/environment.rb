@@ -1,30 +1,21 @@
-require 'rubygems'
-#require 'zenoptimize'
-ADDITIONAL_LOAD_PATHS = []
-ADDITIONAL_LOAD_PATHS.concat %w(
-  src 
-  src/components
-  src/gui
-  lib 
-  lib/ruby3d
-  config 
-).map { |dir| File.dirname(__FILE__) + "/../" + dir }.select { |dir| File.directory?(dir) }
+APP_ROOT = "#{File.join(File.dirname(__FILE__),"..")}/"
 
-ADDITIONAL_LOAD_PATHS.each do |path|
-	$:.push path
-end
-# WHY DO I NEED THIS TO RUN ruby -w
-#$:.push "/usr/local/lib/ruby/site_ruby/1.8/i686-darwin8.10.1"
-APP_ROOT = File.dirname(__FILE__) + "/../"
-DATA_PATH =  APP_ROOT + "data/"
-GDATA_PATH =  APP_ROOT + "glob2_data/"
-ENTITY_DATA_PATH =  DATA_PATH + "gameplay/"
-MAP_PATH = APP_ROOT + "maps/"
 CONFIG_PATH = APP_ROOT + "config/"
-GFX_PATH = DATA_PATH + "gfx/"
-CAMPAIGN_PATH = DATA_PATH + "campaigns/"
+DATA_PATH =  APP_ROOT + "data/"
+SOUND_PATH =  APP_ROOT + "data/sounds/"
+MUSIC_PATH =  APP_ROOT + "data/music/"
+GFX_PATH =  APP_ROOT + "data/graphics/"
+FONTS_PATH =  APP_ROOT + "data/fonts/"
 
-require 'metaclass'
-require 'attribute'
+require 'gamebox'
 
-SNELPS_VERSION = "0.0.3"
+[GAMEBOX_PATH, APP_ROOT, File.join(APP_ROOT,'src')].each{|path| $: << path }
+require "gamebox_application"
+
+require_all Dir.glob("**/*.rb").reject{ |f| f.match("spec") || f.match("src/app.rb")}
+
+GAMEBOX_DATA_PATH =  GAMEBOX_PATH + "data/"
+GAMEBOX_SOUND_PATH =  GAMEBOX_PATH + "data/sounds/"
+GAMEBOX_MUSIC_PATH =  GAMEBOX_PATH + "data/music/"
+GAMEBOX_GFX_PATH =  GAMEBOX_PATH + "data/graphics/"
+GAMEBOX_FONTS_PATH =  GAMEBOX_PATH + "data/fonts/"
