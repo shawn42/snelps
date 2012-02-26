@@ -6,7 +6,7 @@ class ResourceManager
 end
 
 class UnitDefinition
-  attr_accessor :attributes
+  attr_writer :attributes
   def initialize(unit_builder, klass)
     @unit_builder = unit_builder
     @klass = klass
@@ -19,6 +19,20 @@ class UnitDefinition
     other_klass_def.attributes.each do |k, v|
       send k, v
     end
+  end
+
+  def behavior(behavior_def)
+    @klass.instance_eval do
+      has_behaviors behavior_def
+    end
+  end
+
+  def attributes(attrs={})
+    attrs.each do |k, v|
+      send k, v
+    end
+
+    @attributes
   end
 
   def method_missing(method_name, default_value)
