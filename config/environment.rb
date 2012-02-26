@@ -12,7 +12,7 @@ require 'gamebox'
 [GAMEBOX_PATH, APP_ROOT, File.join(APP_ROOT,'src')].each{|path| $: << path }
 require "gamebox_application"
 
-require_all Dir.glob("**/*.rb").reject{ |f| f.match("spec") || f.match("src/app.rb")}
+require_all Dir.glob("**/*.rb").reject{ |f| f.match("data") || f.match("spec") || f.match("src/app.rb")}
 
 GAMEBOX_DATA_PATH =  GAMEBOX_PATH + "data/"
 GAMEBOX_SOUND_PATH =  GAMEBOX_PATH + "data/sounds/"
