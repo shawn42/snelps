@@ -7,6 +7,7 @@ describe UnitClassBuilder do
 
     before do
       Object.send(:remove_const, :Worker) if defined? Worker
+      Object.send(:remove_const, :Warrior) if defined? Warrior
       defined?(Worker).should be_false
       @resource_manager.stubs(:load_data_file).
         with('units/definitions.rb').returns definition
