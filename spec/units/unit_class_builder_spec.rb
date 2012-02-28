@@ -1,23 +1,23 @@
 require 'spec_helper'
 
 describe UnitClassBuilder do
-  inject_mocks :resource_manager
-
   describe "#build" do
 
     before do
       Object.send(:remove_const, :Worker) if defined? Worker
       Object.send(:remove_const, :Warrior) if defined? Warrior
       defined?(Worker).should be_false
-      @resource_manager.stubs(:load_data_file).
-        with('units/definitions.rb').returns definition
+      defined?(Warrior).should be_false
+      File.stubs(:read).
+        with("#{DATA_PATH}units/definitions.rb").returns definition
     end
 
     context 'single basic unit definition' do
       let(:definition) { 
         """
+          thinger = 55
           define_unit :worker do
-            health 55
+            health thinger
             attack_power 20
           end
         """ }
@@ -25,7 +25,7 @@ describe UnitClassBuilder do
       it 'builds a basic class' do
         build
         defined?(Worker).should be_true
-        Worker.ancestors[1].should == Actor
+        Worker.ancestors[1].should == Unit
       end
 
       it 'builds a class with default attributes' do
@@ -131,6 +131,40 @@ describe UnitClassBuilder do
         w = build_worker
         w.health.should == 56
       end
+    end
+
+    context 'can pass a block arg and maintain lexical scope' do
+      let(:definition) { 
+        """
+          thinger = 55
+          define_unit :worker do |w|
+            w.health thinger
+            w.attack_power 20
+          end
+        """ }
+
+      it 'builds a basic class' do
+        build
+        defined?(Worker).should be_true
+        Worker.ancestors[1].should == Unit
+      end
+
+      it 'builds a class with default attributes' do
+        build
+        w = build_worker
+        w.should respond_to(:health)
+        w.health.should == 55
+        w.attack_power.should == 20
+      end
+
+      it 'builds a class that has attr that work' do
+        build
+        w = build_worker
+        w.health.should == 55
+        w.health = 99
+        w.health.should == 99
+      end
+
     end
 
 
